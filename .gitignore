@@ -361,4 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
 /Cplusplus_course/Page.h
+
+/Cplusplus_course/Member.h
+
