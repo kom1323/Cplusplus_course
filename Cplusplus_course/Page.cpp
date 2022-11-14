@@ -5,12 +5,12 @@ using namespace std;
 #include "Member.h"
 
 
-char* Page::getName()
+const char* Page::getName()
 {
 	return name;
 
 }
-Member** Page::getMembersList()
+const Member** Page::getMembersList()
 {
 
 	return membersList;

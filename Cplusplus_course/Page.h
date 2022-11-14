@@ -17,8 +17,8 @@ private:
 public:
 	
 
-	char* getName();
-	Member** getMembersList();
+	const char* getName();
+	const Member** getMembersList();
 	int getNumOfMembers();
 
 	

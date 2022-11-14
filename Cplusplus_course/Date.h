@@ -2,6 +2,10 @@
 #define _Date
 
 class Date {
+
+private:
+
+	//add time variable with "ctime" library
 	int day, month, year;
 
 public:
