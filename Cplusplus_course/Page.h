@@ -11,12 +11,25 @@ class Page
 private:
 	char* name;
 	Member** membersList;
+	int numOfMembers;
+	
 
 public:
+	
 
+	char* getName();
+	Member** getMembersList();
+	int getNumOfMembers();
 
+	
+	bool setName(const char* newName);
+	bool setMembersList(const Member** newMemebersList, const int numMembers);
+	bool setNumOfMembers(const int numMembers);
+	void deleteMembersList();
 
 };
+
+
 
 
 
