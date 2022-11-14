@@ -23,8 +23,5 @@
     <ClInclude Include="Member.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Page.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
