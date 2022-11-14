@@ -10,11 +10,10 @@ class Page
 {
 private:
 	char* name;
-	Member** members_list;
+	Member** membersList;
 
 public:
 
-	void func();
 
 
 };

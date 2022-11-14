@@ -1,8 +1,10 @@
-#pragma once
+#ifndef _MEMBER
+#define _MEMBER
 
 #include <iostream>
 #include "Page.h"
-using namespace std;
+
+
 
 class Member {
 private:
@@ -13,3 +15,5 @@ private:
 public:
 
 };
+
+#endif //_MEMBER
