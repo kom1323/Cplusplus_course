@@ -1,26 +1,45 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 using namespace std;
 
 #include "Page.h"
 #include "Member.h"
+#include "Status.h"
 
 
-const char* Page::getName()
+void** addItemToDynamicArray(void** arr, int& arrLogicalSize, int arrPhysicalSize, int itemSize, void* newItem);
+
+char* Page::getName() const
 {
 	return name;
 
 }
-const Member** Page::getMembersList()
+Member** Page::getMembersList() const
 {
 
 	return membersList;
 }
 
-int Page::getNumOfMembers()
+int Page::getNumOfMembers() const
 {
-	return numOfMembers;
+	return membersListSize;
 
 }
+
+
+int Page::getStatusListSize() const
+{
+	return statusListSize;
+}
+
+Status** Page::getStatusList() const
+{
+
+	return statusList;
+
+}
+
+
 bool Page::setName(const char* newName)
 {
 
@@ -32,7 +51,7 @@ bool Page::setName(const char* newName)
 	return true;
 
 }
-bool Page::setMembersList(const Member** newMembersList, const int numMembers)
+bool Page::setMembersList(const Member** newMembersList, int numMembers)
 {
 	deleteMembersList();
 
@@ -45,25 +64,43 @@ bool Page::setMembersList(const Member** newMembersList, const int numMembers)
 		*membersList[i] = *newMembersList[i];
 	}
 
-	numOfMembers = numMembers;
+	membersListSize = numMembers;
 
 	return true;
 
 }
 
-bool Page::setNumOfMembers(const int numMembers)
+bool Page::setNumOfMembers(int numMembers)
 {
-	numOfMembers = numMembers;
+	membersListSize = numMembers;
 	return true;
 
 }
+
+
+
+// ---------------------------------test---------------------------------------------------
+bool Page::addStatus(Status& status)
+{
+
+	Status* newStatus = new Status(status);
+
+
+	void ** temp = addItemToDynamicArray((void**)statusList, statusListSize, 1, sizeof(Status*), newStatus);
+	statusList = (Status**)temp;
+
+	return true;
+
+}
+
+
 
 //deletes the members list
 void Page::deleteMembersList()
 {
 	if (membersList != nullptr) {
 
-		for (int i = 0; i < numOfMembers; i++)
+		for (int i = 0; i < membersListSize; i++)
 		{
 			delete membersList[i];
 		}

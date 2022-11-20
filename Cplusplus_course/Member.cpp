@@ -1,4 +1,8 @@
+#include <iostream>
+using namespace std;
 #include "Member.h"
+#include "Date.h"
+
 
 bool Member::setName(char* newName)
 {
@@ -10,6 +14,7 @@ bool Member::setName(char* newName)
 bool Member::setBirthday(Date newBirthday)
 {
 	birthday = newBirthday;
+	return true;
 }
 
 

@@ -1,9 +1,8 @@
-#ifndef _MEMBER
-#define _MEMBER
+#ifndef _MEMBER_H
+#define _MEMBER_H
 
-#include <iostream>
-#include "Page.h"
-#include "Status.h"
+
+#include "Types.h"
 #include "Date.h"
 
 class Member {
@@ -13,6 +12,8 @@ private:
 	Member** friends;
 	Page** favPages;
 	Status** statusList;
+
+public:
 
 	bool setName(char* newName);
 	bool setBirthday(Date newBirthday);

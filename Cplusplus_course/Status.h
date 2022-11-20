@@ -1,9 +1,8 @@
-#ifndef _STATUS
-#define _STATUS
+#ifndef _STATUS_H
+#define _STATUS_H
 
+#include "Types.h"
 #include "Date.h"
-
-
 
 class Status
 {
@@ -14,7 +13,7 @@ private:
 	Date date;
 
 public:
-
+	Status();
 	const char* getCurrStatus();
 	Date getDate();
 

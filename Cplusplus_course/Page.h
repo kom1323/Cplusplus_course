@@ -1,9 +1,7 @@
-#ifndef  _PAGE
-#define _PAGE
+#ifndef  _PAGE_H
+#define _PAGE_H
 
-#include "Member.h"
-#include "Status.h"
-
+#include "Types.h"
 
 
 class Page
@@ -11,21 +9,28 @@ class Page
 private:
 	char* name;
 	Member** membersList;
-	int numOfMembers;
+	int membersListSize;
+	Status** statusList;
+	int statusListSize;
 	
 
 public:
 	
+	int getStatusListSize() const;
+	Status** getStatusList() const;
+	char* getName() const;
+	Member** getMembersList() const;
+	int getNumOfMembers() const;
 
-	const char* getName();
-	const Member** getMembersList();
-	int getNumOfMembers();
-
-	
 	bool setName(const char* newName);
-	bool setMembersList(const Member** newMemebersList, const int numMembers);
-	bool setNumOfMembers(const int numMembers);
+	bool setMembersList(const Member** newMemebersList, int numMembers);
+	bool setNumOfMembers(int numMembers);
+	bool setStatusList(const Status** newStatusList, int newStatusListSize);
+	bool setStatusListSize(int newStatusListSize);
+
 	void deleteMembersList();
+	bool addStatus(Status& status);
+
 
 };
 

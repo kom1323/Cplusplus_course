@@ -1,5 +1,6 @@
-#ifndef _Date
-#define _Date
+#ifndef _Date_H
+#define _Date_H
+#include "Types.h"
 
 class Date {
 
