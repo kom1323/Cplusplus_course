@@ -7,4 +7,7 @@ class Status;
 class Date;
 class Facebook;
 
+// ask about location in cpp or header
+constexpr int LIST_STARTING_SIZE = 1;
+
 #endif

@@ -13,11 +13,13 @@ void startMenu(Facebook& fuckbook);
 int main()
 {
 
-	Facebook fuckbook;
+	/*Facebook fuckbook;
 
 	initFacebookEntities(fuckbook);
 
-	startMenu(fuckbook);
+	startMenu(fuckbook);*/
+
+	Page p("hello");
 
 
 

@@ -22,14 +22,14 @@ public:
 	Member(const char* name, const Date date);
 	~Member();
 
-	const char* getName() const;
+	const char* getName() const { return this->name; };
 	Date getBirthday() const;
 
 
 	bool addFriend(const Member* newAmigo);
 	bool removeFriend(const char* friendName);
-	bool addFavPage(const Page* newPage);
-	bool removeFavPage(const char* pageName);
+	bool addFavPage(const Page* newPage) { return false; };
+	bool removeFavPage(const char* pageName) { return true; };
 	bool addStatus();
 
 

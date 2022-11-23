@@ -2,7 +2,7 @@
 #define _PAGE_H
 
 #include "Types.h"
-
+#include "Member.h"
 
 class Page
 {
@@ -21,16 +21,11 @@ public:
 
 	const char* getName() const;
 
-
-
-
-	bool addFriend(const Member* newAmigo);
-	bool removeFriend(const char* friendName);
+	bool addFriend(Member* newAmigo);	// deleted const
+	bool removeFriend(const char* friendName); //circular and do i need it in a page
 	bool addFavPage(const Page* newPage);
 	bool removeFavPage(const char* pageName);
 	bool addStatus();
-
-
 
 	void printAllFans();
 	void printAllStatus();

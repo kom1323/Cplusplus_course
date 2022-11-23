@@ -3,7 +3,6 @@
 
 #include "Types.h"
 
-const int LIST_STARTING_SIZE = 1;
 
 
 
@@ -20,6 +19,7 @@ public:
 
     Facebook() {};
     ~Facebook();
+    Facebook(Facebook& other);
 
 
     bool addMember();
