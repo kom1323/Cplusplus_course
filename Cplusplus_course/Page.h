@@ -1,31 +1,40 @@
-#ifndef  _PAGE
-#define _PAGE
+#ifndef  _PAGE_H
+#define _PAGE_H
 
-#include "Member.h"
-#include "Status.h"
-
+#include "Types.h"
 
 
 class Page
 {
 private:
-	char* name;
+	const char* name;
 	Member** membersList;
-	int numOfMembers;
+	Status** statusList;
+	int statusListPhySize, statusListLogSize,
+		membersListPhySize, membersListLogSize;
 	
 
 public:
 	
+	Page(const char* name);
+	~Page();
 
-	const char* getName();
-	const Member** getMembersList();
-	int getNumOfMembers();
+	const char* getName() const;
 
-	
-	bool setName(const char* newName);
-	bool setMembersList(const Member** newMemebersList, const int numMembers);
-	bool setNumOfMembers(const int numMembers);
-	void deleteMembersList();
+
+
+
+	bool addFriend(const Member* newAmigo);
+	bool removeFriend(const char* friendName);
+	bool addFavPage(const Page* newPage);
+	bool removeFavPage(const char* pageName);
+	bool addStatus();
+
+
+
+	void printAllFans();
+	void printAllStatus();
+
 
 };
 

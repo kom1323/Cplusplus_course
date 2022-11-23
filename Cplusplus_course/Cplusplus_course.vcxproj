@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="functions.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Member.cpp" />
@@ -147,9 +148,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
+    <ClInclude Include="Facebook.h" />
     <ClInclude Include="Member.h" />
     <ClInclude Include="Page.h" />
     <ClInclude Include="Status.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

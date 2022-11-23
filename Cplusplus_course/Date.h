@@ -1,17 +1,27 @@
-#ifndef _Date
-#define _Date
+#ifndef _Date_H
+#define _Date_H
+#include "Types.h"
 
-class Date {
+const int DATE_LENGTH = 11;
+const int TIME_LENGTH = 11;
+
+class Date 
+{
 
 private:
 
 	//add time variable with "ctime" library
-	int day, month, year;
+	
+	const char date[DATE_LENGTH];
+	const char time[TIME_LENGTH];
 
 public:
-	bool setDay(int newDay);
-	bool setMonth(int newMonth);
-	bool setYear(int newYear);
+	
+	
+	Date();
+	Date(const char* birthDayDate);
+	const char* getDate() const;
+	const char* getTime() const;
 
 };
 

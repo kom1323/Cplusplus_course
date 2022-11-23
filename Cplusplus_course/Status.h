@@ -1,30 +1,23 @@
-#ifndef _STATUS
-#define _STATUS
+#ifndef _STATUS_H
+#define _STATUS_H
 
+#include "Types.h"
 #include "Date.h"
-
-
 
 class Status
 {
 
 private:
 
-	char* currStatus;
-	Date date;
+	const char* currStatus;
+	const Date date;
 
 public:
-
-	const char* getCurrStatus();
-	Date getDate();
-
-
-	bool setCurrStatus(const char* statusText);
-	bool setDate(Date& d);
-
-
-
-
+	Status(const char* currStatus, const Date date);
+	~Status();
+	
+	const char* getCurrStatus() const;
+	Date getDate() const;
 
 };
 
