@@ -7,29 +7,33 @@
 class Page
 {
 private:
-	char* name;
+	const char* name;
 	Member** membersList;
-	int membersListSize;
 	Status** statusList;
-	int statusListSize;
+	int statusListPhySize, statusListLogSize,
+		membersListPhySize, membersListLogSize;
 	
 
 public:
 	
-	int getStatusListSize() const;
-	Status** getStatusList() const;
-	char* getName() const;
-	Member** getMembersList() const;
-	int getNumOfMembers() const;
+	Page(const char* name);
+	~Page();
 
-	bool setName(const char* newName);
-	bool setMembersList(const Member** newMemebersList, int numMembers);
-	bool setNumOfMembers(int numMembers);
-	bool setStatusList(const Status** newStatusList, int newStatusListSize);
-	bool setStatusListSize(int newStatusListSize);
+	const char* getName() const;
 
-	void deleteMembersList();
-	bool addStatus(Status& status);
+
+
+
+	bool addFriend(const Member* newAmigo);
+	bool removeFriend(const char* friendName);
+	bool addFavPage(const Page* newPage);
+	bool removeFavPage(const char* pageName);
+	bool addStatus();
+
+
+
+	void printAllFans();
+	void printAllStatus();
 
 
 };

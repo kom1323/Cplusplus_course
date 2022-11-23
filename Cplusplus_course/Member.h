@@ -5,18 +5,39 @@
 #include "Types.h"
 #include "Date.h"
 
-class Member {
+
+class Member 
+{
 private:
-	char* name;
-	Date birthday;
-	Member** friends;
-	Page** favPages;
+	const char* name;
+	const Date birthday;
+	Member** friendsList;
+	Page** favPagesList;
 	Status** statusList;
+	int friendsListPhySize, friendsListLogSize,
+		statusListPhySize, statusListLogSize,
+		pagesListPhySize, pagesListLogSize;
 
 public:
+	Member(const char* name, const Date date);
+	~Member();
 
-	bool setName(char* newName);
-	bool setBirthday(Date newBirthday);
+	const char* getName() const;
+	Date getBirthday() const;
+
+
+	bool addFriend(const Member* newAmigo);
+	bool removeFriend(const char* friendName);
+	bool addFavPage(const Page* newPage);
+	bool removeFavPage(const char* pageName);
+	bool addStatus();
+
+
+	void printAllFriends();
+	void printAllFavPages();
+	void printAllStatus();
+	void printLatestStatusesOfFriends();
+
 };
 
 #endif //_MEMBER

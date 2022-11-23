@@ -9,21 +9,15 @@ class Status
 
 private:
 
-	char* currStatus;
-	Date date;
+	const char* currStatus;
+	const Date date;
 
 public:
-	Status();
-	const char* getCurrStatus();
-	Date getDate();
-
-
-	bool setCurrStatus(const char* statusText);
-	bool setDate(Date& d);
-
-
-
-
+	Status(const char* currStatus, const Date date);
+	~Status();
+	
+	const char* getCurrStatus() const;
+	Date getDate() const;
 
 };
 
