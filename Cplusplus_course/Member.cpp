@@ -7,6 +7,7 @@ using namespace std;
 
 constexpr int LIST_STARTING_SIZE = 1;
 constexpr int STATUS_MAX_SIZE = 50;
+constexpr int NOT_FOUND = -1;
 
 Member::Member(const char* newName, Date date) : birthday(date)
 {
@@ -51,11 +52,32 @@ bool Member::addFriend(Member* newAmigo)
 		return false;
 	else
 	{
-			this->checkFriendsArray(); //check if array is full (if not - double it's size)
+			this->checkFriendsArray(); //check if array is full (if not - double its size)
 			(this->friendsList)[this->friendsListLogSize] = newAmigo;
 			(this->friendsListLogSize)++;
 			newAmigo->addFriend(this); //add this friend to his friend's friends list
 			return true;
+	}
+}
+
+bool Member::removeFriend(const char* friendName)
+{
+	int friendsLoc;
+	friendsLoc=getFriendLocationInArray(friendName); 
+	if (friendsLoc == NOT_FOUND) //not in array
+		return false;
+	else
+	{
+		Member* memberToDelete = this->friendsList[friendsLoc];
+		if (friendsLoc == friendsListLogSize - 1)
+			this->friendsList[friendsLoc] = nullptr;
+		else
+		{
+			this->friendsList[friendsLoc] = this->friendsList[friendsListLogSize - 1];
+			this->friendsList[friendsListLogSize - 1] = nullptr;
+		}
+		(this->friendsListLogSize)--;
+		memberToDelete->removeFriend(this->name);
 	}
 }
 
@@ -73,7 +95,23 @@ bool Member::addFavPage(Page* newPage)
 
 bool Member::removeFavPage(const char* pageName)
 {
-	return false;
+	int pageLoc;
+	pageLoc = getPageLocationInArray(pageName);
+	if (pageLoc == NOT_FOUND) //not in array
+		return false;
+	else
+	{
+		Page* pageToDelete = this->favPagesList[pageLoc];
+		if (pageLoc == pagesListLogSize - 1)
+			this->favPagesList[pageLoc] = nullptr;
+		else
+		{
+			this->favPagesList[pagesListLogSize] = this->favPagesList[pagesListLogSize - 1];
+			this->favPagesList[pagesListLogSize - 1] = nullptr;
+		}
+		(this->pagesListLogSize)--;
+		pageToDelete->removeFan(this->name);
+	}
 }
 
 bool Member::addStatus()
@@ -97,6 +135,30 @@ void Member::printAllFriends()
 	for (int i = 0; i < this->friendsListLogSize; i++)
 	{
 		cout << this->friendsList[i]->getName() << endl;
+	}
+	cout << "-------------------------" << endl;
+}
+
+void Member::printAllFavPages()
+{
+	cout << "Favorite pages of the user: " << this->name << endl;
+	cout << "-------------------------" << endl;
+
+	for (int i = 0; i < this->pagesListLogSize; i++)
+	{
+		cout << this->favPagesList[i]->getName() << endl;
+	}
+	cout << "-------------------------" << endl;
+}
+
+void Member::printAllStatus()
+{
+	cout << "Statuses of the user: " << this->name << endl;
+	cout << "-------------------------" << endl;
+
+	for (int i = 0; i < this->statusListLogSize; i++)
+	{
+		cout << this->statusList[i]->getCurrStatus() << endl;
 	}
 	cout << "-------------------------" << endl;
 }
@@ -127,9 +189,8 @@ void Member::checkFriendsArray()
 {
 	if (this->friendsListLogSize == this->friendsListPhySize)
 	{
-		Member** temp;
 		int i, newSize = (this->friendsListPhySize)*2;
-		temp = new Member * [newSize];
+		Member** temp = new Member*[10];
 		this->friendsListPhySize = newSize;
 		for (i = 0; i < this->friendsListLogSize; i++)
 		{
@@ -185,3 +246,27 @@ char* Member::getTime()
 
 	return temp;
 }
+
+int Member::getFriendLocationInArray(const char* friendName)
+{
+	int i, res;
+	for (i = 0; i < this->friendsListLogSize; i++)
+	{
+		if ((strcmp(this->friendsList[i]->name, friendName) == 0)) //if name is found
+			return i;
+	}
+	return NOT_FOUND;
+}
+
+int Member::getPageLocationInArray(const char* pageName)
+{
+	int i, res;
+	for (i = 0; i < this->pagesListLogSize; i++)
+	{
+		if ((strcmp(this->favPagesList[i]->getName(), pageName) == 0)) //if name is found
+			return i;
+	}
+	return NOT_FOUND;
+}
+
+

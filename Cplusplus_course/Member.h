@@ -35,8 +35,8 @@ public:
 
 
 	void printAllFriends();
-	//void printAllFavPages();
-	//void printAllStatus();
+	void printAllFavPages();
+	void printAllStatus();
 	//void printLatestStatusesOfFriends();
 
 	bool isMember(const Member* newAmigo);
@@ -45,6 +45,8 @@ public:
 	void checkStatusArray();
 	void checkPagesArray();
 	char* getTime();
+	int getFriendLocationInArray(const char* friendName);
+	int getPageLocationInArray(const char* pageName);
 };
 
 #endif //_MEMBER
