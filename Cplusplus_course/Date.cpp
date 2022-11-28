@@ -15,6 +15,7 @@ Date::Date()
     char* tm = ctime(&curr_time);
     strcpy(this->mDate, tm);
 
+    delete[] tm;
 
 }
 

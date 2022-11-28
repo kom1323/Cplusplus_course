@@ -17,15 +17,16 @@ private:
 
 public:
 
-    Facebook() {};
+    Facebook();
     ~Facebook();
-    Facebook(Facebook& other);
 
 
     bool addMember();
     bool removeMember(const char* name);
     bool addPage();
     bool removePage(const char* name);
+    bool isMember(const char* name);
+    bool isPage(const char* name);
 
     void printAllEntities();
 

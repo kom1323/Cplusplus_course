@@ -3,6 +3,8 @@
 
 #include "Types.h"
 #include "Date.h"
+char* readInputString();
+
 
 class Status
 {
@@ -10,12 +12,12 @@ class Status
 private:
 
 	const char* currStatus;
-	const Date date;
+	Date date;
 
 public:
-	Status(const char* currStatus, const Date date);
+	Status();
 	~Status();
-	
+
 	const char* getCurrStatus() const;
 	Date getDate() const;
 

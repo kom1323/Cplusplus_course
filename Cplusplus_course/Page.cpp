@@ -109,7 +109,7 @@ bool Page::removeFan(const char* friendName)
 bool Page::addStatus()
 {
 	//change date to dynamic------------------------------
-	Status* s = new Status(readInputString(), Date());
+	Status* s = new Status();
 
 	//increase statusList if necessery
 	if (this->statusListLogSize == this->statusListPhySize)
@@ -138,7 +138,7 @@ bool Page::isFan(Member* member) const
 {
 	for (int i = 0; i < this->membersListLogSize; i++)
 	{
-		//---------------------------------------------by object itself or name?----------------
+		
 		if (this->membersList[i] == member) {
 
 			return true;
@@ -151,7 +151,7 @@ bool Page::isFan(const char* name) const
 {
 	for (int i = 0; i < this->membersListLogSize; i++)
 	{
-		//---------------------------------------------by object itself or name?----------------
+		
 		if (strcmp(this->membersList[i]->getName(),name) == 0) {
 
 			return true;

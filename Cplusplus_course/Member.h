@@ -4,9 +4,10 @@
 
 #include "Types.h"
 #include "Date.h"
+#include "Page.h"
+#include "Status.h"
 
-
-class Member 
+class Member
 {
 private:
 	const char* name;
@@ -19,17 +20,17 @@ private:
 		pagesListPhySize, pagesListLogSize;
 
 public:
-	Member(const char* name, const Date date);
+	Member(const char* newName, const Date date);
 	~Member();
 
-	const char* getName() const { return this->name; };
+	const char* getName() const;
 	Date getBirthday() const;
 
 
-	bool addFriend(const Member* newAmigo);
+	bool addFriend(Member* newAmigo);
 	bool removeFriend(const char* friendName);
-	bool addFavPage(const Page* newPage) { return false; };
-	bool removeFavPage(const char* pageName) { return true; };
+	bool addFavPage(Page* newPage);
+	bool removeFavPage(const char* pageName);
 	bool addStatus();
 
 
@@ -38,6 +39,13 @@ public:
 	void printAllStatus();
 	void printLatestStatusesOfFriends();
 
+	bool isMember(const Member* newAmigo);
+	bool isFanPage(const Page* newPage);
+	void checkFriendsArray();
+	void checkStatusArray();
+	void checkPagesArray();
+	int getFriendLocationInArray(const char* friendName);
+	int getPageLocationInArray(const char* pageName);
 };
 
 #endif //_MEMBER

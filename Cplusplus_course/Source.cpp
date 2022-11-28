@@ -10,17 +10,37 @@ void initFacebookEntities(Facebook &fuckbook);
 void startMenu(Facebook& fuckbook);
 
 
+
+
 int main()
 {
 
-	/*Facebook fuckbook;
+
+	Facebook fuckbook;
 
 	initFacebookEntities(fuckbook);
 
-	startMenu(fuckbook);*/
 
-	Page p("hello");
+	fuckbook.printAllEntities();
+
+	//startMenu(fuckbook);
+
+	/*Page p("hello");
+	Member* m = new Member();
+
+	p.printAllFans();
+	p.addFan(m);
+	p.printAllFans();
+	p.addStatus();
+	p.printAllStatus();*/
 
 
+	/*Date d;
+	cout << d.getmDate() << endl;
+	Date e("Fab");
+	cout << e.getmDate() << endl;*/
+
+	int x;
+	cin >> x;
 
 }

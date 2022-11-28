@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Facebook.cpp" />
     <ClCompile Include="functions.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="Date.cpp" />
