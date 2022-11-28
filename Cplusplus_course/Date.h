@@ -2,26 +2,25 @@
 #define _Date_H
 #include "Types.h"
 
-const int DATE_LENGTH = 11;
-const int TIME_LENGTH = 11;
+const int DATE_LENGTH = 30;
+
 
 class Date 
 {
 
 private:
 
-	//add time variable with "ctime" library
 	
-	const char date[DATE_LENGTH];
-	const char time[TIME_LENGTH];
+	char mDate[DATE_LENGTH];
+
 
 public:
 	
 	
 	Date();
 	Date(const char* birthDayDate);
-	const char* getDate() const;
-	const char* getTime() const;
+	const char* getmDate() const;
+
 
 };
 
