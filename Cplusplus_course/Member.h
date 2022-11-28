@@ -37,14 +37,13 @@ public:
 	void printAllFriends();
 	void printAllFavPages();
 	void printAllStatus();
-	//void printLatestStatusesOfFriends();
+	void printLatestStatusesOfFriends();
 
 	bool isMember(const Member* newAmigo);
 	bool isFanPage(const Page* newPage);
 	void checkFriendsArray();
 	void checkStatusArray();
 	void checkPagesArray();
-	char* getTime();
 	int getFriendLocationInArray(const char* friendName);
 	int getPageLocationInArray(const char* pageName);
 };

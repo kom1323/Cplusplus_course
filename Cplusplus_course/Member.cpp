@@ -116,11 +116,7 @@ bool Member::removeFavPage(const char* pageName)
 
 bool Member::addStatus()
 {
-	char* statusTemp = new char[STATUS_MAX_SIZE];
-	cin.getline(statusTemp, STATUS_MAX_SIZE);
-	char* timeTemp = this->getTime();
-
-	Status* newStatus = new Status(statusTemp, timeTemp);
+	Status* newStatus = new Status();
 	this->checkStatusArray();
 	this->statusList[this->statusListLogSize] = newStatus;
 	(this->statusListLogSize)++;
@@ -158,9 +154,32 @@ void Member::printAllStatus()
 
 	for (int i = 0; i < this->statusListLogSize; i++)
 	{
-		cout << this->statusList[i]->getCurrStatus() << endl;
+		cout <<i+1<<". "<< this->statusList[i]->getCurrStatus() << endl << this->statusList[i]->getDate().getmDate() << endl << endl;
 	}
 	cout << "-------------------------" << endl;
+}
+
+void Member::printLatestStatusesOfFriends()
+{
+	int statusSize;
+	cout << "The statuses of " << this->name << "'s friends: " << endl;;
+	cout << "-------------------------" << endl;
+	for (int i = 0; i < this->friendsListLogSize; i++)
+	{
+		if (this->friendsList[i]->statusListLogSize == 0)
+			cout << this->friendsList[i]->name << "doesn't have statuses yet" << endl;
+		else
+		{
+			statusSize = min(this->friendsList[i]->statusListLogSize, 10);
+			cout << "Statuses of " << this->friendsList[i]->name <<": "<< endl;
+			for (int j = 0; j < statusSize; j++)
+			{
+				cout << j+1 << ". " << this->friendsList[i]->statusList[j]->getCurrStatus() << endl << this->friendsList[i] ->statusList[j]->getDate().getmDate() << endl << endl;
+			}
+		}
+		cout << "-------------------------" << endl;
+	}
+
 }
 
 bool Member::isMember(const Member* newAmigo)
@@ -235,17 +254,6 @@ void Member::checkPagesArray()
 	}
 }
 
-char* Member::getTime()
-{
-	time_t curr_time;
-	curr_time = time(NULL);
-
-	char* tm = ctime(&curr_time);
-	char* temp = new char[TIME_LENGTH];
-	strcpy(temp, tm);
-
-	return temp;
-}
 
 int Member::getFriendLocationInArray(const char* friendName)
 {
