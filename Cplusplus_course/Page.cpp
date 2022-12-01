@@ -63,7 +63,8 @@ bool Page::addFan(Member* newAmigo)
 	//increase membersList if necessery
 	if (this->membersListLogSize == this->membersListPhySize)
 	{
-		Member** temp = new Member * [this->membersListPhySize * 2];
+		this->membersListPhySize *= 2;
+		Member** temp = new Member * [this->membersListPhySize];
 
 		for (int i = 0; i < this->membersListLogSize; i++)
 		{
@@ -118,7 +119,8 @@ bool Page::addStatus()
 	//increase statusList if necessery
 	if (this->statusListLogSize == this->statusListPhySize)
 	{
-		Status** temp = new Status * [this->statusListPhySize * 2];
+		this->statusListPhySize *= 2;
+		Status** temp = new Status * [this->statusListPhySize];
 
 		for (int i = 0; i < this->statusListLogSize; i++)
 		{
@@ -142,7 +144,8 @@ bool Page::addStatus(const char* status)
 	//increase statusList if necessery
 	if (this->statusListLogSize == this->statusListPhySize)
 	{
-		Status** temp = new Status * [this->statusListPhySize * 2];
+		this->statusListPhySize *= 2;
+		Status** temp = new Status * [this->statusListPhySize];
 
 		for (int i = 0; i < this->statusListLogSize; i++)
 		{

@@ -26,7 +26,7 @@ void printMenu();
 char* readInputString()
 {
 	char* stringFromUser = new char[BUFFER_SIZE];
-	cin.getline(stringFromUser, 30, '\n');
+	cin.getline(stringFromUser, BUFFER_SIZE, '\n');
 
 	return stringFromUser;
 }
@@ -42,14 +42,14 @@ void initFacebookEntities(Facebook& fuckbook)
 	p1 = new Page("Twitter");
 	p2 = new Page("Instagram");
 	p3 = new Page("Linkedin");
-
+	
 	fuckbook.addMember(m1);
 	fuckbook.addMember(m2);
 	fuckbook.addMember(m3);
 	fuckbook.addPage(p1);
 	fuckbook.addPage(p2);
 	fuckbook.addPage(p3);
-
+	
 	m1->addStatus("This is Daniel's status");
 	m2->addStatus("This is Omer's status");
 	m2->addStatus("This is Omer's second status");

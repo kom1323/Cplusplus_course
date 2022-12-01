@@ -23,7 +23,6 @@ Facebook::Facebook()
 
 Facebook::~Facebook()
 {
-	this->printAllMembers();
 	//deleting all members of facebook
 	for (int i = 0; i < this->membersLogSize; i++) 
 	{
@@ -73,7 +72,8 @@ bool Facebook::addMember(Member* mem)
 	//increase membersList if necessery
 	if (this->membersLogSize == this->membersPhySize)
 	{
-		Member** temp = new Member * [this->membersPhySize * 2];
+		this->membersPhySize *= 2;
+		Member** temp = new Member * [this->membersPhySize];
 
 		//copy array
 		for (int i = 0; i < this->membersLogSize; i++)
@@ -93,29 +93,7 @@ bool Facebook::addMember(Member* mem)
 }
 
 
-//bool Facebook::removeMember(const char* name)
-//{
-//	for (int i = 0; i < this->membersLogSize; i++)
-//	{
-//		//finding the member
-//		if (strcmp(this->allMembers[i]->getName(), name))
-//		{
-//			delete this->allMembers[i];
-//
-//			//move minimize array spacing
-//			for (; i < this->membersLogSize - 1; i++)
-//			{
-//				this->allMembers[i] = this->allMembers[i + 1];
-//			}
-//			return true;
-//		}
-//
-//	}
-//
-//	cout << name << " is not in Facebook" << endl;
-//	return false;
-//
-//}
+
 
 bool Facebook::addPage()
 {
@@ -144,7 +122,8 @@ bool Facebook::addPage(Page* pag)
 	//increase Pagelist if necessery
 	if (this->pagesLogSize == this->pagesPhySize)
 	{
-		Page** temp = new Page * [this->pagesPhySize * 2];
+		this->pagesPhySize *= 2;
+		Page** temp = new Page * [this->pagesPhySize];
 
 		//copy array
 		for (int i = 0; i < this->pagesLogSize; i++)
@@ -163,28 +142,7 @@ bool Facebook::addPage(Page* pag)
 	return true;
 }
 
-//bool Facebook::removePage(const char* name)
-//{
-//	for (int i = 0; i < this->pagesLogSize; i++)
-//	{
-//
-//		if (strcmp(this->allPages[i]->getName(), name))
-//		{
-//			delete this->allPages[i];
-//
-//			//move minimize array spacing
-//			for (; i < this->pagesLogSize - 1; i++)
-//			{
-//				this->allPages[i] = this->allPages[i + 1];
-//			}
-//			return true;
-//		}
-//
-//	}
-//
-//	cout << "Page: " << name << " is not in Facebook" << endl;
-//	return false;
-//}
+
 
 bool Facebook::isMember(const char* name)
 {

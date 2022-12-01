@@ -277,6 +277,7 @@ void Member::checkFriendsArray()
 		}
 		delete[] this->friendsList;
 		this->friendsList = temp;
+		this->friendsListPhySize = newSize;
 	}
 }
 
@@ -295,6 +296,7 @@ void Member::checkStatusArray()
 		}
 		delete[] this->statusList;
 		this->statusList = temp;
+		this->statusListPhySize = newSize;
 	}
 }
 
@@ -313,6 +315,7 @@ void Member::checkPagesArray()
 		}
 		delete[] this->favPagesList;
 		this->favPagesList = temp;
+		this->pagesListPhySize = newSize;
 	}
 }
 
