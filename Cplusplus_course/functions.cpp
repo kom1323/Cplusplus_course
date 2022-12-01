@@ -31,7 +31,7 @@ char* readInputString()
 	return stringFromUser;
 }
 
-void initFacebookEntities(Facebook& fuckbook)
+void initFacebookEntities(Facebook& facebook)
 {
 	Member* m1,* m2,* m3;
 	Page* p1, * p2, * p3;
@@ -43,12 +43,12 @@ void initFacebookEntities(Facebook& fuckbook)
 	p2 = new Page("Instagram");
 	p3 = new Page("Linkedin");
 	
-	fuckbook.addMember(m1);
-	fuckbook.addMember(m2);
-	fuckbook.addMember(m3);
-	fuckbook.addPage(p1);
-	fuckbook.addPage(p2);
-	fuckbook.addPage(p3);
+	facebook.addMember(m1);
+	facebook.addMember(m2);
+	facebook.addMember(m3);
+	facebook.addPage(p1);
+	facebook.addPage(p2);
+	facebook.addPage(p3);
 	
 	m1->addStatus("This is Daniel's status");
 	m2->addStatus("This is Omer's status");
@@ -69,7 +69,7 @@ void initFacebookEntities(Facebook& fuckbook)
 }
 
 
-void startMenu(Facebook& fuckbook)
+void startMenu(Facebook& facebook)
 {
 	char* userInput;
 	char* nameInput, *nameInput2;
@@ -87,119 +87,119 @@ void startMenu(Facebook& fuckbook)
 		switch (choice)
 		{
 			case MENU_OPTIONS::ADD_MEMBER:
-				fuckbook.addMember();
+				facebook.addMember();
 				break;
 
 			case MENU_OPTIONS::ADD_FAN_PAGE:
-				fuckbook.addPage();
+				facebook.addPage();
 				break;
 
 			case MENU_OPTIONS::ADD_MEMBER_STATUS:
-				fuckbook.printAllMembers();
+				facebook.printAllMembers();
 				cout << "Choose 1 member of the above by typing his name: ";
 				nameInput = readInputString();
-				fuckbook.getMemberByName(nameInput)->addStatus();
+				facebook.getMemberByName(nameInput)->addStatus();
 				break;
 
 			case MENU_OPTIONS::ADD_PAGE_STATUS:
-				fuckbook.printAllPages();
+				facebook.printAllPages();
 				cout << "Choose 1 page of the above by typing his name: ";
 				nameInput = readInputString();
-				fuckbook.getPageByName(nameInput)->addStatus();
+				facebook.getPageByName(nameInput)->addStatus();
 				break;
 
 			case MENU_OPTIONS::PRINT_MEMBER_STATUS:
-				fuckbook.printAllMembers();
+				facebook.printAllMembers();
 				cout << "Choose 1 member of the above by typing his name: ";
 				nameInput = readInputString();
-				fuckbook.getMemberByName(nameInput)->printAllStatus();
+				facebook.getMemberByName(nameInput)->printAllStatus();
 				break;
 
 			case MENU_OPTIONS::PRINT_PAGE_STATUS:
-				fuckbook.printAllPages();
+				facebook.printAllPages();
 				cout << "Choose 1 page of the above by typing his name: ";
 				nameInput = readInputString();
-				fuckbook.getPageByName(nameInput)->printAllStatus();
+				facebook.getPageByName(nameInput)->printAllStatus();
 				break;
 
 			case MENU_OPTIONS::PRINT_RECENT_FRIENDS_STATUS:
-				fuckbook.printAllMembers();
+				facebook.printAllMembers();
 				cout << "Choose 1 member of the above by typing his name: ";
 				nameInput = readInputString();
-				fuckbook.getMemberByName(nameInput)->printLatestStatusesOfFriends();
+				facebook.getMemberByName(nameInput)->printLatestStatusesOfFriends();
 				break;
 
 			case MENU_OPTIONS::CONNECT_MEMBERS:
-				fuckbook.printAllMembers();
+				facebook.printAllMembers();
 				cout << "Choose the first member from the list above by typing his name: ";
 				nameInput = readInputString();
-				if (fuckbook.printAvailableFriends(nameInput))
+				if (facebook.printAvailableFriends(nameInput))
 				{
 					cout << "Please enter the second member's name from the list above: ";
 					nameInput2 = readInputString();
-					fuckbook.getMemberByName(nameInput)->addFriend(fuckbook.getMemberByName(nameInput2));
+					facebook.getMemberByName(nameInput)->addFriend(facebook.getMemberByName(nameInput2));
 				}
 				else
 					cout << "There are no members available to choose from" << endl;
 				break;
 
 			case MENU_OPTIONS::DISCONNECT_MEMBERS:
-				fuckbook.printAllMembers();
+				facebook.printAllMembers();
 				cout << "Choose the first member from the list above by typing his name: ";
 				nameInput = readInputString();
-				if (fuckbook.printFriendListOfMember(nameInput))
+				if (facebook.printFriendListOfMember(nameInput))
 				{
 					cout << "Please choose a friend to delete from the list above: ";
-					fuckbook.getMemberByName(nameInput)->printAllFriends();
+					facebook.getMemberByName(nameInput)->printAllFriends();
 					cout << "Please enter the second member's name: ";
 					nameInput2 = readInputString();
-					fuckbook.getMemberByName(nameInput)->removeFriend(nameInput2);
+					facebook.getMemberByName(nameInput)->removeFriend(nameInput2);
 				}
 				else
 					cout << "There are no members available to delete" << endl;
 				break;
 
 			case MENU_OPTIONS::ADD_FAN_TO_PAGE:
-				fuckbook.printAllPages();
+				facebook.printAllPages();
 				cout << "Choose 1 page of the above by typing his name: ";
 				nameInput = readInputString();
-				if (fuckbook.printAvailableFans(nameInput))
+				if (facebook.printAvailableFans(nameInput))
 				{
 					cout << "Please enter the member's name from the list above: ";
 					nameInput2 = readInputString();
-					fuckbook.getPageByName(nameInput)->addFan(fuckbook.getMemberByName(nameInput2));
+					facebook.getPageByName(nameInput)->addFan(facebook.getMemberByName(nameInput2));
 				}
 				else
 					cout << "There are no fans available to choose from" << endl;
 				break;
 
 			case MENU_OPTIONS::REMOVE_FAN_FROM_PAGE:
-				fuckbook.printAllPages();
+				facebook.printAllPages();
 				cout << "Choose 1 page of the above by typing his name: ";
 				nameInput = readInputString();
 				cout << "Choose from ";
-				fuckbook.getPageByName(nameInput)->printAllFans();
+				facebook.getPageByName(nameInput)->printAllFans();
 				cout << "Please enter the member's name: ";
 				nameInput2 = readInputString();
-				fuckbook.getPageByName(nameInput)->removeFan(nameInput2);
+				facebook.getPageByName(nameInput)->removeFan(nameInput2);
 				break;
 
 			case MENU_OPTIONS::PRINT_ALL_ENTITIES:
-				fuckbook.printAllEntities();
+				facebook.printAllEntities();
 				break;
 
 			case MENU_OPTIONS::PRINT_MEMBER_FRIENDS:
-				fuckbook.printAllMembers();
+				facebook.printAllMembers();
 				cout << "Choose the first member from the list above by typing his name: ";
 				nameInput = readInputString();
-				fuckbook.getMemberByName(nameInput)->printAllFriends();
+				facebook.getMemberByName(nameInput)->printAllFriends();
 				break;
 
 			case MENU_OPTIONS::PRINT_PAGE_FANS:
-				fuckbook.printAllPages();
+				facebook.printAllPages();
 				cout << "Choose 1 page of the above by typing his name: ";
 				nameInput = readInputString();
-				fuckbook.getPageByName(nameInput)->printAllFans();
+				facebook.getPageByName(nameInput)->printAllFans();
 				break;
 
 			case MENU_OPTIONS::EXIT_MENU:
