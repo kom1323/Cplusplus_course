@@ -1,7 +1,6 @@
 #ifndef _MEMBER_H
 #define _MEMBER_H
 
-
 #include "Types.h"
 #include "Date.h"
 #include "Page.h"
@@ -25,7 +24,8 @@ public:
 
 	const char* getName() const;
 	Date getBirthday() const;
-
+	int getFriendListLogSize() const;
+	Member** getFriendsList() const;
 
 	bool addFriend(Member* newAmigo);
 	bool removeFriend(const char* friendName);
@@ -34,7 +34,6 @@ public:
 	bool addStatus();
 	bool addStatus(const char* status);
 
-
 	void printAllFriends();
 	void printAllFavPages();
 	void printAllStatus();
@@ -42,11 +41,11 @@ public:
 
 	bool isMember(const Member* newAmigo);
 	bool isFanPage(const Page* newPage);
+	bool isFanPage(const char* pageName);
 	void checkFriendsArray();
 	void checkStatusArray();
 	void checkPagesArray();
 	int getFriendLocationInArray(const char* friendName);
 	int getPageLocationInArray(const char* pageName);
 };
-
 #endif //_MEMBER

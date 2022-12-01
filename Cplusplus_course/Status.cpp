@@ -1,10 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable:4996)
 #include <iostream>
 using namespace std;
 
 #include "Status.h"
-
-
 
 Status::Status()
 {
@@ -12,7 +10,6 @@ Status::Status()
 	char* str = readInputString();
 	this->currStatus = str;
 	this->date = Date();
-
 }
 
 Status::Status(const char* status)

@@ -30,10 +30,28 @@ Member::Member(const char* newName, Date date) : birthday(date)
 
 Member::~Member()
 {
-	delete[] this->name;
+	int i;
+
+	//deleting the member from all the friends lists of his friends
+	for (i = 0; i< this->friendsListLogSize; i++)
+		this->friendsList[i]->removeFriend(this->name);
+
 	delete[] this->friendsList;
-	delete[] this->statusList;
+
+	//deleting the member from all the fans lists of his fav pages
+	for (i = 0; i < this->pagesListLogSize; i++)
+		this->favPagesList[i]->removeFan(this->name);
+
 	delete[] this->favPagesList;
+
+	//deleting all his statuses
+	for (i = 0; i < this->statusListLogSize; i++)
+		delete this->statusList[i];
+
+	delete[] this->statusList;
+
+	delete[] this->name;
+	
 }
 
 const char* Member::getName() const
@@ -44,6 +62,16 @@ const char* Member::getName() const
 Date Member::getBirthday() const
 {
 	return this->birthday;
+}
+
+int Member::getFriendListLogSize() const
+{
+	return this->friendsListLogSize;
+}
+
+Member** Member::getFriendsList() const
+{
+	return this->friendsList;
 }
 
 bool Member::addFriend(Member* newAmigo)
@@ -64,13 +92,17 @@ bool Member::removeFriend(const char* friendName)
 {
 	int friendsLoc;
 	friendsLoc = getFriendLocationInArray(friendName);
-	if (friendsLoc == NOT_FOUND) //not in array
+	//not in array
+	if (friendsLoc == NOT_FOUND) 
 		return false;
+	//if the member exists in his friends list
 	else
 	{
 		Member* memberToDelete = this->friendsList[friendsLoc];
+		//if the member's location in the friends list is the last - just delete it
 		if (friendsLoc == friendsListLogSize - 1)
 			this->friendsList[friendsLoc] = nullptr;
+		//if it is not in the edge of the array, switch it with the last and then delete the last
 		else
 		{
 			this->friendsList[friendsLoc] = this->friendsList[friendsListLogSize - 1];
@@ -79,6 +111,7 @@ bool Member::removeFriend(const char* friendName)
 		(this->friendsListLogSize)--;
 		memberToDelete->removeFriend(this->name);
 	}
+	return true;
 }
 
 bool Member::addFavPage(Page* newPage)
@@ -97,13 +130,17 @@ bool Member::removeFavPage(const char* pageName)
 {
 	int pageLoc;
 	pageLoc = getPageLocationInArray(pageName);
-	if (pageLoc == NOT_FOUND) //not in array
+	//not in array
+	if (pageLoc == NOT_FOUND) 
 		return false;
+	//if the page exists in his pages list
 	else
 	{
 		Page* pageToDelete = this->favPagesList[pageLoc];
+		//if the page's location in the pages list is the last - just delete it
 		if (pageLoc == pagesListLogSize - 1)
 			this->favPagesList[pageLoc] = nullptr;
+		//if it is not in the edge of the array, switch it with the last and then delete the last
 		else
 		{
 			this->favPagesList[pagesListLogSize] = this->favPagesList[pagesListLogSize - 1];
@@ -112,6 +149,7 @@ bool Member::removeFavPage(const char* pageName)
 		(this->pagesListLogSize)--;
 		pageToDelete->removeFan(this->name);
 	}
+	return true;
 }
 
 bool Member::addStatus()
@@ -177,7 +215,7 @@ void Member::printLatestStatusesOfFriends()
 	for (int i = 0; i < this->friendsListLogSize; i++)
 	{
 		if (this->friendsList[i]->statusListLogSize == 0)
-			cout << this->friendsList[i]->name << "doesn't have statuses yet" << endl;
+			cout << this->friendsList[i]->name << " doesn't have statuses yet" << endl;
 		else
 		{
 			statusSize = min(this->friendsList[i]->statusListLogSize, 10);
@@ -214,8 +252,20 @@ bool Member::isFanPage(const Page* newPage)
 	return false;
 }
 
+bool Member::isFanPage(const char* pageName)
+{
+	int i;
+	for (i = 0; i < this->pagesListLogSize; i++)
+	{
+		if (strcmp(this->favPagesList[i]->getName(), pageName)==0)
+			return true;
+	}
+	return false;
+}
+
 void Member::checkFriendsArray()
 {
+	//if needed a bigger array, creating a new array (with doubled size) and copying all data from old to new
 	if (this->friendsListLogSize == this->friendsListPhySize)
 	{
 		int i, newSize = (this->friendsListPhySize) * 2;
@@ -232,6 +282,7 @@ void Member::checkFriendsArray()
 
 void Member::checkStatusArray()
 {
+	//if needed a bigger array, creating a new array (with doubled size) and copying all data from old to new
 	if (this->statusListLogSize == this->statusListPhySize)
 	{
 		Status** temp;
@@ -249,6 +300,7 @@ void Member::checkStatusArray()
 
 void Member::checkPagesArray()
 {
+	//if needed a bigger array, creating a new array (with doubled size) and copying all data from old to new
 	if (this->pagesListLogSize == this->pagesListPhySize)
 	{
 		Page** temp;

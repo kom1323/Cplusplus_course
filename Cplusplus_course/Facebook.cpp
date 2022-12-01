@@ -6,7 +6,7 @@
 using namespace std;
 
 constexpr int LIST_STARTING_SIZE = 1;
-
+constexpr int NOT_FOUND = -1;
 char* readInputString();
 
 Facebook::Facebook()
@@ -23,13 +23,16 @@ Facebook::Facebook()
 
 Facebook::~Facebook()
 {
-
-	for (int i = 0; i < this->membersLogSize; i++)
+	this->printAllMembers();
+	//deleting all members of facebook
+	for (int i = 0; i < this->membersLogSize; i++) 
 	{
 		delete this->allMembers[i];
 	}
+
 	delete[] this->allMembers;
 
+	//deleting all pages of facebook
 	for (int i = 0; i < this->pagesLogSize; i++)
 	{
 		delete this->allPages[i];
@@ -59,6 +62,7 @@ bool Facebook::addMember()
 	
 	Member* temp = new Member(name, dateOfBirth);
 	
+	//delete temporary strings
 	delete[] name;
 	delete[] dateOfBirth;
 	return this->addMember(temp);
@@ -88,29 +92,30 @@ bool Facebook::addMember(Member* mem)
 	return true;
 }
 
-bool Facebook::removeMember(const char* name)
-{
-	for (int i = 0; i < this->membersLogSize; i++)
-	{
 
-		if (strcmp(this->allMembers[i]->getName(), name))
-		{
-			delete this->allMembers[i];
-
-			//move minimize array spacing
-			for (; i < this->membersLogSize - 1; i++)
-			{
-				this->allMembers[i] = this->allMembers[i + 1];
-			}
-			return true;
-		}
-
-	}
-
-	cout << name << " is not in Facebook" << endl;
-	return false;
-
-}
+//bool Facebook::removeMember(const char* name)
+//{
+//	for (int i = 0; i < this->membersLogSize; i++)
+//	{
+//		//finding the member
+//		if (strcmp(this->allMembers[i]->getName(), name))
+//		{
+//			delete this->allMembers[i];
+//
+//			//move minimize array spacing
+//			for (; i < this->membersLogSize - 1; i++)
+//			{
+//				this->allMembers[i] = this->allMembers[i + 1];
+//			}
+//			return true;
+//		}
+//
+//	}
+//
+//	cout << name << " is not in Facebook" << endl;
+//	return false;
+//
+//}
 
 bool Facebook::addPage()
 {
@@ -158,34 +163,34 @@ bool Facebook::addPage(Page* pag)
 	return true;
 }
 
-bool Facebook::removePage(const char* name)
-{
-	for (int i = 0; i < this->pagesLogSize; i++)
-	{
-
-		if (strcmp(this->allPages[i]->getName(), name))
-		{
-			delete this->allPages[i];
-
-			//move minimize array spacing
-			for (; i < this->pagesLogSize - 1; i++)
-			{
-				this->allPages[i] = this->allPages[i + 1];
-			}
-			return true;
-		}
-
-	}
-
-	cout << "Page: " << name << " is not in Facebook" << endl;
-	return false;
-}
+//bool Facebook::removePage(const char* name)
+//{
+//	for (int i = 0; i < this->pagesLogSize; i++)
+//	{
+//
+//		if (strcmp(this->allPages[i]->getName(), name))
+//		{
+//			delete this->allPages[i];
+//
+//			//move minimize array spacing
+//			for (; i < this->pagesLogSize - 1; i++)
+//			{
+//				this->allPages[i] = this->allPages[i + 1];
+//			}
+//			return true;
+//		}
+//
+//	}
+//
+//	cout << "Page: " << name << " is not in Facebook" << endl;
+//	return false;
+//}
 
 bool Facebook::isMember(const char* name)
 {
 	for (int i = 0; i < this->membersLogSize; i++)
 	{
-
+		
 		if (strcmp(this->allMembers[i]->getName(), name) == 0) {
 
 			return true;
@@ -235,7 +240,13 @@ Page* Facebook::getPageByName(const char* name)
 
 void Facebook::printAllEntities()
 {
-	cout << "All members in Facebook"  << endl;
+	this->printAllMembers();
+	this->printAllPages();
+}
+
+void Facebook::printAllMembers()
+{
+	cout << "All members in Facebook" << endl;
 	cout << "-------------------------" << endl;
 
 	for (int i = 0; i < this->membersLogSize; i++)
@@ -243,8 +254,10 @@ void Facebook::printAllEntities()
 		cout << this->allMembers[i]->getName() << endl;
 	}
 	cout << "-------------------------" << endl;
+}
 
-
+void Facebook::printAllPages()
+{
 	cout << "All Pages in Facebook" << endl;
 	cout << "-------------------------" << endl;
 
@@ -253,5 +266,59 @@ void Facebook::printAllEntities()
 		cout << this->allPages[i]->getName() << endl;
 	}
 	cout << "-------------------------" << endl;
+}
 
+bool Facebook::printAvailableFriends(const char* amigoName)
+{
+	bool isFriends=false; //to see if everyone are already his friends
+	cout << "All available friends to add:" << endl;
+	cout << "-------------------------" << endl;
+	for (int i = 0; i < this->membersLogSize; i++) 
+	{
+		if (this->allMembers[i]->getFriendLocationInArray(amigoName) == NOT_FOUND && (strcmp(this->allMembers[i]->getName(), amigoName)!=0))
+		{
+			cout << this->allMembers[i]->getName() << endl;
+			isFriends = true;
+		}
+	}
+	cout << "-------------------------" << endl;
+	return isFriends;
+}
+
+bool Facebook::printFriendListOfMember(const char* name)
+{
+	Member* temp;
+	temp = this->getMemberByName(name);
+	int size = temp->getFriendListLogSize();
+
+	if (size == 0)
+		return false;
+	else
+	{
+		cout << "All available friends to delete:" << endl;
+		cout << "-------------------------" << endl;
+		for (int i = 0; i < size; i++)
+		{
+			cout << temp->getFriendsList()[i]->getName() << endl;
+		}
+		cout << "-------------------------" << endl;
+	}
+	return true;
+}
+
+bool Facebook::printAvailableFans(const char* pageName)
+{
+	bool isFan = false; //to see if everyone are already his friends
+	cout << "All available friends to add:" << endl;
+	cout << "-------------------------" << endl;
+	for (int i = 0; i < this->pagesLogSize; i++)
+	{
+		if ( this->allMembers[i]->isFanPage(pageName) == false && (strcmp(this->allMembers[i]->getName(), pageName) != 0))
+		{
+			cout << this->allMembers[i]->getName() << endl;
+			isFan = true;
+		}
+	}
+	cout << "-------------------------" << endl;
+	return isFan;
 }

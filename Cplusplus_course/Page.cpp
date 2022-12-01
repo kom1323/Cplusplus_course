@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable:4996)
 #include <iostream>
 using namespace std;
 #include "Page.h"
@@ -28,13 +28,14 @@ Page::Page(const char* name)
 
 Page::~Page()
 {
-	
+	//deleting the statuses
 	for (int i = 0; i < statusListLogSize; i++)
 	{
 		delete statusList[i];
 	}
 	delete[] statusList;
 
+	//deleting the page from the fav pages list of each member that is a fan of this page
 	for (int i = 0; i < membersListLogSize; i++)
 	{
 		membersList[i]->removeFavPage(this->name);

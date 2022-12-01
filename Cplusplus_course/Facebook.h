@@ -4,22 +4,16 @@
 #include "Types.h"
 
 
-
-
 class Facebook
 {
 private:
-
     Member** allMembers;
     Page** allPages;
     int membersLogSize, membersPhySize,
         pagesLogSize, pagesPhySize;
-
 public:
-
     Facebook();
     ~Facebook();
-
 
     bool addMember();
     bool addMember(Member* mem);
@@ -33,11 +27,10 @@ public:
     Page* getPageByName(const char* name);
 
     void printAllEntities();
-
-
-
-
+    void printAllMembers();
+    void printAllPages();
+    bool printAvailableFriends(const char* amigoName);
+    bool printFriendListOfMember(const char* name);
+    bool printAvailableFans(const char* fanName);
 };
-
-
 #endif

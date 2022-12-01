@@ -5,8 +5,6 @@ using namespace std;
 #include "Date.h"
 
 
-
-
 Date::Date()
 {
     time_t curr_time;

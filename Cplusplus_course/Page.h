@@ -3,7 +3,6 @@
 
 #include "Types.h"
 
-
 class Page
 {
 private:
@@ -12,12 +11,10 @@ private:
 	Status** statusList;
 	int statusListPhySize, statusListLogSize,
 		membersListPhySize, membersListLogSize;
-	
-
 public:
-	
 	Page(const char* name);
 	~Page();
+
 
 	const char* getName() const;
 
@@ -30,13 +27,5 @@ public:
 
 	void printAllFans();
 	void printAllStatus();
-
-
 };
-
-
-
-
-
-
 #endif // ! _PAGE
