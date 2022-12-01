@@ -8,11 +8,16 @@ using namespace std;
 
 Status::Status()
 {
-	cout << "Please enter a status: " << endl;
+	cout << "Please enter a status: ";
 	char* str = readInputString();
-	char* temp = new char[strlen(str) + 1];
-	strcpy(temp, str);
-	delete[] str;
+	this->currStatus = str;
+	this->date = Date();
+
+}
+
+Status::Status(const char* status)
+{
+	char* temp = strdup(status);
 	this->currStatus = temp;
 	this->date = Date();
 }

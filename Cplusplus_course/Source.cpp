@@ -1,10 +1,7 @@
 #include <iostream>
 using namespace std;
 #include "Facebook.h"
-#include "Date.h"
-#include "Member.h"
-#include "Page.h"
-#include "Status.h"
+
 
 void initFacebookEntities(Facebook &fuckbook);
 void startMenu(Facebook& fuckbook);
@@ -17,30 +14,14 @@ int main()
 
 
 	Facebook fuckbook;
-
 	initFacebookEntities(fuckbook);
 
+	startMenu(fuckbook);
 
-	fuckbook.printAllEntities();
-
-	//startMenu(fuckbook);
-
-	/*Page p("hello");
-	Member* m = new Member();
-
-	p.printAllFans();
-	p.addFan(m);
-	p.printAllFans();
-	p.addStatus();
-	p.printAllStatus();*/
+	//go over all destructors
+	//check if copy and move constructos is needed
 
 
-	/*Date d;
-	cout << d.getmDate() << endl;
-	Date e("Fab");
-	cout << e.getmDate() << endl;*/
 
-	int x;
-	cin >> x;
 
 }

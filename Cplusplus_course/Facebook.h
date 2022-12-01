@@ -22,11 +22,15 @@ public:
 
 
     bool addMember();
+    bool addMember(Member* mem);
     bool removeMember(const char* name);
     bool addPage();
+    bool addPage(Page* pag);
     bool removePage(const char* name);
     bool isMember(const char* name);
     bool isPage(const char* name);
+    Member* getMemberByName(const char* name);
+    Page* getPageByName(const char* name);
 
     void printAllEntities();
 

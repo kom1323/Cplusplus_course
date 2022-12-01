@@ -32,6 +32,7 @@ public:
 	bool addFavPage(Page* newPage);
 	bool removeFavPage(const char* pageName);
 	bool addStatus();
+	bool addStatus(const char* status);
 
 
 	void printAllFriends();

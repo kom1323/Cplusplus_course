@@ -41,7 +41,7 @@ Page::~Page()
 	}
 	delete[] membersList;
 
-	//cout << "Killed " << this->name << endl;
+	
 	delete[] this->name;
 
 }
@@ -56,7 +56,6 @@ bool Page::addFan(Member* newAmigo)
 	//check if member is alread a fan of page
 	if(this->isFan(newAmigo))
 	{	
-		cout << "Member " << newAmigo->getName() << "is already a fan" << endl;
 		return false;
 	}
 
@@ -87,28 +86,32 @@ bool Page::removeFan(const char* friendName)
 	
 	for (int i = 0; i < this->membersListLogSize; i++)
 	{
+		//match by name
 		if (strcmp(this->membersList[i]->getName(), friendName) == 0)
 		{
-			this->membersList[i]->removeFavPage(this->getName());
-			delete this->membersList[i];
+			//check if already removed the page from the member
+			if(!this->membersList[i]->removeFavPage(this->getName()))
+			{
+				return true;
+			}
 
 			//minimize space
 			for (int j = i; j < this->membersListLogSize - 1; j++)
 			{
 				this->membersList[j] = this->membersList[j + 1];
 			}
+			this->membersListLogSize--;
 			return true;
+			
 		}
 
 	}
 
-	cout << "Member " << friendName << "is not a fan" << endl;
 	return false;
 }
 
 bool Page::addStatus()
 {
-	//change date to dynamic------------------------------
 	Status* s = new Status();
 
 	//increase statusList if necessery
@@ -130,7 +133,30 @@ bool Page::addStatus()
 	this->statusListLogSize++;
 	return true;
 
-	return false;
+}
+bool Page::addStatus(const char* status)
+{
+	Status* s = new Status(status);
+
+	//increase statusList if necessery
+	if (this->statusListLogSize == this->statusListPhySize)
+	{
+		Status** temp = new Status * [this->statusListPhySize * 2];
+
+		for (int i = 0; i < this->statusListLogSize; i++)
+		{
+			temp[i] = this->statusList[i];
+		}
+		delete[] this->statusList;
+
+		this->statusList = temp;
+	}
+
+	//add the new status 
+	this->statusList[this->statusListLogSize] = s;
+	this->statusListLogSize++;
+	return true;
+
 }
 
 
@@ -182,7 +208,7 @@ void Page::printAllStatus()
 
 	for (int i = 0; i < this->statusListLogSize; i++)
 	{
-		cout << this->statusList[i]->getCurrStatus() << endl;
+		cout << i + 1 << ". " << this->statusList[i]->getCurrStatus()  << endl << "Date: " << this->statusList[i]->getDate().getmDate() << endl;
 	}
 
 	cout << "-------------------------" << endl;

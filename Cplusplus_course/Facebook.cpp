@@ -38,6 +38,8 @@ Facebook::~Facebook()
 
 }
 
+
+
 bool Facebook::addMember()
 {
 
@@ -55,7 +57,15 @@ bool Facebook::addMember()
 	cout << "Please enter date of birth(dd/mm/yyyy): ";
 	char* dateOfBirth = readInputString();
 	
+	Member* temp = new Member(name, dateOfBirth);
+	
+	delete[] name;
+	delete[] dateOfBirth;
+	return this->addMember(temp);
+}
 
+bool Facebook::addMember(Member* mem)
+{
 	//increase membersList if necessery
 	if (this->membersLogSize == this->membersPhySize)
 	{
@@ -72,11 +82,9 @@ bool Facebook::addMember()
 	}
 
 	//add the new member
-	this->allMembers[this->membersLogSize] = new Member(name, Date(dateOfBirth));
+	this->allMembers[this->membersLogSize] = mem;
 	this->membersLogSize++;
 
-	delete[] name;
-	delete[] dateOfBirth;
 	return true;
 }
 
@@ -119,6 +127,15 @@ bool Facebook::addPage()
 	}
 
 
+	Page* temp = new Page(name);
+	delete[] name;
+
+	return this->addPage(temp);
+}
+
+bool Facebook::addPage(Page* pag)
+{
+
 	//increase Pagelist if necessery
 	if (this->pagesLogSize == this->pagesPhySize)
 	{
@@ -135,10 +152,9 @@ bool Facebook::addPage()
 	}
 
 	//add the new Page
-	this->allPages[this->pagesLogSize] = new Page(name);
+	this->allPages[this->pagesLogSize] = pag;
 	this->pagesLogSize++;
 
-	delete[] name;
 	return true;
 }
 
@@ -189,6 +205,32 @@ bool Facebook::isPage(const char* name)
 		}
 	}
 	return false;
+}
+
+Member* Facebook::getMemberByName(const char* name)
+{
+	for (int i = 0; i < this->membersLogSize; i++)
+	{
+		if (strcmp(this->allMembers[i]->getName(), name) == 0)
+		{
+			return this->allMembers[i];
+		}
+	}
+
+	return nullptr;
+}
+
+Page* Facebook::getPageByName(const char* name)
+{
+	for (int i = 0; i < this->pagesLogSize; i++)
+	{
+		if (strcmp(this->allPages[i]->getName(), name) == 0)
+		{
+			return this->allPages[i];
+		}
+	}
+
+	return nullptr;
 }
 
 void Facebook::printAllEntities()

@@ -24,6 +24,7 @@ public:
 	bool addFan(Member* newAmigo);
 	bool removeFan(const char* friendName); 
 	bool addStatus();
+	bool addStatus(const char* status);
 	bool isFan(Member* member) const;
 	bool isFan(const char* name) const;
 

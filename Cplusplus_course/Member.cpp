@@ -17,15 +17,15 @@ Member::Member(const char* newName, Date date) : birthday(date)
 
 	this->friendsList = new Member * [LIST_STARTING_SIZE];
 	this->friendsListLogSize = 0;
-	this->friendsListPhySize = 1;
+	this->friendsListPhySize = LIST_STARTING_SIZE;
 
 	this->statusList = new Status * [LIST_STARTING_SIZE];
 	this->statusListLogSize = 0;
-	this->statusListPhySize = 1;
+	this->statusListPhySize = LIST_STARTING_SIZE;
 
 	this->favPagesList = new Page * [LIST_STARTING_SIZE];
 	this->pagesListLogSize = 0;
-	this->pagesListPhySize = 1;
+	this->pagesListPhySize = LIST_STARTING_SIZE;
 }
 
 Member::~Member()
@@ -123,6 +123,16 @@ bool Member::addStatus()
 	return true;
 }
 
+bool Member::addStatus(const char* status)
+{
+	Status* newStatus = new Status(status);
+	this->checkStatusArray();
+	this->statusList[this->statusListLogSize] = newStatus;
+	(this->statusListLogSize)++;
+	return true;
+}
+
+
 void Member::printAllFriends()
 {
 	cout << "Friends of the user: " << this->name << endl;
@@ -154,7 +164,7 @@ void Member::printAllStatus()
 
 	for (int i = 0; i < this->statusListLogSize; i++)
 	{
-		cout << i + 1 << ". " << this->statusList[i]->getCurrStatus() << endl << this->statusList[i]->getDate().getmDate() << endl << endl;
+		cout << i + 1 << ". " << this->statusList[i]->getCurrStatus() << endl <<  "Date: " << this->statusList[i]->getDate().getmDate() << endl;
 	}
 	cout << "-------------------------" << endl;
 }

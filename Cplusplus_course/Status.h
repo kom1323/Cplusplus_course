@@ -16,6 +16,7 @@ private:
 
 public:
 	Status();
+	Status(const char* status);
 	~Status();
 
 	const char* getCurrStatus() const;
