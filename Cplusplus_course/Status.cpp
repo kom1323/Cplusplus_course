@@ -1,5 +1,7 @@
 #include "Status.h"
 
+
+
 Status::Status(const string& status) : currStatus(status), date(Date())
 {
 }

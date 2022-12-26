@@ -6,7 +6,7 @@
 #include <vector>
 #include <list>
 #include <ctime>
-#include <string.h>
+#include <string>
 
 #include "Date.h"
 #include "Page.h"

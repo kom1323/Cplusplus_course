@@ -2,6 +2,8 @@
 
 
 
+
+
 Page::Page(const string& name) : name(name)
 {
 }

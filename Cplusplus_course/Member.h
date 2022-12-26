@@ -14,7 +14,7 @@ private:
 	vector<Status> statusList;
 
 public:
-	Member(const string& newName, const Date date);
+	Member(const string& newName, Date date);
 	Member() = default;
 	const Member& operator=(const Member& other);
 	const string getName() const;

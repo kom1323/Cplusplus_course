@@ -2,8 +2,6 @@
 #define _Date_H
 #include "Types.h"
 
-constexpr int DATE_LENGTH = 30;
-
 
 class Date
 {

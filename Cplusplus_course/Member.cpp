@@ -2,6 +2,8 @@
 
 
 
+
+
 Member::Member(const string& newName, Date date) : name(newName), birthday(date)
 {
 	

@@ -4,7 +4,6 @@
 #include "Types.h"
 
 
-string readInputString();
 
 class Status
 {

@@ -4,6 +4,7 @@
 #include "Types.h"
 
 
+
 class Facebook
 {
 private:
@@ -13,20 +14,21 @@ public:
     Facebook() = default;
     ~Facebook();
 
-    bool addMember();
     bool addMember(Member* mem);
+    bool addMember();
     bool addPage();
     bool addPage(Page* pag);
-    bool isMember(const char* name);
-    bool isPage(const char* name);
-    Member* getMemberByName(const char* name);
-    Page* getPageByName(const char* name);
+
+    bool isMember(const string& name);
+    bool isPage(const string& name);
+    Member* getMemberByName(const string& name);
+    Page* getPageByName(const string& name);
 
     void printAllEntities();
     void printAllMembers();
     void printAllPages();
-    bool printAvailableFriends(const char* amigoName);
-    bool printFriendListOfMember(const char* name);
-    bool printAvailableFans(const char* fanName);
+    bool printAvailableFriends(const string& amigoName);
+    bool printFriendListOfMember(const string& name);
+    bool printAvailableFans(const string& fanName);
 };
 #endif
