@@ -7,20 +7,16 @@
 class Facebook
 {
 private:
-    Member** allMembers;
-    Page** allPages;
-    int membersLogSize, membersPhySize,
-        pagesLogSize, pagesPhySize;
+    list<Member*> allMembers;
+    list<Page*> allPages;
 public:
-    Facebook();
+    Facebook() = default;
     ~Facebook();
 
     bool addMember();
     bool addMember(Member* mem);
-    bool removeMember(const char* name);
     bool addPage();
     bool addPage(Page* pag);
-    bool removePage(const char* name);
     bool isMember(const char* name);
     bool isPage(const char* name);
     Member* getMemberByName(const char* name);

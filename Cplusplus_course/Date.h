@@ -5,15 +5,15 @@
 constexpr int DATE_LENGTH = 30;
 
 
-class Date 
+class Date
 {
 private:
-	char mDate[DATE_LENGTH];
+	string mDate;
 
 public:
 	Date();
-	Date(const char* birthDayDate);
-	const char* getmDate() const;
+	Date(const string& birthDayDate);
+	const string& getmDate() const;
 };
 
 #endif //_Date

@@ -1,53 +1,24 @@
-#pragma warning(disable:4996)
-#include <iostream>
-using namespace std;
 #include "Page.h"
-#include "Status.h"
-#include "Member.h"
 
-constexpr int LIST_STARTING_SIZE = 1;
 
-char* readInputString();
 
-Page::Page(const char* name)
+Page::Page(const string& name) : name(name)
 {
-	char* temp = new char[strlen(name) + 1];
-	strcpy(temp, name);
-	this->name = temp;
-
-	this->membersList = new Member * [LIST_STARTING_SIZE];
-	this->membersListLogSize = 0;
-	this->membersListPhySize = 1;
-	
-	this->statusList = new Status * [LIST_STARTING_SIZE];
-	this->statusListLogSize = 0;
-	this->statusListPhySize = 1;
-
-
 }
 
-Page::~Page()
+
+const Page& Page::operator=(const Page& other)
 {
-	//deleting the statuses
-	for (int i = 0; i < statusListLogSize; i++)
+	if (this != &other)
 	{
-		delete statusList[i];
+		this->name = other.name;
+		this->membersList = other.membersList;
+		this->statusList = other.statusList;
 	}
-	delete[] statusList;
-
-	//deleting the page from the fav pages list of each member that is a fan of this page
-	for (int i = 0; i < membersListLogSize; i++)
-	{
-		membersList[i]->removeFavPage(this->name);
-	}
-	delete[] membersList;
-
-	
-	delete[] this->name;
-
+	return *this;
 }
 
-const char* Page::getName() const
+const string& Page::getName() const
 {
 	return this->name;
 }
@@ -55,56 +26,35 @@ const char* Page::getName() const
 bool Page::addFan(Member* newAmigo)
 {
 	//check if member is alread a fan of page
-	if(this->isFan(newAmigo))
-	{	
+	if (this->isFan(newAmigo))
+	{
 		return false;
 	}
 
-	//increase membersList if necessery
-	if (this->membersListLogSize == this->membersListPhySize)
-	{
-		this->membersListPhySize *= 2;
-		Member** temp = new Member * [this->membersListPhySize];
-
-		for (int i = 0; i < this->membersListLogSize; i++)
-		{
-			temp[i] = this->membersList[i];
-		}
-		delete[] this->membersList;
-
-		this->membersList = temp;
-	}
-
 	//add the new member and update the member's favorite pages
-	this->membersList[this->membersListLogSize] = newAmigo;
-	this->membersListLogSize++;
+	this->membersList.push_back(newAmigo);
 	newAmigo->addFavPage(this);
 
 	return true;
 }
 
-bool Page::removeFan(const char* friendName)
+bool Page::removeFan(const string friendName)
 {
-	
-	for (int i = 0; i < this->membersListLogSize; i++)
+	vector<Member*>::iterator itr = this->membersList.begin();
+	for (itr; itr != this->membersList.end(); itr++)
 	{
 		//match by name
-		if (strcmp(this->membersList[i]->getName(), friendName) == 0)
+		if ((*itr)->getName() == friendName)
 		{
 			//check if already removed the page from the member
-			if(!this->membersList[i]->removeFavPage(this->getName()))
+			if (!(*itr)->removeFavPage(this->getName()))
 			{
 				return true;
 			}
 
-			//minimize space
-			for (int j = i; j < this->membersListLogSize - 1; j++)
-			{
-				this->membersList[j] = this->membersList[j + 1];
-			}
-			this->membersListLogSize--;
+			this->membersList.erase(itr);
 			return true;
-			
+
 		}
 
 	}
@@ -114,51 +64,14 @@ bool Page::removeFan(const char* friendName)
 
 bool Page::addStatus()
 {
-	Status* s = new Status();
-
-	//increase statusList if necessery
-	if (this->statusListLogSize == this->statusListPhySize)
-	{
-		this->statusListPhySize *= 2;
-		Status** temp = new Status * [this->statusListPhySize];
-
-		for (int i = 0; i < this->statusListLogSize; i++)
-		{
-			temp[i] = this->statusList[i];
-		}
-		delete[] this->statusList;
-
-		this->statusList = temp;
-	}
-
 	//add the new status 
-	this->statusList[this->statusListLogSize] = s;
-	this->statusListLogSize++;
+	this->statusList.push_back(Status());
 	return true;
-
 }
-bool Page::addStatus(const char* status)
+bool Page::addStatus(const string status)
 {
-	Status* s = new Status(status);
 
-	//increase statusList if necessery
-	if (this->statusListLogSize == this->statusListPhySize)
-	{
-		this->statusListPhySize *= 2;
-		Status** temp = new Status * [this->statusListPhySize];
-
-		for (int i = 0; i < this->statusListLogSize; i++)
-		{
-			temp[i] = this->statusList[i];
-		}
-		delete[] this->statusList;
-
-		this->statusList = temp;
-	}
-
-	//add the new status 
-	this->statusList[this->statusListLogSize] = s;
-	this->statusListLogSize++;
+	this->statusList.push_back(Status(status));
 	return true;
 
 }
@@ -166,10 +79,10 @@ bool Page::addStatus(const char* status)
 
 bool Page::isFan(Member* member) const
 {
-	for (int i = 0; i < this->membersListLogSize; i++)
+	for (auto& fan : this->membersList)
 	{
-		
-		if (this->membersList[i] == member) {
+
+		if (fan == member) {
 
 			return true;
 		}
@@ -177,12 +90,12 @@ bool Page::isFan(Member* member) const
 	return false;
 }
 
-bool Page::isFan(const char* name) const
+bool Page::isFan(const string name) const
 {
-	for (int i = 0; i < this->membersListLogSize; i++)
+	for (auto& fan : this->membersList)
 	{
-		
-		if (strcmp(this->membersList[i]->getName(),name) == 0) {
+
+		if (fan->getName() == name) {
 
 			return true;
 		}
@@ -195,13 +108,11 @@ void Page::printAllFans()
 	cout << "Fans of page: " << this->name << endl;
 	cout << "-------------------------" << endl;
 
-	for (int i = 0; i < this->membersListLogSize; i++)
+	for (auto& fan : this->membersList)
 	{
-		cout << this->membersList[i]->getName() << endl;
+		cout << fan->getName() << endl;
 	}
 	cout << "-------------------------" << endl;
-
-
 }
 
 void Page::printAllStatus()
@@ -209,10 +120,11 @@ void Page::printAllStatus()
 
 	cout << "Statuses in page: " << this->name << endl;
 	cout << "-------------------------" << endl;
-
-	for (int i = 0; i < this->statusListLogSize; i++)
+	int count = 0;
+	for (auto& status : this->statusList)
 	{
-		cout << i + 1 << ". " << this->statusList[i]->getCurrStatus()  << endl << "Date: " << this->statusList[i]->getDate().getmDate() << endl;
+		cout << count + 1 << ". " << status.getCurrStatus() << endl << "Date: " << status.getDate().getmDate() << endl;
+		count++;
 	}
 
 	cout << "-------------------------" << endl;

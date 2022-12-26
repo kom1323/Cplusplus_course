@@ -1,26 +1,18 @@
-#pragma warning(disable:4996)
-#include <iostream>
-#include <ctime>
-using namespace std;
 #include "Date.h"
-
 
 Date::Date()
 {
     time_t curr_time;
     curr_time = time(NULL);
 
-    char* tm = ctime(&curr_time);
-    strcpy(this->mDate, tm);
-
+    this->mDate = ctime(&curr_time);
 }
 
-Date::Date(const char* birthDayDate)
+Date::Date(const string& birthDayDate) : mDate(birthDayDate)
 {
-    strcpy(this->mDate, birthDayDate);
 }
 
-const char* Date::getmDate() const
+const string& Date::getmDate() const
 {
     return this->mDate;
 }

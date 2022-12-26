@@ -1,30 +1,12 @@
-#pragma warning(disable:4996)
-#include <iostream>
-using namespace std;
-
 #include "Status.h"
 
-Status::Status()
+Status::Status(const string& status) : currStatus(status), date(Date())
 {
-	cout << "Please enter a status: ";
-	char* str = readInputString();
-	this->currStatus = str;
-	this->date = Date();
 }
 
-Status::Status(const char* status)
-{
-	char* temp = strdup(status);
-	this->currStatus = temp;
-	this->date = Date();
-}
 
-Status::~Status()
-{
-	delete[] this->currStatus;
-}
 
-const char* Status::getCurrStatus() const
+const string& Status::getCurrStatus() const
 {
 	return this->currStatus;
 }

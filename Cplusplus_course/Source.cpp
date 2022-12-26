@@ -5,10 +5,7 @@ Daniel Omesi 207689092
 
 */
 
-#include <iostream>
-using namespace std;
-#include "Facebook.h"
-
+#include "Types.h"
 
 void initFacebookEntities(Facebook &facebook);
 void startMenu(Facebook& facebook);

@@ -1,42 +1,23 @@
-#include <iostream>
 #include "Facebook.h"
-#include "Member.h"
-#include "Date.h"
-#include "Page.h"
-using namespace std;
 
-constexpr int LIST_STARTING_SIZE = 1;
-constexpr int NOT_FOUND = -1;
-char* readInputString();
 
-Facebook::Facebook()
-{
-	this->allMembers = new Member * [LIST_STARTING_SIZE];
-	this->membersLogSize = 0;
-	this->membersPhySize = LIST_STARTING_SIZE;
-	
-	this->allPages = new Page * [LIST_STARTING_SIZE];
-	this->pagesLogSize = 0;
-	this->pagesPhySize = LIST_STARTING_SIZE;
 
-}
+
 
 Facebook::~Facebook()
 {
 	//deleting all members of facebook
-	for (int i = 0; i < this->membersLogSize; i++) 
+	for (auto &member: this->allMembers) 
 	{
-		delete this->allMembers[i];
+		delete member;
 	}
 
-	delete[] this->allMembers;
 
 	//deleting all pages of facebook
-	for (int i = 0; i < this->pagesLogSize; i++)
+	for (auto &page: this->allPages)
 	{
-		delete this->allPages[i];
+		delete page;
 	}
-	delete[] this->allPages;
 
 }
 

@@ -6,24 +6,24 @@
 class Page
 {
 private:
-	const char* name;
-	Member** membersList;
-	Status** statusList;
-	int statusListPhySize, statusListLogSize,
-		membersListPhySize, membersListLogSize;
+	string name;
+	vector<Member*> membersList;
+	vector<Status> statusList;
+
 public:
-	Page(const char* name);
-	~Page();
+	Page(const string& name);
+	Page() = default;
 
+	const Page& operator=(const Page& other);
 
-	const char* getName() const;
+	const string& getName() const;
 
 	bool addFan(Member* newAmigo);
-	bool removeFan(const char* friendName); 
+	bool removeFan(const string friendName);
 	bool addStatus();
-	bool addStatus(const char* status);
+	bool addStatus(const string status);
 	bool isFan(Member* member) const;
-	bool isFan(const char* name) const;
+	bool isFan(const string name) const;
 
 	void printAllFans();
 	void printAllStatus();

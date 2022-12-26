@@ -2,20 +2,19 @@
 #define _STATUS_H
 
 #include "Types.h"
-#include "Date.h"
 
-char* readInputString();
+
+string readInputString();
 
 class Status
 {
 private:
-	const char* currStatus;
+	string currStatus;
 	Date date;
 public:
-	Status();
-	Status(const char* status);
-	~Status();
-	const char* getCurrStatus() const;
+	Status() = default;
+	Status(const string& status);
+	const string& getCurrStatus() const;
 	Date getDate() const;
 };
 #endif // !_STATUS

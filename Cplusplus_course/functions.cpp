@@ -1,11 +1,4 @@
-#include <iostream>
-using namespace std;
-#include "Facebook.h"
-#include "Date.h"
-#include "Status.h"
-#include "Member.h"
-#include "Page.h"
-#include <string>
+#include "Types.h"
 
 enum class MENU_OPTIONS {ADD_MEMBER=1, ADD_FAN_PAGE, ADD_MEMBER_STATUS, ADD_PAGE_STATUS,
 					PRINT_MEMBER_STATUS, PRINT_PAGE_STATUS, PRINT_RECENT_FRIENDS_STATUS,
@@ -23,12 +16,12 @@ constexpr int BUFFER_SIZE = 256;
 
 void printMenu();
 
-char* readInputString()
+string readInputString()
 {
-	char* stringFromUser = new char[BUFFER_SIZE];
-	cin.getline(stringFromUser, BUFFER_SIZE, '\n');
+	string input;
+	getline(cin, input);
 
-	return stringFromUser;
+	return input;
 }
 
 void initFacebookEntities(Facebook& facebook)

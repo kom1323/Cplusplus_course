@@ -2,37 +2,31 @@
 #define _MEMBER_H
 
 #include "Types.h"
-#include "Date.h"
-#include "Page.h"
-#include "Status.h"
+
 
 class Member
 {
 private:
-	const char* name;
-	const Date birthday;
-	Member** friendsList;
-	Page** favPagesList;
-	Status** statusList;
-	int friendsListPhySize, friendsListLogSize,
-		statusListPhySize, statusListLogSize,
-		pagesListPhySize, pagesListLogSize;
+	string name;
+	Date birthday;
+	vector<Member*> friendsList;
+	vector<Page*> favPagesList;
+	vector<Status> statusList;
 
 public:
-	Member(const char* newName, const Date date);
-	~Member();
-
-	const char* getName() const;
+	Member(const string& newName, const Date date);
+	Member() = default;
+	const Member& operator=(const Member& other);
+	const string getName() const;
 	Date getBirthday() const;
-	int getFriendListLogSize() const;
-	Member** getFriendsList() const;
+	const vector<Member*>& getFriendsList() const;
 
 	bool addFriend(Member* newAmigo);
-	bool removeFriend(const char* friendName);
+	bool removeFriend(const string& friendName);
 	bool addFavPage(Page* newPage);
-	bool removeFavPage(const char* pageName);
+	bool removeFavPage(const string pageName);
 	bool addStatus();
-	bool addStatus(const char* status);
+	bool addStatus(const string& status);
 
 	void printAllFriends();
 	void printAllFavPages();
@@ -40,12 +34,9 @@ public:
 	void printLatestStatusesOfFriends();
 
 	bool isMember(const Member* newAmigo);
+	bool isMember(const string& amigoName);
 	bool isFanPage(const Page* newPage);
-	bool isFanPage(const char* pageName);
-	void checkFriendsArray();
-	void checkStatusArray();
-	void checkPagesArray();
-	int getFriendLocationInArray(const char* friendName);
-	int getPageLocationInArray(const char* pageName);
+	bool isFanPage(const string& pageName);
+
 };
 #endif //_MEMBER
