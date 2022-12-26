@@ -1,4 +1,10 @@
 #include "Types.h"
+#include "Facebook.h"
+#include "Date.h"
+#include "Status.h"
+#include "Member.h"
+#include "Page.h"
+
 
 enum class MENU_OPTIONS {ADD_MEMBER=1, ADD_FAN_PAGE, ADD_MEMBER_STATUS, ADD_PAGE_STATUS,
 					PRINT_MEMBER_STATUS, PRINT_PAGE_STATUS, PRINT_RECENT_FRIENDS_STATUS,

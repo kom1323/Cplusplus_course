@@ -2,7 +2,9 @@
 #define _FACEBOOK_H
 
 #include "Types.h"
-
+#include "Page.h"
+#include "Member.h"
+#include <list>
 
 
 class Facebook

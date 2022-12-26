@@ -1,8 +1,10 @@
 #ifndef  _PAGE_H
 #define _PAGE_H
 
+#pragma warning(disable : 4996)
 #include "Types.h"
-
+#include "Status.h"
+#include "Member.h"
 
 class Page
 {

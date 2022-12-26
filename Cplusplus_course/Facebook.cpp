@@ -2,7 +2,7 @@
 
 
 
-
+string readInputString();
 
 Facebook::~Facebook()
 {

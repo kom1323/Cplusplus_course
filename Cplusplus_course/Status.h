@@ -1,9 +1,10 @@
 #ifndef _STATUS_H
 #define _STATUS_H
 
+#pragma warning(disable : 4996)
+
 #include "Types.h"
-
-
+#include "Date.h"
 
 class Status
 {

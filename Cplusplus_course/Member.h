@@ -2,6 +2,9 @@
 #define _MEMBER_H
 
 #include "Types.h"
+#include "Date.h"
+#include "Page.h"
+#include "Status.h"
 
 
 class Member
