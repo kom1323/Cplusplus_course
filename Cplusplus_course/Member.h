@@ -20,6 +20,7 @@ public:
 	Member(const string& newName, Date date);
 	Member() = default;
 	const Member& operator=(const Member& other);
+	const Member& operator+=(Member& other);
 	const string getName() const;
 	Date getBirthday() const;
 	const vector<Member*>& getFriendsList() const;

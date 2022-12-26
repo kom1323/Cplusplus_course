@@ -30,6 +30,13 @@ const Member& Member::operator=(const Member& other)
 	return *this;
 }
 
+const Member& Member::operator+=(Member& other)
+{
+	this->addFriend(&other);
+	return *this;
+}
+
+
 Date Member::getBirthday() const
 {
 	return this->birthday;
@@ -182,7 +189,6 @@ bool Member::isMember(const Member* newAmigo)
 
 bool Member::isMember(const string& amigoName)
 {
-	int i;
 	for (auto& amigo : this->friendsList)
 	{
 		if (amigoName == amigo->getName())
@@ -193,7 +199,6 @@ bool Member::isMember(const string& amigoName)
 
 bool Member::isFanPage(const Page* newPage)
 {
-	int i;
 	for (auto& page : this->favPagesList)
 	{
 		if (page == newPage)
@@ -204,7 +209,6 @@ bool Member::isFanPage(const Page* newPage)
 
 bool Member::isFanPage(const string& pageName)
 {
-	int i;
 	for (auto& page : this->favPagesList)
 	{
 		if (pageName == page->getName())

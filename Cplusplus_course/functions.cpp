@@ -143,7 +143,10 @@ void startMenu(Facebook& facebook)
 			{
 				cout << "Please enter the second member's name from the list above: ";
 				nameInput2 = readInputString();
-				facebook.getMemberByName(nameInput)->addFriend(facebook.getMemberByName(nameInput2));
+				//facebook.getMemberByName(nameInput)->addFriend(facebook.getMemberByName(nameInput2));
+				Member* member1 = facebook.getMemberByName(nameInput);
+				Member* member2 = facebook.getMemberByName(nameInput2);
+				*member1 += *member2;
 			}
 			else
 				cout << "There are no members available to choose from" << endl;
