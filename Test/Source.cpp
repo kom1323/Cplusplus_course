@@ -32,18 +32,19 @@ Page::~Page()
 	delete this->a;
 }
 
-Page foo() {
+int& foo(int &y) {
 
-	Page d(5);
-	return d;
+	
+	return ++y;
 }
 
 int main()
 {
 	int* c = new int();
-	Page b = foo();
+	int a = 3;
+	a = foo(a);
 
-	cout << "a: " << *(b.a) << endl;
+	cout << "a: " << a << endl;
 
 	cin >> *c;
 	return 1;

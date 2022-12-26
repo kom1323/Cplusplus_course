@@ -21,6 +21,47 @@ const Page& Page::operator=(const Page& other)
 	return *this;
 }
 
+const Page& Page::operator+=(Member& fan)
+{
+	this->addFan(&fan);
+	return *this;
+}
+
+
+bool Page::operator>(const Member& other)
+{
+	if (this->membersList.size() > other.getFriendsList().size())
+		return true;
+	return false;
+}
+
+bool Page::operator>(const Page& other)
+{
+	if (this->membersList.size() > other.membersList.size())
+		return true;
+	return false;
+}
+
+
+bool Page::operator<(const Member& other)
+{
+	if (this->membersList.size() < other.getFriendsList().size())
+		return true;
+	return false;
+}
+
+bool Page::operator<(const Page& other)
+{
+	if (this->membersList.size() < other.membersList.size())
+		return true;
+	return false;
+}
+
+int Page::getFanListSize() const
+{
+	return this->membersList.size();
+}
+
 const string& Page::getName() const
 {
 	return this->name;

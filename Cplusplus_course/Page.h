@@ -17,9 +17,17 @@ public:
 	Page(const string& name);
 	Page() = default;
 
-	const Page& operator=(const Page& other);
-
+	int getFanListSize() const;
 	const string& getName() const;
+
+
+	const Page& operator=(const Page& other);
+	const Page& operator+=(Member& fan);
+
+	bool operator>(const Member& other);
+	bool operator>(const Page& other);
+	bool operator<(const Member& other);
+	bool operator<(const Page& other);
 
 	bool addFan(Member* newAmigo);
 	bool removeFan(const string friendName);

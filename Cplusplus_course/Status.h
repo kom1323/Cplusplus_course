@@ -14,7 +14,13 @@ private:
 public:
 	Status() = default;
 	Status(const string& status);
+	
+	bool operator==(const Status& other) const;
+	bool operator!=(const Status& other) const;
+
+
 	const string& getCurrStatus() const;
 	Date getDate() const;
+
 };
 #endif // !_STATUS

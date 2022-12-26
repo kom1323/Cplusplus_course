@@ -55,7 +55,7 @@ void initFacebookEntities(Facebook& facebook)
 	facebook.addPage(p2);
 	facebook.addPage(p3);
 	
-	m1->addStatus("This is Daniel's status");
+	m1->addStatus("This is Omer's status");
 	m2->addStatus("This is Omer's status");
 	m2->addStatus("This is Omer's second status");
 	m3->addStatus("This is Roey's status");
@@ -71,12 +71,26 @@ void initFacebookEntities(Facebook& facebook)
 	m3->addFavPage(p3);
 
 	m2->addFavPage(p2);
+
+
+	//TESTING
+
+	if (*m2 > *m3)
+		cout << "m1 > m3" << endl;
+	else
+		cout << "m1 <= m3" << endl;
+
+	if (m2->getStatusList()[0] != m3->getStatusList()[0])
+		cout << "m1 same status m2" << endl;
+
 }
 
 
 void startMenu(Facebook& facebook)
 {
 	string userInput, nameInput, nameInput2, statusInput;
+	Page* page;
+	Member* member1, * member2;
 	cout << "Welcome to the amazing Facebook!" << endl << endl;
 	MENU_OPTIONS  choice = MENU_OPTIONS::START_MENU;
 	printMenu();
@@ -143,9 +157,8 @@ void startMenu(Facebook& facebook)
 			{
 				cout << "Please enter the second member's name from the list above: ";
 				nameInput2 = readInputString();
-				//facebook.getMemberByName(nameInput)->addFriend(facebook.getMemberByName(nameInput2));
-				Member* member1 = facebook.getMemberByName(nameInput);
-				Member* member2 = facebook.getMemberByName(nameInput2);
+				member1 = facebook.getMemberByName(nameInput);
+				member2 = facebook.getMemberByName(nameInput2);
 				*member1 += *member2;
 			}
 			else
@@ -176,7 +189,9 @@ void startMenu(Facebook& facebook)
 			{
 				cout << "Please enter the member's name from the list above: ";
 				nameInput2 = readInputString();
-				facebook.getPageByName(nameInput)->addFan(facebook.getMemberByName(nameInput2));
+				page = facebook.getPageByName(nameInput);
+				member1 = facebook.getMemberByName(nameInput2);
+				*page += *member1;
 			}
 			else
 				cout << "There are no fans available to choose from" << endl;

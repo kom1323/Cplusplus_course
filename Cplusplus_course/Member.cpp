@@ -36,10 +36,43 @@ const Member& Member::operator+=(Member& other)
 	return *this;
 }
 
+bool Member::operator>(const Member& other)
+{
+	if (this->friendsList.size() > other.friendsList.size())
+		return true;
+	return false;
+}
+
+bool Member::operator>(const Page& other)
+{
+	if (this->friendsList.size() > other.getFanListSize())
+		return true;
+	return false;
+}
+
+
+bool Member::operator<(const Member& other)
+{
+	if (this->friendsList.size() < other.friendsList.size())
+		return true;
+	return false;
+}
+
+bool Member::operator<(const Page& other)
+{
+	if (this->friendsList.size() < other.getFanListSize())
+		return true;
+	return false;
+}
 
 Date Member::getBirthday() const
 {
 	return this->birthday;
+}
+
+const vector<Status>& Member::getStatusList() const
+{
+	return this->statusList;
 }
 
 
