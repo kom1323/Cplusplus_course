@@ -246,6 +246,12 @@ void startMenu(Facebook& facebook)
 
 }
 
+void newTerminate()
+{
+	cout << "A problem has occured" << endl;
+	exit(1);
+}
+
 
 void printMenu()
 {

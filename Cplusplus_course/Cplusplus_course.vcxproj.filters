@@ -56,5 +56,8 @@
     <ClInclude Include="Facebook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FacebookExceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,13 +5,16 @@
 #include "Page.h"
 #include "Member.h"
 #include <list>
-
+#include "FacebookExceptions.h"
 
 class Facebook
 {
 private:
     list<Member*> allMembers;
     list<Page*> allPages;
+
+    void isBirthdayValid(const string& birthday) const throw(DateFormatException);
+    void isNameValid(string& name) const throw(InvalidNameException);
 public:
     Facebook() = default;
     ~Facebook();
@@ -21,7 +24,8 @@ public:
     bool addPage();
     bool addPage(Page* pag);
 
-    bool isMember(const string& name);
+    void getMember(string& name, string& dateOfBirth);
+    bool isMember(const string& name) throw(NameExistException);
     bool isPage(const string& name);
     Member* getMemberByName(const string& name);
     Page* getPageByName(const string& name);

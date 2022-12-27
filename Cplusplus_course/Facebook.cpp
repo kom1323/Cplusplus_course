@@ -1,7 +1,5 @@
 #include "Facebook.h"
 
-
-
 string readInputString();
 
 Facebook::~Facebook()
@@ -25,24 +23,91 @@ Facebook::~Facebook()
 
 bool Facebook::addMember()
 {
+	string name, dateOfBirth;
 
-	cout << "Please enter the new member name: ";
-	string name = readInputString();
-
-	//check if member is alread a member
-	if (this->isMember(name))
-	{
-		cout << name << " is already a member" << endl;
-		return false;
-	}
-
-	cout << "Please enter date of birth(dd/mm/yyyy): ";
-	string dateOfBirth = readInputString();
+	this->getMember(name, dateOfBirth);
 	
 	Member* temp = new Member(name, dateOfBirth);
 	
 	this->allMembers.push_back(temp);
 	return true;
+}
+
+
+void Facebook::getMember(string& name, string& dateOfBirth) throw(...)
+{
+
+	bool isValid = false;
+	while (!isValid)
+	{
+		cout << "Please enter the new member name: ";
+		name = readInputString();
+		try
+		{
+			this->isNameValid(name);
+			this->isMember(name);
+			isValid = true;
+		}
+		catch (InvalidNameException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (NameExistException& e)
+		{
+			cout << e.what() << endl;
+		}
+	}
+	isValid = false;
+	while (!isValid)
+	{
+		cout << "Please enter date of birth(dd/mm/yyyy): ";
+		dateOfBirth = readInputString();
+		try
+		{
+			this->isBirthdayValid(dateOfBirth);
+			isValid = true;
+		}
+		catch (DateFormatException& e)
+		{
+			cout << e.what() << endl;
+		}
+	}
+
+
+
+
+
+}
+
+void Facebook::isNameValid(string& name) const throw(InvalidNameException)
+{
+	for (int i = 0; i < name.size(); i++)
+	{
+		if (!isalpha(name[i]))
+		{
+			throw InvalidNameException();
+				break;
+		}
+	}
+
+}
+
+void Facebook::isBirthdayValid(const string& birthday) const throw(DateFormatException)
+{
+	//check that the file is in the format with legit birthday - dd/mm/yy (example: 06/11/1998)
+	
+	int day, month, year;
+	if ((birthday.size() == 10) && (birthday[2] == '/' && birthday[5] == '/'))
+	{
+		day = (birthday[0] - '0') * 10 + (birthday[1] - '0');
+		month= (birthday[3] - '0') * 10 + (birthday[4] - '0');
+		year = (birthday[6] - '0') * 1000 + (birthday[7] - '0') * 100 + (birthday[8] - '0') * 10 + (birthday[9] - '0');
+		if (!((day <= 31 && day >= 1) && (month <= 12 && month >= 1) && (year >= 0 && year <= 2022)))
+			throw DateFormatException();
+	}
+	else
+		throw DateFormatException();
+		
 }
 
 bool Facebook::addMember(Member* mem)
@@ -82,17 +147,18 @@ bool Facebook::addPage(Page* pag)
 	return true;
 }
 
-bool Facebook::isMember(const string& name)
+bool Facebook::isMember(const string& name) throw(NameExistException)
 {
 	for (auto& mem : this->allMembers)
 	{
 
 		if (mem->getName() == name) {
 
-			return true;
+			throw NameExistException();
 		}
 	}
 	return false;
+	
 }
 
 bool Facebook::isPage(const string& name)
@@ -185,7 +251,7 @@ bool Facebook::printFriendListOfMember(const string& name)
 {
 	Member* temp;
 	temp = this->getMemberByName(name);
-	int size = temp->getFriendsList().size();
+	int size = (int)temp->getFriendsList().size();
 
 	if (size == 0)
 		return false;

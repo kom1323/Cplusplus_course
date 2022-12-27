@@ -94,6 +94,7 @@ bool Member::addFriend(Member* newAmigo)
 	}
 }
 
+//function that unconnects one friends from another
 bool Member::removeFriend(const string& friendName)
 {
 	vector<Member*>::iterator mem = this->friendsList.begin();

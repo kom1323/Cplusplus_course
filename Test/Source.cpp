@@ -1,51 +1,31 @@
 #include <iostream>
 using namespace std;
 
-class Page {
+class Father {
 
 public:
 	int* a;
-	Page(int x) { a = new int(x); };
-	/*Page(const Page& other);
-	Page(Page&& other);
-	*/
-	~Page();
-
-
+	Father(int x) { a = new int(x); };
+	Father() = default;
+	virtual void print()
+	{
+		cout << "I am father";
+	};
 };
 
-//Page::Page(const Page& other)
-//{
-//	
-//}
-//Page::Page(Page&& other)
-//{
-//
-//}
-//
-Page::~Page()
+
+class Son : public Father
 {
-	if (a)
-		cout << "Deleting " << *(this->a) << endl;
-	else
-		cout << "Deleting Null pointer" << endl;
-	delete this->a;
-}
+public:
+	void print()
+	{
+		cout<<"I am son";
+	};
+};
 
-int& foo(int &y) {
-
-	
-	return ++y;
-}
 
 int main()
 {
-	int* c = new int();
-	int a = 3;
-	a = foo(a);
-
-	cout << "a: " << a << endl;
-
-	cin >> *c;
-	return 1;
+	Father* p= new Son();
+	p->print();
 }

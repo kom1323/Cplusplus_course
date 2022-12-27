@@ -12,12 +12,13 @@ Daniel Omesi 207689092
 
 void initFacebookEntities(Facebook &facebook);
 void startMenu(Facebook& facebook);
-
+void newTerminate();
 
 
 
 int main()
 {
+	set_terminate(newTerminate);
 	Facebook facebook;
 	initFacebookEntities(facebook);
 
@@ -32,7 +33,7 @@ To do list:
 Member:
 (-3) no copy ctor implementation for class with dynamically allocated data members (Page, Status, Facebook)
 
-(-3) input / output should not be done in classes / modules which handle program logic (Status ctor, Facebook::addMember, ::addPage)
+(-3) input / output should not be done in classes / modules which handle program logic (Facebook::addMember, ::addPage)
 
 allocations using strdup should be freed using C-style free, not delete (in general strdup should be avoided in cpp) (Status ctor);
 (-2) long functions / methods should be split into shorter ones (startMenu); (-1) avoid using exit, other control mechanisms are preferable (startMenu)
@@ -46,4 +47,16 @@ allocations using strdup should be freed using C-style free, not delete (in gene
 do not submit debug folder or any other project files other than .sln and .vcxproj
 
 - add to readme file how to execute operators testings except status
+*/
+
+/*
+Exception types:
+name - need to be only letters
+date - need to be in format
+if name is already a member
+if name is already a page
+if name is already a friend
+if name is already a fan
+if the member/page doesn't exist
+
 */
