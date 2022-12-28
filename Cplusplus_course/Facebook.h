@@ -26,7 +26,7 @@ public:
     bool addPage();
     bool addPage(Page* pag);
 
-    bool isNotMember(const string& name) throw();
+    
     bool isMember(const string& name) throw(NameExistException);
     bool isPage(const string& name)  throw(NameExistException);
     Member* getMemberByName(const string& name);

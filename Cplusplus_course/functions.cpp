@@ -115,137 +115,70 @@ void startMenu(Facebook& facebook)
 			break;
 
 		case MENU_OPTIONS::ADD_MEMBER_STATUS:
-			while (!isValid)
-			{
-				facebook.printAllMembers();
-				cout << "Choose 1 member of the above by typing his name: ";
-				nameInput = readInputString();
-				try
-				{
-					facebook.isMember(nameInput);
-					MemberNotFoundException e;
-					cout<<e.what()<<endl;
-				}
-				//isMember function throws an exception if and only if the member exists
-				catch (FacebookExceptions& e)
-				{
-					isValid = true;
-				}
-			}
+			readMemberName(facebook, nameInput);
 			cout << "Please enter a status: ";
 			statusInput = readInputString();
 			facebook.getMemberByName(nameInput)->addStatus(statusInput);
 			break;
 
 		case MENU_OPTIONS::ADD_PAGE_STATUS:
-			while (!isValid)
-			{
-				facebook.printAllPages();
-				cout << "Choose 1 page of the above by typing his name: ";
-				nameInput = readInputString();
-				try
-				{
-					facebook.isPage(nameInput);
-					PageNotFoundException e;
-					cout << e.what() << endl;
-				}
-				//isPage function throws an exception if and only if the member exists
-				catch (FacebookExceptions& e)
-				{
-					isValid = true;
-				}
-			}
+			readPageName(facebook, nameInput);
 			cout << "Please enter a status: ";
 			statusInput = readInputString();
 			facebook.getPageByName(nameInput)->addStatus(statusInput);
 			break;
 
 		case MENU_OPTIONS::PRINT_MEMBER_STATUS:
-			while (!isValid)
-			{
-				facebook.printAllMembers();
-				cout << "Choose 1 member of the above by typing his name: ";
-				nameInput = readInputString();
-				try
-				{
-					facebook.isMember(nameInput);
-					MemberNotFoundException e;
-					cout << e.what() << endl;
-				}
-				//isMember function throws an exception if and only if the member exists
-				catch (FacebookExceptions& e)
-				{
-					isValid = true;
-				}
-			}
+			readMemberName(facebook, nameInput);
 			facebook.getMemberByName(nameInput)->printAllStatus();
 			break;
 
 		case MENU_OPTIONS::PRINT_PAGE_STATUS:
-			while (!isValid)
-			{
-				facebook.printAllPages();
-				cout << "Choose 1 page of the above by typing his name: ";
-				nameInput = readInputString();
-				try
-				{
-					facebook.isPage(nameInput);
-					PageNotFoundException e;
-					cout << e.what() << endl;
-				}
-				//isPage function throws an exception if and only if the page exists
-				catch (FacebookExceptions& e)
-				{
-					isValid = true;
-				}
-			}
+			readPageName(facebook, nameInput);
 			facebook.getPageByName(nameInput)->printAllStatus();
 			break;
 
 		case MENU_OPTIONS::PRINT_RECENT_FRIENDS_STATUS:
-			while (!isValid)
-			{
-				facebook.printAllMembers();
-				cout << "Choose 1 member of the above by typing his name: ";
-				nameInput = readInputString();
-				try
-				{
-					facebook.isMember(nameInput);
-					MemberNotFoundException e;
-					cout << e.what() << endl;
-				}
-				//isMember function throws an exception if and only if the member exists
-				catch (FacebookExceptions& e)
-				{
-					isValid = true;
-				}
-			}
+			readMemberName(facebook, nameInput);
 			facebook.getMemberByName(nameInput)->printLatestStatusesOfFriends();
 			break;
 
 		case MENU_OPTIONS::CONNECT_MEMBERS:
-			while (!isValid)
-			{
-				facebook.printAllMembers();
-				cout << "Choose 1 member of the above by typing his name: ";
-				nameInput = readInputString();
-				try
-				{
-					facebook.isMember(nameInput);
-					MemberNotFoundException e;
-					cout << e.what() << endl;
-				}
-				//isMember function throws an exception if and only if the member exists
-				catch (FacebookExceptions& e)
-				{
-					isValid = true;
-				}
-			}
+			readMemberName(facebook, nameInput);
 			if (facebook.printAvailableFriends(nameInput))
 			{
-				cout << "Please enter the second member's name from the list above: ";
-				nameInput2 = readInputString();
 				member1 = facebook.getMemberByName(nameInput);
+				while (!isValid)
+				{
+					cout << "Choose the second member from the above by typing his name: ";
+					nameInput2 = readInputString();
+					try
+					{
+						facebook.isMember(nameInput2);
+						
+						MemberNotFoundException e;
+						cout << e.what() << endl;
+						facebook.printAvailableFriends(nameInput);
+					}
+					//isMember function throws an exception if and only if the member exists
+					catch (FacebookExceptions& e)
+					{
+						isValid = true;
+					}
+				}
+				isValid = false;
+				while (!isValid)
+				{
+					AlreadyFriends e;
+					if (member1->isMember(nameInput2))
+					{
+						cout << e.what() << endl;
+						facebook.printAvailableFriends(nameInput);
+						cout << "Choose the second member from the above by typing his name: ";
+						nameInput2 = readInputString();
+					}
+					
+				}
 				member2 = facebook.getMemberByName(nameInput2);
 				*member1 += *member2;
 			}

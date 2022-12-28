@@ -5,7 +5,7 @@
 #include "Date.h"
 #include "Page.h"
 #include "Status.h"
-
+#include "FacebookExceptions.h"
 
 class Member
 {
@@ -46,7 +46,7 @@ public:
 	void printLatestStatusesOfFriends();
 
 	bool isMember(const Member* newAmigo);
-	bool isMember(const string& amigoName);
+	bool isMember(const string& amigoName) throw(AlreadyFriends);
 	bool isFanPage(const Page* newPage);
 	bool isFanPage(const string& pageName);
 

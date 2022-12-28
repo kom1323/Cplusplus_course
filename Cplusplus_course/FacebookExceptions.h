@@ -39,5 +39,11 @@ public:
 	const char* what() const override { return "This page is not found!"; }
 };
 
+class AlreadyFriends : public FacebookExceptions
+{
+public:
+	const char* what() const override { return "These two members are already friends!"; }
+};
+
 
 #endif

@@ -221,7 +221,7 @@ bool Member::isMember(const Member* newAmigo)
 	return isMember(newAmigo->name);
 }
 
-bool Member::isMember(const string& amigoName)
+bool Member::isMember(const string& amigoName) throw(AlreadyFriends)
 {
 	for (auto& amigo : this->friendsList)
 	{

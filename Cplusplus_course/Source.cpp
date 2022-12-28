@@ -60,3 +60,5 @@ if name is already a fan
 if the member/page doesn't exist
 
 */
+
+//we need to create a function that does the opposite of isMember throw action
