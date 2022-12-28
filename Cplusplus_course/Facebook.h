@@ -15,6 +15,8 @@ private:
 
     void isBirthdayValid(const string& birthday) const throw(DateFormatException);
     void isNameValid(string& name) const throw(InvalidNameException);
+    void getMember(string& name, string& dateOfBirth);
+    void getPage(string& name);
 public:
     Facebook() = default;
     ~Facebook();
@@ -24,9 +26,9 @@ public:
     bool addPage();
     bool addPage(Page* pag);
 
-    void getMember(string& name, string& dateOfBirth);
+    bool isNotMember(const string& name) throw();
     bool isMember(const string& name) throw(NameExistException);
-    bool isPage(const string& name);
+    bool isPage(const string& name)  throw(NameExistException);
     Member* getMemberByName(const string& name);
     Page* getPageByName(const string& name);
 

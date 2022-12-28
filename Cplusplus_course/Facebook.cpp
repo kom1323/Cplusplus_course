@@ -48,14 +48,18 @@ void Facebook::getMember(string& name, string& dateOfBirth) throw(...)
 			this->isMember(name);
 			isValid = true;
 		}
-		catch (InvalidNameException& e)
+		catch (FacebookExceptions& e)
+		{
+			cout << e.what() << endl;
+		}
+		/*catch (InvalidNameException& e)
 		{
 			cout << e.what() << endl;
 		}
 		catch (NameExistException& e)
 		{
 			cout << e.what() << endl;
-		}
+		}*/
 	}
 	isValid = false;
 	while (!isValid)
@@ -67,15 +71,15 @@ void Facebook::getMember(string& name, string& dateOfBirth) throw(...)
 			this->isBirthdayValid(dateOfBirth);
 			isValid = true;
 		}
-		catch (DateFormatException& e)
+		catch (FacebookExceptions& e)
 		{
 			cout << e.what() << endl;
 		}
+		//catch (DateFormatException& e)
+		//{
+		//	cout << e.what() << endl;
+		//}
 	}
-
-
-
-
 
 }
 
@@ -121,17 +125,8 @@ bool Facebook::addMember(Member* mem)
 
 bool Facebook::addPage()
 {
-
-	cout << "Please enter page name: ";
-	string name = readInputString();
-
-	//check if Page is alread a included
-	if (this->isPage(name))
-	{
-		cout << name << " is already a Page in Facebook" << endl;
-		return false;
-	}
-
+	string name;
+	this->getPage(name);
 
 	Page* temp = new Page(name);
 	this->allPages.push_back(temp);
@@ -145,6 +140,35 @@ bool Facebook::addPage(Page* pag)
 	this->allPages.push_back(pag);
 
 	return true;
+}
+
+void Facebook::getPage(string& name)
+{
+	bool isValid = false;
+	while (!isValid)
+	{
+		cout << "Please enter the new page name: ";
+		name = readInputString();
+		try
+		{
+			this->isNameValid(name);
+			this->isPage(name);
+			isValid = true;
+		}
+		catch (FacebookExceptions& e)
+		{
+			cout << e.what() << endl;
+		}
+		 
+		//catch (InvalidNameException& e)
+		//{
+		//	cout << e.what() << endl;
+		//}
+		//catch (NameExistException& e)
+		//{
+		//	cout << e.what() << endl;
+		//}
+	}
 }
 
 bool Facebook::isMember(const string& name) throw(NameExistException)
@@ -161,14 +185,14 @@ bool Facebook::isMember(const string& name) throw(NameExistException)
 	
 }
 
-bool Facebook::isPage(const string& name)
+bool Facebook::isPage(const string& name) throw(NameExistException)
 {
 	for (auto& pag : this->allPages)
 	{
 
 		if (pag->getName() == name) {
 
-			return true;
+			throw NameExistException();
 		}
 	}
 	return false;
