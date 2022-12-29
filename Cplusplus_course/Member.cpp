@@ -103,8 +103,10 @@ bool Member::removeFriend(const string& friendName)
 	{
 		if ((*mem)->getName() == friendName)
 		{
+			Member* tmp = *mem;
+			*mem = nullptr;
 			this->friendsList.erase(mem);
-			(*mem)->removeFriend((this->name));
+			tmp->removeFriend(this->name);
 			return true;
 		}
 	}
@@ -129,8 +131,9 @@ bool Member::removeFavPage(const string pageName)
 	{
 		if ((*page)->getName() == pageName)
 		{
+			Page* temp = *page;
+			*page = nullptr;
 			this->favPagesList.erase(page);
-			(*page)->removeFan((this->name));
 			return true;
 		}
 	}
@@ -216,12 +219,30 @@ void Member::printLatestStatusesOfFriends()
 
 }
 
+void Member::checkFriendship(const string& name) throw(AlreadyFriendsException)
+{
+	if (this->isMember(name))
+		throw AlreadyFriendsException();
+}
+
+void Member::checkNotFriendship(const string& name) throw(NotFriendsException)
+{
+	if (!this->isMember(name))
+		throw NotFriendsException();
+}
+
+void Member::isMe(const string& name) throw(SelfException)
+{
+	if (this->name == name)
+		throw SelfException();
+}
+
 bool Member::isMember(const Member* newAmigo)
 {
 	return isMember(newAmigo->name);
 }
 
-bool Member::isMember(const string& amigoName) throw(AlreadyFriends)
+bool Member::isMember(const string& amigoName)
 {
 	for (auto& amigo : this->friendsList)
 	{

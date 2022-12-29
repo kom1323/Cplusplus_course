@@ -26,11 +26,14 @@ public:
     bool addPage();
     bool addPage(Page* pag);
 
-    
+    bool isNotMember(const string& name) throw(MemberNotFoundException);
     bool isMember(const string& name) throw(NameExistException);
     bool isPage(const string& name)  throw(NameExistException);
     Member* getMemberByName(const string& name);
     Page* getPageByName(const string& name);
+    const list<Member*>& getMembersList() const;
+
+    void isNumber(const string& input) throw(InvalidChoiceException);
 
     void printAllEntities();
     void printAllMembers();

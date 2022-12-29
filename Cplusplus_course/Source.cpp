@@ -31,12 +31,8 @@ int main()
 /*
 To do list:
 Member:
-(-3) no copy ctor implementation for class with dynamically allocated data members (Page, Status, Facebook)
 
-(-3) input / output should not be done in classes / modules which handle program logic (Facebook::addMember, ::addPage)
 
-allocations using strdup should be freed using C-style free, not delete (in general strdup should be avoided in cpp) (Status ctor);
-(-2) long functions / methods should be split into shorter ones (startMenu); (-1) avoid using exit, other control mechanisms are preferable (startMenu)
 
 (-1) program allows adding user with an invalid birth date; (-1) program allows making user a friend of themselves; (-1) runtime exception when trying to add friendship to nonexistent user (in Member::isMember)
 
@@ -61,4 +57,4 @@ if the member/page doesn't exist
 
 */
 
-//we need to create a function that does the opposite of isMember throw action
+//we need to create a function that uses the invalid choice exception wisely

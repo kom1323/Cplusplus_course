@@ -98,7 +98,16 @@ void startMenu(Facebook& facebook)
 	MENU_OPTIONS  choice = MENU_OPTIONS::START_MENU;
 	printMenu();
 	userInput = readInputString();
-	choice = (MENU_OPTIONS)stoi(userInput);
+	try
+	{
+		facebook.isNumber(userInput);
+		choice = (MENU_OPTIONS)stoi(userInput);
+	}
+	catch (FacebookExceptions& e)
+	{
+		cout << e.what() << endl;
+	}
+	
 
 
 	while (choice != MENU_OPTIONS::EXIT_MENU)
@@ -145,88 +154,117 @@ void startMenu(Facebook& facebook)
 
 		case MENU_OPTIONS::CONNECT_MEMBERS:
 			readMemberName(facebook, nameInput);
-			if (facebook.printAvailableFriends(nameInput))
-			{
-				member1 = facebook.getMemberByName(nameInput);
-				while (!isValid)
+			member1 = facebook.getMemberByName(nameInput);
+				if (member1->getFriendsList().size() == (facebook.getMembersList().size()-1) )
+					cout << "No members available to add as friends to this user" << endl;
+				else
 				{
-					cout << "Choose the second member from the above by typing his name: ";
-					nameInput2 = readInputString();
-					try
+					while (!isValid)
 					{
-						facebook.isMember(nameInput2);
-						
-						MemberNotFoundException e;
-						cout << e.what() << endl;
-						facebook.printAvailableFriends(nameInput);
-					}
-					//isMember function throws an exception if and only if the member exists
-					catch (FacebookExceptions& e)
-					{
-						isValid = true;
-					}
-				}
-				isValid = false;
-				while (!isValid)
-				{
-					AlreadyFriends e;
-					if (member1->isMember(nameInput2))
-					{
-						cout << e.what() << endl;
 						facebook.printAvailableFriends(nameInput);
 						cout << "Choose the second member from the above by typing his name: ";
 						nameInput2 = readInputString();
+						try
+						{
+							facebook.isNotMember(nameInput2);
+							member1->isMe(nameInput2);
+							member2 = facebook.getMemberByName(nameInput2);
+							member1->checkFriendship(nameInput2);
+							isValid = true;
+						}
+						catch (FacebookExceptions& e)
+						{
+							cout << e.what() << endl;
+						}
 					}
-					
+					member2 = facebook.getMemberByName(nameInput2);
+					*member1 += *member2;
 				}
-				member2 = facebook.getMemberByName(nameInput2);
-				*member1 += *member2;
-			}
-			else
-				cout << "There are no members available to choose from" << endl;
 			break;
 
 		case MENU_OPTIONS::DISCONNECT_MEMBERS:
-			facebook.printAllMembers();
-			cout << "Choose the first member from the list above by typing his name: ";
-			nameInput = readInputString();
-			if (facebook.printFriendListOfMember(nameInput))
-			{
-				cout << "Please choose a friend to delete from the list above: ";
-				facebook.getMemberByName(nameInput)->printAllFriends();
-				cout << "Please enter the second member's name: ";
-				nameInput2 = readInputString();
-				facebook.getMemberByName(nameInput)->removeFriend(nameInput2);
-			}
+			readMemberName(facebook, nameInput);
+			member1 = facebook.getMemberByName(nameInput);
+			if (member1->getFriendsList().size() == 0)
+				cout << "No members available to remove from this user" << endl;
 			else
-				cout << "There are no members available to delete" << endl;
+			{
+				while (!isValid)
+				{
+					facebook.printFriendListOfMember(nameInput);
+					cout << "Please choose a friend to delete from the list above: ";
+					nameInput2 = readInputString();
+					try
+					{
+						facebook.isNotMember(nameInput2);
+						member1->isMe(nameInput2);
+						member2 = facebook.getMemberByName(nameInput2);
+						member1->checkNotFriendship(nameInput2);
+						isValid = true;
+					}
+					catch (FacebookExceptions& e)
+					{
+						cout << e.what() << endl;
+					}
+				}
+				member1->removeFriend(nameInput2);
+			}
 			break;
 
 		case MENU_OPTIONS::ADD_FAN_TO_PAGE:
-			facebook.printAllPages();
-			cout << "Choose 1 page of the above by typing his name: ";
-			nameInput = readInputString();
-			if (facebook.printAvailableFans(nameInput))
+			readPageName(facebook, nameInput);
+			page = facebook.getPageByName(nameInput);
+			if (page->getFanListSize() == (facebook.getMembersList().size() - 1))
+				cout << "No members available to add as fans to this page" << endl;
+			else
 			{
-				cout << "Please enter the member's name from the list above: ";
-				nameInput2 = readInputString();
-				page = facebook.getPageByName(nameInput);
+				while (!isValid)
+				{
+					facebook.printAvailableFans(nameInput);
+					cout << "Please enter the member's name from the list above: ";
+					nameInput2 = readInputString();
+					try
+					{
+						facebook.isNotMember(nameInput2);
+						page->checkFanship(nameInput2);
+						isValid = true;
+					}
+					catch (FacebookExceptions& e)
+					{
+						cout << e.what() << endl;
+					}
+				}
 				member1 = facebook.getMemberByName(nameInput2);
 				*page += *member1;
 			}
-			else
-				cout << "There are no fans available to choose from" << endl;
 			break;
 
 		case MENU_OPTIONS::REMOVE_FAN_FROM_PAGE:
-			facebook.printAllPages();
-			cout << "Choose 1 page of the above by typing his name: ";
-			nameInput = readInputString();
-			cout << "Choose from ";
-			facebook.getPageByName(nameInput)->printAllFans();
-			cout << "Please enter the member's name: ";
-			nameInput2 = readInputString();
-			facebook.getPageByName(nameInput)->removeFan(nameInput2);
+			readPageName(facebook, nameInput);
+			page = facebook.getPageByName(nameInput);
+			if (page->getFanListSize() == 0)
+				cout << "No members available to remove from this page fan list" << endl;
+			else
+			{
+				while (!isValid)
+				{
+					cout << "Fans available to delete:" << endl;
+					facebook.getPageByName(nameInput)->printAllFans();
+					cout << "Please enter the member's name from the list above: ";
+					nameInput2 = readInputString();
+					try
+					{
+						facebook.isNotMember(nameInput2);
+						page->checkNotFanship(nameInput2);
+						isValid = true;
+					}
+					catch (FacebookExceptions& e)
+					{
+						cout << e.what() << endl;
+					}
+				}
+				page->removeFan(nameInput2);
+			}
 			break;
 
 		case MENU_OPTIONS::PRINT_ALL_ENTITIES:
@@ -234,23 +272,20 @@ void startMenu(Facebook& facebook)
 			break;
 
 		case MENU_OPTIONS::PRINT_MEMBER_FRIENDS:
-			facebook.printAllMembers();
-			cout << "Choose the first member from the list above by typing his name: ";
-			nameInput = readInputString();
+			readMemberName(facebook, nameInput);
 			facebook.getMemberByName(nameInput)->printAllFriends();
 			break;
 
 		case MENU_OPTIONS::PRINT_PAGE_FANS:
-			facebook.printAllPages();
-			cout << "Choose 1 page of the above by typing his name: ";
-			nameInput = readInputString();
+			readPageName(facebook, nameInput);
 			facebook.getPageByName(nameInput)->printAllFans();
 			break;
 
 		case MENU_OPTIONS::EXIT_MENU:
-			exit(1);
 			break;
-
+		default:
+			cout << "Invalid option" << endl;
+			break;
 		}
 
 		if (choice != MENU_OPTIONS::EXIT_MENU)
@@ -259,7 +294,6 @@ void startMenu(Facebook& facebook)
 			printMenu();
 			userInput = readInputString();
 			choice = (MENU_OPTIONS)stoi(userInput);
-
 		}
 
 
@@ -327,3 +361,4 @@ void readPageName(Facebook& facebook, string& nameInput)
 		}
 	}
 }
+

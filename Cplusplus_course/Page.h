@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "Status.h"
 #include "Member.h"
+#include "FacebookExceptions.h"
 
 class Page
 {
@@ -28,6 +29,9 @@ public:
 	bool operator>(const Page& other);
 	bool operator<(const Member& other);
 	bool operator<(const Page& other);
+
+	void checkFanship(const string& name) throw(AlreadyFanException);
+	void checkNotFanship(const string& name) throw(NotFanException);
 
 	bool addFan(Member* newAmigo);
 	bool removeFan(const string friendName);

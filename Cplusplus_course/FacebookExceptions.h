@@ -39,11 +39,40 @@ public:
 	const char* what() const override { return "This page is not found!"; }
 };
 
-class AlreadyFriends : public FacebookExceptions
+class AlreadyFriendsException : public FacebookExceptions
 {
 public:
 	const char* what() const override { return "These two members are already friends!"; }
 };
 
+class NotFriendsException : public FacebookExceptions
+{
+public:
+	const char* what() const override { return "These two members are not friends!"; }
+};
+
+class SelfException : public FacebookExceptions
+{
+public:
+	const char* what() const override { return "Please choose a different user than yourself!"; }
+};
+
+class AlreadyFanException : public FacebookExceptions
+{
+public:
+	const char* what() const override { return "This user is already a fan of this page!"; }
+};
+
+class NotFanException : public FacebookExceptions
+{
+public:
+	const char* what() const override { return "This user is not a fan of this page!"; }
+};
+
+class InvalidChoiceException : public FacebookExceptions
+{
+public:
+	const char* what() const override { return "This is not a valid choice!"; }
+};
 
 #endif

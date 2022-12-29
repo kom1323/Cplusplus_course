@@ -171,6 +171,19 @@ void Facebook::getPage(string& name)
 	}
 }
 
+bool Facebook::isNotMember(const string& name) throw(MemberNotFoundException)
+{
+	try
+	{
+		isMember(name);
+		throw MemberNotFoundException();
+	}
+	catch (NameExistException& e)
+	{
+		return true;
+	}
+}
+
 bool Facebook::isMember(const string& name) throw(NameExistException)
 {
 	for (auto& mem : this->allMembers)
@@ -222,6 +235,21 @@ Page* Facebook::getPageByName(const string& name)
 	}
 
 	return nullptr;
+}
+
+const list<Member*>& Facebook::getMembersList() const
+{
+	return this->allMembers;
+}
+
+void Facebook::isNumber(const string& input) throw(InvalidChoiceException)
+{
+	if (input.size() >= 3)
+		throw InvalidChoiceException();
+	if (input.size()==2 &&( !isdigit(input[0]) || !isdigit(input[1]) || stoi(input)>15 || stoi(input)<1))
+		throw InvalidChoiceException();
+	if (input.size() == 1 && (!isdigit(input[0]) || stoi(input) < 1))
+		throw InvalidChoiceException();
 }
 
 void Facebook::printAllEntities()

@@ -57,6 +57,18 @@ bool Page::operator<(const Page& other)
 	return false;
 }
 
+void Page::checkFanship(const string& name) throw(AlreadyFanException)
+{
+	if (isFan(name))
+		throw AlreadyFanException();
+}
+
+void Page::checkNotFanship(const string& name) throw(NotFanException)
+{
+	if (!isFan(name))
+		throw NotFanException();
+}
+
 int Page::getFanListSize() const
 {
 	return this->membersList.size();
@@ -90,13 +102,10 @@ bool Page::removeFan(const string friendName)
 		//match by name
 		if ((*itr)->getName() == friendName)
 		{
-			//check if already removed the page from the member
-			if (!(*itr)->removeFavPage(this->getName()))
-			{
-				return true;
-			}
-
+			Member* tmp = *itr;
+			*itr = nullptr;
 			this->membersList.erase(itr);
+			tmp->removeFavPage((this->name));
 			return true;
 
 		}

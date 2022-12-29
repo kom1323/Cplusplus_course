@@ -15,6 +15,7 @@ private:
 	vector<Member*> friendsList;
 	vector<Page*> favPagesList;
 	vector<Status> statusList;
+	
 
 public:
 	Member(const string& newName, Date date);
@@ -33,6 +34,11 @@ public:
 	const vector<Member*>& getFriendsList() const;
 	const vector<Status>& getStatusList() const;
 
+	void checkFriendship(const string& name) throw(AlreadyFriendsException);
+	void checkNotFriendship(const string& name) throw(NotFriendsException);
+	void isMe(const string& name) throw(SelfException);
+
+
 	bool addFriend(Member* newAmigo);
 	bool removeFriend(const string& friendName);
 	bool addFavPage(Page* newPage);
@@ -45,8 +51,9 @@ public:
 	void printAllStatus();
 	void printLatestStatusesOfFriends();
 
+	
 	bool isMember(const Member* newAmigo);
-	bool isMember(const string& amigoName) throw(AlreadyFriends);
+	bool isMember(const string& amigoName);
 	bool isFanPage(const Page* newPage);
 	bool isFanPage(const string& pageName);
 
