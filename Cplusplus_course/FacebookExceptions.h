@@ -75,4 +75,10 @@ public:
 	const char* what() const override { return "This is not a valid choice!"; }
 };
 
+class BlankException : public FacebookExceptions
+{
+public:
+	const char* what() const override { return "Blank data cannot be read!"; }
+};
+
 #endif

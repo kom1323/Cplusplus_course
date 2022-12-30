@@ -173,7 +173,11 @@ void Member::printAllFavPages()
 {
 	cout << "Favorite pages of the user: " << this->name << endl;
 	cout << "-------------------------" << endl;
-
+	if (this->favPagesList.size() == 0)
+	{
+		cout << "This user has no fav pages" << endl;
+		return;
+	}
 	for (auto& page : this->favPagesList)
 	{
 		cout << page->getName() << endl;
@@ -186,6 +190,11 @@ void Member::printAllStatus()
 	cout << "Statuses of the user: " << this->name << endl;
 	cout << "-------------------------" << endl;
 	int count = 0;
+	if (this->statusList.size() == 0)
+	{
+		cout << "This user has no statuses" << endl;
+		return;
+	}
 	for (auto& status : this->statusList)
 	{
 		cout << count + 1 << ". " << status.getCurrStatus() << endl << "Date: " << status.getDate().getmDate() << endl;
@@ -219,29 +228,34 @@ void Member::printLatestStatusesOfFriends()
 
 }
 
+//throws if users are already friends
 void Member::checkFriendship(const string& name) throw(AlreadyFriendsException)
 {
 	if (this->isMember(name))
 		throw AlreadyFriendsException();
 }
 
+//throws if users are not friends
 void Member::checkNotFriendship(const string& name) throw(NotFriendsException)
 {
 	if (!this->isMember(name))
 		throw NotFriendsException();
 }
 
+//throw if the name belongs to this user
 void Member::isMe(const string& name) throw(SelfException)
 {
 	if (this->name == name)
 		throw SelfException();
 }
 
+//function that returns true if the users are friends
 bool Member::isMember(const Member* newAmigo)
 {
 	return isMember(newAmigo->name);
 }
 
+//function that returns true if the users are friends
 bool Member::isMember(const string& amigoName)
 {
 	for (auto& amigo : this->friendsList)
@@ -252,6 +266,7 @@ bool Member::isMember(const string& amigoName)
 	return false;
 }
 
+//function that returns true if the page is on this user's fav pages
 bool Member::isFanPage(const Page* newPage)
 {
 	for (auto& page : this->favPagesList)
@@ -262,6 +277,7 @@ bool Member::isFanPage(const Page* newPage)
 	return false;
 }
 
+//function that returns true if the page is on this user's fav pages
 bool Member::isFanPage(const string& pageName)
 {
 	for (auto& page : this->favPagesList)

@@ -7,6 +7,9 @@
 #include <list>
 #include "FacebookExceptions.h"
 
+void isBlank(const string& input) throw(BlankException);
+string readInputString();
+
 class Facebook
 {
 private:
@@ -20,6 +23,7 @@ private:
 public:
     Facebook() = default;
     ~Facebook();
+    
 
     bool addMember(Member* mem);
     bool addMember();
@@ -29,12 +33,14 @@ public:
     bool isNotMember(const string& name) throw(MemberNotFoundException);
     bool isMember(const string& name) throw(NameExistException);
     bool isPage(const string& name)  throw(NameExistException);
+    bool isNotPage(const string& name)  throw(PageNotFoundException);
+
     Member* getMemberByName(const string& name);
     Page* getPageByName(const string& name);
     const list<Member*>& getMembersList() const;
 
     void isNumber(const string& input) throw(InvalidChoiceException);
-
+    
     void printAllEntities();
     void printAllMembers();
     void printAllPages();

@@ -1,91 +1,4 @@
-#include "Types.h"
-#include "Facebook.h"
-#include "Date.h"
-#include "Status.h"
-#include "Member.h"
-#include "Page.h"
-#include "FacebookExceptions.h"
-
-enum class MENU_OPTIONS {ADD_MEMBER=1, ADD_FAN_PAGE, ADD_MEMBER_STATUS, ADD_PAGE_STATUS,
-					PRINT_MEMBER_STATUS, PRINT_PAGE_STATUS, PRINT_RECENT_FRIENDS_STATUS,
-					CONNECT_MEMBERS, DISCONNECT_MEMBERS, ADD_FAN_TO_PAGE, REMOVE_FAN_FROM_PAGE,
-					PRINT_ALL_ENTITIES, PRINT_MEMBER_FRIENDS, PRINT_PAGE_FANS, EXIT_MENU, START_MENU};
-
-
-const char* enumStrings[] = {"Add member", "Add fan page", "Add status to member", "Add status to page",
-"Print member statuses", "Print page statuses", "Print recent statuses of a member's friends",
-"Friend two members", "Unfriend two members", "Add a fan to a page", "Remove fan from page",
-"Print all entities in Facebook", "Print member's friends", "Print page's Fans", "exit"};
-
-constexpr int enumStringSize = 15;
-constexpr int BUFFER_SIZE = 256;
-
-void printMenu();
-void readMemberName(Facebook& facebook, string& nameInput);
-void readPageName(Facebook& facebook, string& nameInput);
-
-string readInputString()
-{
-	string input;
-	getline(cin, input);
-
-	return input;
-}
-
-void initFacebookEntities(Facebook& facebook)
-{
-	Member* m1,* m2,* m3;
-	Page* p1, * p2, * p3;
-
-
-	Date d1("20/01/2020");
-	Date d2("30/02/2020");
-	Date d3("12/01/2020");
-
-
-	m1 = new Member("Daniel", d1);
-	m2 = new Member("Omer", d2);
-	m3 = new Member("Roey", d3);
-	p1 = new Page("Twitter");
-	p2 = new Page("Instagram");
-	p3 = new Page("Linkedin");
-	
-	facebook.addMember(m1);
-	facebook.addMember(m2);
-	facebook.addMember(m3);
-	facebook.addPage(p1);
-	facebook.addPage(p2);
-	facebook.addPage(p3);
-	
-	m1->addStatus("This is Daniel's status");
-	m2->addStatus("This is Omer's status");
-	m2->addStatus("This is Omer's second status");
-	m3->addStatus("This is Roey's status");
-
-	p1->addStatus("This is Twitter's status");
-	p2->addStatus("This is instagram's status");
-	p3->addStatus("This is linkedin's status");
-
-	m1->addFriend(m2);
-	m1->addFavPage(p1);
-
-	m3->addFriend(m2);
-	m3->addFavPage(p3);
-
-	m2->addFavPage(p2);
-
-
-	//TESTING
-
-	if (*m2 > *m3)
-		cout << "m1 > m3" << endl;
-	else
-		cout << "m1 <= m3" << endl;
-
-	if (m2->getStatusList()[0] != m3->getStatusList()[0])
-		cout << "m1 same status m2" << endl;
-
-}
+#include "Functions.h"
 
 
 void startMenu(Facebook& facebook)
@@ -96,19 +9,7 @@ void startMenu(Facebook& facebook)
 	bool isValid;
 	cout << "Welcome to the amazing Facebook!" << endl << endl;
 	MENU_OPTIONS  choice = MENU_OPTIONS::START_MENU;
-	printMenu();
-	userInput = readInputString();
-	try
-	{
-		facebook.isNumber(userInput);
-		choice = (MENU_OPTIONS)stoi(userInput);
-	}
-	catch (FacebookExceptions& e)
-	{
-		cout << e.what() << endl;
-	}
-	
-
+	readValidChoice(userInput, choice, facebook);
 
 	while (choice != MENU_OPTIONS::EXIT_MENU)
 	{
@@ -166,6 +67,7 @@ void startMenu(Facebook& facebook)
 						nameInput2 = readInputString();
 						try
 						{
+							isBlank(nameInput2);
 							facebook.isNotMember(nameInput2);
 							member1->isMe(nameInput2);
 							member2 = facebook.getMemberByName(nameInput2);
@@ -196,6 +98,7 @@ void startMenu(Facebook& facebook)
 					nameInput2 = readInputString();
 					try
 					{
+						isBlank(nameInput2);
 						facebook.isNotMember(nameInput2);
 						member1->isMe(nameInput2);
 						member2 = facebook.getMemberByName(nameInput2);
@@ -225,6 +128,7 @@ void startMenu(Facebook& facebook)
 					nameInput2 = readInputString();
 					try
 					{
+						isBlank(nameInput2);
 						facebook.isNotMember(nameInput2);
 						page->checkFanship(nameInput2);
 						isValid = true;
@@ -254,6 +158,7 @@ void startMenu(Facebook& facebook)
 					nameInput2 = readInputString();
 					try
 					{
+						isBlank(nameInput2);
 						facebook.isNotMember(nameInput2);
 						page->checkNotFanship(nameInput2);
 						isValid = true;
@@ -291,9 +196,7 @@ void startMenu(Facebook& facebook)
 		if (choice != MENU_OPTIONS::EXIT_MENU)
 		{
 			cout << "-------------------------" << endl;
-			printMenu();
-			userInput = readInputString();
-			choice = (MENU_OPTIONS)stoi(userInput);
+			readValidChoice(userInput, choice, facebook);
 		}
 
 
@@ -307,6 +210,29 @@ void newTerminate()
 	exit(1);
 }
 
+
+void readValidChoice(string& userInput, MENU_OPTIONS& choice,Facebook& facebook)
+{
+	bool isValid = false;
+	while (!isValid)
+	{
+		printMenu();
+		userInput = readInputString();
+		try
+		{
+			isBlank(userInput);
+			facebook.isNumber(userInput);
+			choice = (MENU_OPTIONS)stoi(userInput);
+			isValid = true;
+		}
+		catch (FacebookExceptions& e)
+		{
+			cout << e.what() << endl;
+		}
+
+	}
+
+}
 
 void printMenu()
 {
@@ -328,14 +254,15 @@ void readMemberName(Facebook& facebook, string& nameInput)
 		nameInput = readInputString();
 		try
 		{
-			facebook.isMember(nameInput);
-			MemberNotFoundException e;
-			cout << e.what() << endl;
+			isBlank(nameInput);
+			facebook.isNotMember(nameInput);
+			isValid = true;
+			
 		}
 		//isMember function throws an exception if and only if the member exists
 		catch (FacebookExceptions& e)
 		{
-			isValid = true;
+			cout << e.what() << endl;
 		}
 	}
 }
@@ -350,15 +277,72 @@ void readPageName(Facebook& facebook, string& nameInput)
 		nameInput = readInputString();
 		try
 		{
-			facebook.isPage(nameInput);
-			PageNotFoundException e;
-			cout << e.what() << endl;
+			isBlank(nameInput);
+			facebook.isNotPage(nameInput);
+			isValid = true;
 		}
 		//isPage function throws an exception if and only if the page exists
 		catch (FacebookExceptions& e)
 		{
-			isValid = true;
+			cout << e.what() << endl;
 		}
 	}
 }
 
+string readInputString()
+{
+	string input;
+	getline(cin, input);
+
+	return input;
+}
+
+
+void initFacebookEntities(Facebook& facebook)
+{
+	Member* m1, * m2, * m3;
+	Page* p1, * p2, * p3;
+
+
+	Date d1("06/11/2020");
+	Date d2("30/02/2020");
+	Date d3("12/01/2020");
+
+
+	m1 = new Member("Daniel", d1);
+	m2 = new Member("Omer", d2);
+	m3 = new Member("Roey", d3);
+	p1 = new Page("Twitter");
+	p2 = new Page("Instagram");
+	p3 = new Page("Linkedin");
+
+	facebook.addMember(m1);
+	facebook.addMember(m2);
+	facebook.addMember(m3);
+	facebook.addPage(p1);
+	facebook.addPage(p2);
+	facebook.addPage(p3);
+
+	m1->addStatus("This is Daniel's status");
+	m2->addStatus("This is Omer's status");
+	m2->addStatus("This is Omer's second status");
+	m3->addStatus("This is Roey's status");
+
+	p1->addStatus("This is Twitter's status");
+	p2->addStatus("This is instagram's status");
+	p3->addStatus("This is linkedin's status");
+
+	m1->addFriend(m2);
+	m1->addFavPage(p1);
+
+	m3->addFriend(m2);
+	m3->addFavPage(p3);
+
+	m2->addFavPage(p2);
+}
+
+void isBlank(const string& input) throw(BlankException)
+{
+	if (input.size() == 0)
+		throw BlankException();
+}

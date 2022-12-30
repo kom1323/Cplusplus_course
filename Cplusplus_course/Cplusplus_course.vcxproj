@@ -140,7 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Facebook.cpp" />
-    <ClCompile Include="functions.cpp" />
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Member.cpp" />
@@ -151,6 +151,7 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="FacebookExceptions.h" />
     <ClInclude Include="Facebook.h" />
+    <ClInclude Include="Functions.h" />
     <ClInclude Include="Member.h" />
     <ClInclude Include="Page.h" />
     <ClInclude Include="Status.h" />

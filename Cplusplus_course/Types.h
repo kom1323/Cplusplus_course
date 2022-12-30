@@ -1,6 +1,7 @@
 #ifndef _TYPES_H
 #define _TYPES_H
 #pragma warning(disable : 4996)
+#pragma warning(disable: 4290)
 
 #include <string>
 #include <iostream>
@@ -16,7 +17,8 @@ class Date;
 class Facebook;
 
 constexpr int NOT_FOUND = -1;
-
+constexpr int MINIMUM_CHOICE = 1;
+constexpr int MAXIMUM_CHOICE = 15;
 
 
 #endif

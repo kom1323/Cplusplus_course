@@ -1,6 +1,6 @@
 #include "Facebook.h"
 
-string readInputString();
+
 
 Facebook::~Facebook()
 {
@@ -33,8 +33,8 @@ bool Facebook::addMember()
 	return true;
 }
 
-
-void Facebook::getMember(string& name, string& dateOfBirth) throw(...)
+//function that receives the data and validates it
+void Facebook::getMember(string& name, string& dateOfBirth) 
 {
 
 	bool isValid = false;
@@ -44,6 +44,7 @@ void Facebook::getMember(string& name, string& dateOfBirth) throw(...)
 		name = readInputString();
 		try
 		{
+			isBlank(name);
 			this->isNameValid(name);
 			this->isMember(name);
 			isValid = true;
@@ -52,14 +53,6 @@ void Facebook::getMember(string& name, string& dateOfBirth) throw(...)
 		{
 			cout << e.what() << endl;
 		}
-		/*catch (InvalidNameException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (NameExistException& e)
-		{
-			cout << e.what() << endl;
-		}*/
 	}
 	isValid = false;
 	while (!isValid)
@@ -68,6 +61,7 @@ void Facebook::getMember(string& name, string& dateOfBirth) throw(...)
 		dateOfBirth = readInputString();
 		try
 		{
+			isBlank(dateOfBirth);
 			this->isBirthdayValid(dateOfBirth);
 			isValid = true;
 		}
@@ -75,10 +69,6 @@ void Facebook::getMember(string& name, string& dateOfBirth) throw(...)
 		{
 			cout << e.what() << endl;
 		}
-		//catch (DateFormatException& e)
-		//{
-		//	cout << e.what() << endl;
-		//}
 	}
 
 }
@@ -142,6 +132,7 @@ bool Facebook::addPage(Page* pag)
 	return true;
 }
 
+//function that receives the data and validates it
 void Facebook::getPage(string& name)
 {
 	bool isValid = false;
@@ -151,6 +142,7 @@ void Facebook::getPage(string& name)
 		name = readInputString();
 		try
 		{
+			isBlank(name);
 			this->isNameValid(name);
 			this->isPage(name);
 			isValid = true;
@@ -159,31 +151,25 @@ void Facebook::getPage(string& name)
 		{
 			cout << e.what() << endl;
 		}
-		 
-		//catch (InvalidNameException& e)
-		//{
-		//	cout << e.what() << endl;
-		//}
-		//catch (NameExistException& e)
-		//{
-		//	cout << e.what() << endl;
-		//}
 	}
 }
 
+//throws if a member with this name is not found
 bool Facebook::isNotMember(const string& name) throw(MemberNotFoundException)
 {
-	try
+	for (auto& mem : this->allMembers)
 	{
-		isMember(name);
-		throw MemberNotFoundException();
+
+		if (mem->getName() == name) {
+
+			return false;
+		}
 	}
-	catch (NameExistException& e)
-	{
-		return true;
-	}
+	throw MemberNotFoundException();
+
 }
 
+//throws if a member with this name is found
 bool Facebook::isMember(const string& name) throw(NameExistException)
 {
 	for (auto& mem : this->allMembers)
@@ -209,6 +195,19 @@ bool Facebook::isPage(const string& name) throw(NameExistException)
 		}
 	}
 	return false;
+}
+
+bool Facebook::isNotPage(const string& name) throw(PageNotFoundException)
+{
+	for (auto& pag : this->allPages)
+	{
+
+		if (pag->getName() == name) {
+
+			return false;
+		}
+	}
+	throw PageNotFoundException();
 }
 
 Member* Facebook::getMemberByName(const string& name)
@@ -242,13 +241,16 @@ const list<Member*>& Facebook::getMembersList() const
 	return this->allMembers;
 }
 
+//function to check if the input in the menu is valid, if not it throws
 void Facebook::isNumber(const string& input) throw(InvalidChoiceException)
 {
 	if (input.size() >= 3)
 		throw InvalidChoiceException();
-	if (input.size()==2 &&( !isdigit(input[0]) || !isdigit(input[1]) || stoi(input)>15 || stoi(input)<1))
+	if (input.size()==2 &&( !isdigit(input[0]) || !isdigit(input[1]) || input[0] == '0'|| stoi(input)>MAXIMUM_CHOICE || stoi(input)< MINIMUM_CHOICE))
 		throw InvalidChoiceException();
-	if (input.size() == 1 && (!isdigit(input[0]) || stoi(input) < 1))
+	if (input.size() == 1 && (!isdigit(input[0]) || input[0]=='0'))
+		throw InvalidChoiceException();
+	if (input.size() ==0)
 		throw InvalidChoiceException();
 }
 
@@ -336,3 +338,4 @@ bool Facebook::printAvailableFans(const string& pageName)
 	cout << "-------------------------" << endl;
 	return isFan;
 }
+
