@@ -46,6 +46,9 @@ public:
 	bool addStatus();
 	bool addStatus(const string& status);
 
+	//use typeid to count the number of members in followersList
+	int getMembersSize() const;
+
 	void printAllFriends();
 	void printAllFavPages();
 	void printAllStatus();

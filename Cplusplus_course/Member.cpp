@@ -153,6 +153,7 @@ bool Member::addStatus(const string& status)
 }
 
 
+
 void Member::printAllFriends()
 {
 	cout << "Friends of the user: " << this->name << endl;
@@ -260,6 +261,7 @@ bool Member::isMember(const string& amigoName)
 {
 	for (auto& amigo : this->friendsList)
 	{
+		//add if amigo is member
 		if (amigoName == amigo->getName())
 			return true;
 	}

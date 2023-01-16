@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Facebook.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Page.cpp" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="FacebookExceptions.h" />
     <ClInclude Include="Facebook.h" />
     <ClInclude Include="Functions.h" />
