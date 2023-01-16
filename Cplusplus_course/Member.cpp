@@ -6,16 +6,11 @@ using namespace std;
 
 
 
-Member::Member(const string& newName, Date date) : name(newName), birthday(date)
+Member::Member(const string& newName, Date date) : Entity(newName), birthday(date), friendsSize(0),favPagesSize(0)
 {
-	
 
 }
 
-const string Member::getName() const
-{
-	return this->name;
-}
 
 const Member& Member::operator=(const Member& other)
 {
@@ -32,7 +27,7 @@ const Member& Member::operator=(const Member& other)
 
 const Member& Member::operator+=(Member& other)
 {
-	this->addFriend(&other);
+	this->addFollow(&other);
 	return *this;
 }
 
@@ -70,17 +65,26 @@ Date Member::getBirthday() const
 	return this->birthday;
 }
 
-const vector<Status>& Member::getStatusList() const
+int Member::getFriendsSize() const
 {
-	return this->statusList;
+	return this->friendsSize;
 }
 
-
-
-const vector<Member*>& Member::getFriendsList() const
+int Member::getFavPagesSize() const
 {
-	return this->friendsList;
+	return this->favPagesSize;
 }
+
+void Member::increaseFriendsSize(int num)
+{
+	(this->friendsSize)+=num;
+}
+
+void Member::increaseFavPagesSize(int num)
+{
+	(this->favPagesSize)+=num;
+}
+
 
 bool Member::addFriend(Member* newAmigo)
 {
@@ -140,133 +144,62 @@ bool Member::removeFavPage(const string pageName)
 	return false;
 }
 
-bool Member::addStatus()
-{
-	this->statusList.push_back(Status());
-	return true;
-}
-
-bool Member::addStatus(const string& status)
-{
-	this->statusList.push_back(Status(status));
-	return true;
-}
-
-
-
-void Member::printAllFriends()
-{
-	cout << "Friends of the user: " << this->name << endl;
-	cout << "-------------------------" << endl;
-	if (this->friendsList.size() == 0)
-	{
-		cout << "This user has no friends" << endl;
-		return;
-	}
-	for (auto& amigo : this->friendsList)
-	{
-		cout << amigo->getName() << endl;
-	}
-	cout << "-------------------------" << endl;
-}
 
 void Member::printAllFavPages()
 {
+	bool hasPages = false;
 	cout << "Favorite pages of the user: " << this->name << endl;
 	cout << "-------------------------" << endl;
-	if (this->favPagesList.size() == 0)
+	for (auto& page : this->followersList)
 	{
-		cout << "This user has no fav pages" << endl;
-		return;
+		if (typeid(*page) == typeid(Page))
+		{
+			hasPages = true;
+			cout << page->getName() << endl;
+		}
 	}
-	for (auto& page : this->favPagesList)
-	{
-		cout << page->getName() << endl;
-	}
+	if (!hasPages)
+		cout << "This user has no favorite pages" << endl;
 	cout << "-------------------------" << endl;
 }
 
-void Member::printAllStatus()
-{
-	cout << "Statuses of the user: " << this->name << endl;
-	cout << "-------------------------" << endl;
-	int count = 0;
-	if (this->statusList.size() == 0)
-	{
-		cout << "This user has no statuses" << endl;
-		return;
-	}
-	for (auto& status : this->statusList)
-	{
-		cout << count + 1 << ". " << status.getCurrStatus() << endl << "Date: " << status.getDate().getmDate() << endl;
-		count++;
-	}
-	cout << "-------------------------" << endl;
-}
+
 
 void Member::printLatestStatusesOfFriends()
 {
 	int statusSize, count;
 	cout << "The statuses of " << this->name << "'s friends: " << endl;;
 	cout << "-------------------------" << endl;
-	for (auto& amigo : this->friendsList)
+	for (auto& amigo : this->followersList)
 	{
-		if (amigo->statusList.size() == 0)
-			cout << amigo->name << " doesn't have statuses yet" << endl;
-		else
+		if (typeid(*amigo) == typeid(Member))
 		{
-			statusSize = min((int)amigo->statusList.size(), 10);
-			cout << "Statuses of " << amigo->name << ": " << endl;
-			count = 1;
-			for (auto& status : amigo->statusList)
+			Member* memPtr = dynamic_cast<Member*>(amigo);
+			if (memPtr->statusList.size() == 0)
+				cout << memPtr->name << " doesn't have statuses yet" << endl;
+			else
 			{
-				cout << count << ". " << status.getCurrStatus() << endl << status.getDate().getmDate() << endl << endl;
-				count++;
+				statusSize = min((int)memPtr->statusList.size(), 10);
+				cout << "Statuses of " << memPtr->name << ": " << endl;
+				count = 1;
+				for (auto& status : memPtr->statusList)
+				{
+					cout << count << ". " << status->getCurrStatus() << endl << status->getDate().getmDate() << endl << endl;
+					count++;
+				}
 			}
 		}
+
 		cout << "-------------------------" << endl;
 	}
 
 }
 
-//throws if users are already friends
-void Member::checkFriendship(const string& name) throw(AlreadyFriendsException)
-{
-	if (this->isMember(name))
-		throw AlreadyFriendsException();
-}
 
-//throws if users are not friends
-void Member::checkNotFriendship(const string& name) throw(NotFriendsException)
-{
-	if (!this->isMember(name))
-		throw NotFriendsException();
-}
 
-//throw if the name belongs to this user
-void Member::isMe(const string& name) throw(SelfException)
-{
-	if (this->name == name)
-		throw SelfException();
-}
 
-//function that returns true if the users are friends
-bool Member::isMember(const Member* newAmigo)
-{
-	return isMember(newAmigo->name);
-}
 
-//function that returns true if the users are friends
-bool Member::isMember(const string& amigoName)
-{
-	for (auto& amigo : this->friendsList)
-	{
-		//add if amigo is member
-		if (amigoName == amigo->getName())
-			return true;
-	}
-	return false;
-}
+
 
 //function that returns true if the page is on this user's fav pages
 bool Member::isFanPage(const Page* newPage)

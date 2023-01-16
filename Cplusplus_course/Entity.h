@@ -3,19 +3,22 @@
 
 #include "Types.h"
 
-
 class Entity 
 {
-private:
+protected:
 
 	string name;
-	vector<Status> statusList;
+	vector<Status*> statusList;
 	vector<Entity*> followersList;
+	
 
 public:
-
+	Entity(const string& newName);
+	~Entity();
+	
 	const string& getName() const;
-	const vector<Status>& getStatusList() const;
+	const vector<Status*>& getStatusList() const;
+	const vector<Entity*>& getFollowersList() const;
 
 	void checkFollowship(const string& name);
 	void checkNotFollowship(const string& name);
@@ -23,11 +26,19 @@ public:
 	bool removeMutualFollow(const string& friendName);
 	bool isMutualFollowing(Entity* entity) const;
 	bool isMutualFollowing(const string& name) const;
+	virtual void printAllFollowerMembers() const=0;
 
-	virtual bool addStatus() = 0;
-	virtual bool addStatus(const string& status)= 0;
+	bool isMember(const Entity* newAmigo) const;
+	bool isMember(const string& amigoName) const;
+	void isMe(const string& name);
 
-	//printallStatus() virtual
+	void printAllFollowerMembers() const;
+
+	bool addStatus(const string& status);
+	bool addMediaStatus(const string& status, const string& fileName);
+
+	void printAllStatus() const;
+
 	//add isMember with implemintaion in Entity, need to use typeid
 	//add isFavPage with implemintaion in Entity, need to use typeid
 

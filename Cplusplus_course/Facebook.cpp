@@ -305,7 +305,7 @@ bool Facebook::printFriendListOfMember(const string& name)
 {
 	Member* temp;
 	temp = this->getMemberByName(name);
-	int size = (int)temp->getFriendsList().size();
+	int size = (int)temp->getFriendsSize();
 
 	if (size == 0)
 		return false;
@@ -315,7 +315,8 @@ bool Facebook::printFriendListOfMember(const string& name)
 		cout << "-------------------------" << endl;
 		for (int i = 0; i < size; i++)
 		{
-			cout << temp->getFriendsList()[i]->getName() << endl;
+			if (typeid(temp->getFollowersList()[i])==typeid(Member*))
+				cout << temp->getFollowersList()[i]->getName() << endl;
 		}
 		cout << "-------------------------" << endl;
 	}

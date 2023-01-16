@@ -3,7 +3,7 @@
 
 void startMenu(Facebook& facebook)
 {
-	string userInput, nameInput, nameInput2, statusInput;
+	string userInput, nameInput, nameInput2, statusInput,mediaFile;
 	Page* page;
 	Member* member1, * member2;
 	bool isValid;
@@ -28,14 +28,21 @@ void startMenu(Facebook& facebook)
 			readMemberName(facebook, nameInput);
 			cout << "Please enter a status: ";
 			statusInput = readInputString();
-			facebook.getMemberByName(nameInput)->addStatus(statusInput);
+			if (getMedia(mediaFile))
+				facebook.getMemberByName(nameInput)->addMediaStatus(statusInput,mediaFile);
+			else
+				facebook.getMemberByName(nameInput)->addStatus(statusInput);
 			break;
 
 		case MENU_OPTIONS::ADD_PAGE_STATUS:
 			readPageName(facebook, nameInput);
+			getMedia(mediaFile);
 			cout << "Please enter a status: ";
 			statusInput = readInputString();
-			facebook.getPageByName(nameInput)->addStatus(statusInput);
+			if (getMedia(mediaFile))
+				facebook.getPageByName(nameInput)->addStatus(statusInput);
+			else
+				facebook.getPageByName(nameInput)->addMediaStatus(statusInput,mediaFile);
 			break;
 
 		case MENU_OPTIONS::PRINT_MEMBER_STATUS:
@@ -56,7 +63,7 @@ void startMenu(Facebook& facebook)
 		case MENU_OPTIONS::CONNECT_MEMBERS:
 			readMemberName(facebook, nameInput);
 			member1 = facebook.getMemberByName(nameInput);
-				if (member1->getFriendsList().size() == (facebook.getMembersList().size()-1) )
+				if (member1->getFriendsSize() == (facebook.getMembersList().size()-1) )
 					cout << "No members available to add as friends to this user" << endl;
 				else
 				{
@@ -71,7 +78,7 @@ void startMenu(Facebook& facebook)
 							facebook.isNotMember(nameInput2);
 							member1->isMe(nameInput2);
 							member2 = facebook.getMemberByName(nameInput2);
-							member1->checkFriendship(nameInput2);
+							member1->checkFollowship(nameInput2);
 							isValid = true;
 						}
 						catch (FacebookExceptions& e)
@@ -87,7 +94,7 @@ void startMenu(Facebook& facebook)
 		case MENU_OPTIONS::DISCONNECT_MEMBERS:
 			readMemberName(facebook, nameInput);
 			member1 = facebook.getMemberByName(nameInput);
-			if (member1->getFriendsList().size() == 0)
+			if (member1->getFriendsSize() == 0)
 				cout << "No members available to remove from this user" << endl;
 			else
 			{
@@ -102,7 +109,7 @@ void startMenu(Facebook& facebook)
 						facebook.isNotMember(nameInput2);
 						member1->isMe(nameInput2);
 						member2 = facebook.getMemberByName(nameInput2);
-						member1->checkNotFriendship(nameInput2);
+						member1->checkNotFollowship(nameInput2);
 						isValid = true;
 					}
 					catch (FacebookExceptions& e)
@@ -110,7 +117,7 @@ void startMenu(Facebook& facebook)
 						cout << e.what() << endl;
 					}
 				}
-				member1->removeFriend(nameInput2);
+				member1->removeMutualFollow(nameInput2);
 			}
 			break;
 
@@ -345,4 +352,35 @@ void isBlank(const string& input) throw(BlankException)
 {
 	if (input.size() == 0)
 		throw BlankException();
+}
+
+bool getMedia(string& mediaFile)
+{
+	bool isValid = false;
+	string userAnswer;
+
+	while (!isValid)
+	{
+		cout << "Do you want to add a media file (image/video)? Y\N" << endl;
+		userAnswer = readInputString();
+		if (userAnswer == "Y")
+		{
+			mediaFile = readInputString();
+			try
+			{
+				isBlank(mediaFile);
+			}
+			catch (FacebookExceptions& e)
+			{
+				cout << e.what() << endl;
+			}
+			isValid = true;
+			return true;
+		}
+		else if (userAnswer == "N")
+			return false;
+		else 
+			cout << "Wrong input!";
+	}	
+
 }

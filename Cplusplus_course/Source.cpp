@@ -29,3 +29,4 @@ int main()
 }
 
 
+//we stopped at case MENU_OPTIONS::ADD_FAN_TO_PAGE:

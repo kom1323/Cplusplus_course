@@ -8,7 +8,7 @@
 
 class Status
 {
-private:
+protected:
 	string currStatus;
 	Date date;
 public:

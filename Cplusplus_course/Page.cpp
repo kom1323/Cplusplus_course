@@ -57,19 +57,6 @@ bool Page::operator<(const Page& other)
 	return false;
 }
 
-//throws exception if the user is already a fan of this page
-void Page::checkFanship(const string& name) throw(AlreadyFanException)
-{
-	if (isFan(name))
-		throw AlreadyFanException();
-}
-
-//throws exception if the user is not a fan of this page
-void Page::checkNotFanship(const string& name) throw(NotFanException)
-{
-	if (!isFan(name))
-		throw NotFanException();
-}
 
 int Page::getFanListSize() const
 {
@@ -117,46 +104,9 @@ bool Page::removeFan(const string friendName)
 	return false;
 }
 
-bool Page::addStatus()
-{
-	//add the new status 
-	this->statusList.push_back(Status());
-	return true;
-}
-bool Page::addStatus(const string status)
-{
-
-	this->statusList.push_back(Status(status));
-	return true;
-
-}
 
 
-bool Page::isFan(Member* member) const
-{
-	for (auto& fan : this->membersList)
-	{
 
-		if (fan == member) {
-
-			return true;
-		}
-	}
-	return false;
-}
-
-bool Page::isFan(const string name) const
-{
-	for (auto& fan : this->membersList)
-	{
-
-		if (fan->getName() == name) {
-
-			return true;
-		}
-	}
-	return false;
-}
 
 void Page::printAllFans()
 {
@@ -174,23 +124,3 @@ void Page::printAllFans()
 	cout << "-------------------------" << endl;
 }
 
-void Page::printAllStatus()
-{
-
-	cout << "Statuses in page: " << this->name << endl;
-	cout << "-------------------------" << endl;
-	int count = 0;
-	if (this->statusList.size() == 0)
-	{
-		cout << "This page has no statuses" << endl;
-		return;
-	}
-	for (auto& status : this->statusList)
-	{
-		cout << count + 1 << ". " << status.getCurrStatus() << endl << "Date: " << status.getDate().getmDate() << endl;
-		count++;
-	}
-
-	cout << "-------------------------" << endl;
-
-}
