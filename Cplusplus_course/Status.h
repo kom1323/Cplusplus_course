@@ -14,6 +14,7 @@ protected:
 public:
 	Status() = default;
 	Status(const string& status);
+	virtual ~Status() = default;
 	
 	bool operator==(const Status& other) const;
 	bool operator!=(const Status& other) const;

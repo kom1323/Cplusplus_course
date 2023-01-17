@@ -34,6 +34,7 @@ void initFacebookEntities(Facebook& facebook);
 void newTerminate();
 void startMenu(Facebook& facebook);
 void isBlank(const string& input) throw(BlankException);
+bool getMedia(string& mediaFile);
 
 #endif // !_FUNCTIONS_H
 

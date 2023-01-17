@@ -62,6 +62,14 @@ void Entity::printAllStatus() const
 	{
 		cout << count + 1 << ". " << status->getCurrStatus() << endl << "Date: " << status->getDate().getmDate() << endl;
 		count++;
+
+		if (typeid(*status) == typeid(MediaStatus))
+		{
+			MediaStatus* tmp = (MediaStatus*)status;
+			tmp->playMedia();
+		}
+			
+
 	}
 	cout << "-------------------------" << endl;
 }
@@ -77,10 +85,10 @@ bool Entity::addFollow(Entity* newEntity)
 
 	//add the new member and update the member's favorite pages
 	this->followersList.push_back(newEntity);
-	if (typeid(this) == typeid(Member*))
+	if (typeid(*this) == typeid(Member))
 	{
-		Member* temp = dynamic_cast<Member*>(this);
-		if (typeid(newEntity) == typeid(Member*))
+		Member* temp = (Member*)newEntity;
+		if (typeid(*newEntity) == typeid(Member))
 			temp->increaseFriendsSize(1);
 		else
 			temp->increaseFavPagesSize(1);
@@ -101,10 +109,10 @@ bool Entity::removeMutualFollow(const string& friendName)
 			Entity* tmp = *entityItr;
 			*entityItr = nullptr;
 			this->followersList.erase(entityItr);
-			if (typeid(this) == typeid(Member*))
+			if (typeid(*this) == typeid(Member))
 			{
-				Member* memPtr = dynamic_cast<Member*>(this);
-				if (typeid(*entityItr) == typeid(Member*))
+				Member* memPtr = (Member*)this;
+				if (typeid(*(*entityItr)) == typeid(Member))
 					memPtr->increaseFriendsSize(-1);
 				else
 					memPtr->increaseFavPagesSize(-1);
@@ -151,7 +159,7 @@ bool Entity::isMember(const string& amigoName) const
 	for (auto& amigo : this->followersList)
 	{
 		//add if amigo is member
-		if ( typeid(amigo)==typeid(Member*) && amigoName == amigo->getName() )
+		if ( typeid(*amigo)==typeid(Member) && amigoName == amigo->getName() )
 			return true;
 	}
 	return false;
@@ -160,7 +168,7 @@ bool Entity::isMember(const string& amigoName) const
 void Entity::printAllFollowerMembers() const
 {
 	bool hasFriends = false;
-	if (typeid(this) == typeid(Member*))
+	if (typeid(*this) == typeid(Member))
 		cout << "Friends";
 	else
 		cout << "Fans" ;
@@ -169,7 +177,7 @@ void Entity::printAllFollowerMembers() const
 
 	for (auto& amigo : this->followersList)
 	{
-		if (typeid(amigo) == typeid(Member*))
+		if (typeid(*amigo) == typeid(Member))
 		{
 			hasFriends = true;
 			cout << amigo->getName() << endl;
@@ -177,7 +185,7 @@ void Entity::printAllFollowerMembers() const
 	}
 	if (!hasFriends)
 	{
-		if (typeid(this) == typeid(Member*))
+		if (typeid(*this) == typeid(Member))
 			cout << "This user doesn't have any friends!";
 		else
 			cout << "This page doesn't have any fans!";

@@ -36,13 +36,12 @@ void startMenu(Facebook& facebook)
 
 		case MENU_OPTIONS::ADD_PAGE_STATUS:
 			readPageName(facebook, nameInput);
-			getMedia(mediaFile);
 			cout << "Please enter a status: ";
 			statusInput = readInputString();
 			if (getMedia(mediaFile))
-				facebook.getPageByName(nameInput)->addStatus(statusInput);
+				facebook.getPageByName(nameInput)->addMediaStatus(statusInput, mediaFile);
 			else
-				facebook.getPageByName(nameInput)->addMediaStatus(statusInput,mediaFile);
+				facebook.getPageByName(nameInput)->addStatus(statusInput);
 			break;
 
 		case MENU_OPTIONS::PRINT_MEMBER_STATUS:
@@ -124,20 +123,20 @@ void startMenu(Facebook& facebook)
 		case MENU_OPTIONS::ADD_FAN_TO_PAGE:
 			readPageName(facebook, nameInput);
 			page = facebook.getPageByName(nameInput);
-			if (page->getFanListSize() == (facebook.getMembersList().size() - 1))
+			if (page->getFollowersList().size() == (facebook.getMembersList().size() - 1))
 				cout << "No members available to add as fans to this page" << endl;
 			else
 			{
 				while (!isValid)
 				{
-					facebook.printAvailableFans(nameInput);
+					facebook.printAvailableFans(page);
 					cout << "Please enter the member's name from the list above: ";
 					nameInput2 = readInputString();
 					try
 					{
 						isBlank(nameInput2);
 						facebook.isNotMember(nameInput2);
-						page->checkFanship(nameInput2);
+						page->checkFollowship(nameInput2);
 						isValid = true;
 					}
 					catch (FacebookExceptions& e)
@@ -153,21 +152,21 @@ void startMenu(Facebook& facebook)
 		case MENU_OPTIONS::REMOVE_FAN_FROM_PAGE:
 			readPageName(facebook, nameInput);
 			page = facebook.getPageByName(nameInput);
-			if (page->getFanListSize() == 0)
+			if (page->getFollowersList().size() == 0)
 				cout << "No members available to remove from this page fan list" << endl;
 			else
 			{
 				while (!isValid)
 				{
 					cout << "Fans available to delete:" << endl;
-					facebook.getPageByName(nameInput)->printAllFans();
+					page->printAllFollowerMembers();
 					cout << "Please enter the member's name from the list above: ";
 					nameInput2 = readInputString();
 					try
 					{
 						isBlank(nameInput2);
 						facebook.isNotMember(nameInput2);
-						page->checkNotFanship(nameInput2);
+						page->checkNotFollowship(nameInput2);
 						isValid = true;
 					}
 					catch (FacebookExceptions& e)
@@ -175,7 +174,7 @@ void startMenu(Facebook& facebook)
 						cout << e.what() << endl;
 					}
 				}
-				page->removeFan(nameInput2);
+				page->removeMutualFollow(nameInput2);
 			}
 			break;
 
@@ -185,12 +184,12 @@ void startMenu(Facebook& facebook)
 
 		case MENU_OPTIONS::PRINT_MEMBER_FRIENDS:
 			readMemberName(facebook, nameInput);
-			facebook.getMemberByName(nameInput)->printAllFriends();
+			facebook.getMemberByName(nameInput)->printAllMyFriends();
 			break;
 
 		case MENU_OPTIONS::PRINT_PAGE_FANS:
 			readPageName(facebook, nameInput);
-			facebook.getPageByName(nameInput)->printAllFans();
+			facebook.getPageByName(nameInput)->printAllFollowerMembers();
 			break;
 
 		case MENU_OPTIONS::EXIT_MENU:
@@ -339,13 +338,14 @@ void initFacebookEntities(Facebook& facebook)
 	p2->addStatus("This is instagram's status");
 	p3->addStatus("This is linkedin's status");
 
-	m1->addFriend(m2);
-	m1->addFavPage(p1);
 
-	m3->addFriend(m2);
-	m3->addFavPage(p3);
+	m1->addFollow(m2);
+	m1->addFollow(p1);
 
-	m2->addFavPage(p2);
+	m3->addFollow(m2);
+	m3->addFollow(p3);
+
+	m2->addFollow(p2);
 }
 
 void isBlank(const string& input) throw(BlankException)
@@ -365,6 +365,7 @@ bool getMedia(string& mediaFile)
 		userAnswer = readInputString();
 		if (userAnswer == "Y")
 		{
+			cout << "Please type the file name with extension: " << endl;
 			mediaFile = readInputString();
 			try
 			{
@@ -381,6 +382,7 @@ bool getMedia(string& mediaFile)
 			return false;
 		else 
 			cout << "Wrong input!";
+		
 	}	
 
 }

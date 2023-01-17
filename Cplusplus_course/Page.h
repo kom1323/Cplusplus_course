@@ -17,7 +17,7 @@ public:
 	Page(const string& name);
 	Page() = default;
 
-	int getFanListSize() const;
+	
 
 
 	const Page& operator=(const Page& other);
@@ -29,9 +29,6 @@ public:
 	bool operator<(const Page& other);
 
 	
-
-	bool addFan(Member* newAmigo);
-	bool removeFan(const string friendName);
 
 
 	void printAllFans();

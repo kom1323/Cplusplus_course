@@ -36,19 +36,14 @@ public:
 	void increaseFavPagesSize(int num);
 
 	
+
+
+
 	
 
-
-	bool addFriend(Member* newAmigo);
-	bool removeFriend(const string& friendName);
-	bool addFavPage(Page* newPage);
-	bool removeFavPage(const string pageName);
-	
-
-	//use typeid to count the number of members in followersList
-	int getMembersSize() const;
 
 	void printAllFavPages();
+	void printAllMyFriends();
 	void printLatestStatusesOfFriends();
 
 	

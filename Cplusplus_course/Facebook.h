@@ -46,6 +46,6 @@ public:
     void printAllPages();
     bool printAvailableFriends(const string& amigoName);
     bool printFriendListOfMember(const string& name);
-    bool printAvailableFans(const string& fanName);
+    bool printAvailableFans(Page* pagePtr) const;
 };
 #endif

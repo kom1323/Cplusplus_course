@@ -323,14 +323,14 @@ bool Facebook::printFriendListOfMember(const string& name)
 	return true;
 }
 
-bool Facebook::printAvailableFans(const string& pageName)
+bool Facebook::printAvailableFans(Page* pagePtr) const
 {
 	bool isFan = false; //to see if everyone are already his friends
 	cout << "All available friends to add:" << endl;
 	cout << "-------------------------" << endl;
 	for (auto& mem : this->allMembers)
 	{
-		if (mem->isFanPage(pageName) == false)
+		if (mem->isMutualFollowing(pagePtr) == false)
 		{
 			cout << mem->getName() << endl;
 			isFan = true;

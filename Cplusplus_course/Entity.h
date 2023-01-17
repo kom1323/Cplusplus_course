@@ -14,7 +14,7 @@ protected:
 
 public:
 	Entity(const string& newName);
-	~Entity();
+	virtual ~Entity();
 	
 	const string& getName() const;
 	const vector<Status*>& getStatusList() const;
@@ -26,13 +26,12 @@ public:
 	bool removeMutualFollow(const string& friendName);
 	bool isMutualFollowing(Entity* entity) const;
 	bool isMutualFollowing(const string& name) const;
-	virtual void printAllFollowerMembers() const=0;
+	void printAllFollowerMembers() const;
 
 	bool isMember(const Entity* newAmigo) const;
 	bool isMember(const string& amigoName) const;
 	void isMe(const string& name);
 
-	void printAllFollowerMembers() const;
 
 	bool addStatus(const string& status);
 	bool addMediaStatus(const string& status, const string& fileName);
