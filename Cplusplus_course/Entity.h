@@ -38,11 +38,8 @@ public:
 
 	void printAllStatus() const;
 
-	//add isMember with implemintaion in Entity, need to use typeid
-	//add isFavPage with implemintaion in Entity, need to use typeid
-
-
-
+	virtual void writeToFile(ostream& os) const;
+	friend ostream& operator<<(ostream& os, const Entity& entity);
 
 };
 

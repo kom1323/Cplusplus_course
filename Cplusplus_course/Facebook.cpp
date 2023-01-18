@@ -340,3 +340,27 @@ bool Facebook::printAvailableFans(Page* pagePtr) const
 	return isFan;
 }
 
+ostream& operator<<(ostream& os, Facebook& facebook)
+{
+	os << facebook.allMembers.size() << endl;
+	for (auto& member : facebook.allMembers)
+	{
+		os << *member;
+	}
+	os << facebook.allPages.size() << endl;
+	for (auto& page : facebook.allPages)
+	{
+		os << *page;
+	}
+	return os;
+}
+
+istream& operator>>(istream& os, Facebook& facebook)
+{
+	int MembersSize, pagesSize;
+	os >> MembersSize;
+	Member* tempMem;
+	Page* tempPage;
+	int i;
+
+}

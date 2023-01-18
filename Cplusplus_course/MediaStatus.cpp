@@ -12,3 +12,8 @@ void MediaStatus::playMedia() const
 	const char* run = temp.c_str();
 	system(run);
 }
+
+void MediaStatus::writeToFile(ostream& os) const
+{
+	os << this->fileName;
+}

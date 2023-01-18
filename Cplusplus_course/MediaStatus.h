@@ -15,6 +15,10 @@ public:
 	MediaStatus(const string& status, const string& nameOfFile);
 	
 	void playMedia() const;
+	
+	void writeToFile(ostream& os) const override;
+
+
 
 };
 

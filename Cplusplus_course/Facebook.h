@@ -47,5 +47,7 @@ public:
     bool printAvailableFriends(const string& amigoName);
     bool printFriendListOfMember(const string& name);
     bool printAvailableFans(Page* pagePtr) const;
+    friend ostream& operator<<(ostream& os, Facebook& facebook);
+    friend istream& operator>>(istream& os, Facebook& facebook);
 };
 #endif

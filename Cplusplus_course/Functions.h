@@ -8,6 +8,7 @@
 #include "Member.h"
 #include "Page.h"
 #include "FacebookExceptions.h"
+#include <fstream>
 
 enum class MENU_OPTIONS {
 	ADD_MEMBER = 1, ADD_FAN_PAGE, ADD_MEMBER_STATUS, ADD_PAGE_STATUS,
@@ -35,6 +36,7 @@ void newTerminate();
 void startMenu(Facebook& facebook);
 void isBlank(const string& input) throw(BlankException);
 bool getMedia(string& mediaFile);
+//void saveData(Facebook& facebook);
 
 #endif // !_FUNCTIONS_H
 

@@ -18,3 +18,10 @@ const string& Date::getmDate() const
     return this->mDate;
 }
 
+
+
+ostream& operator<<(ostream& os, const Date& d)
+{  
+    os << d.mDate;
+    return os;
+}

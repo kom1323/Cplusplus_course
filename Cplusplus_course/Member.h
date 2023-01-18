@@ -37,19 +37,11 @@ public:
 
 	
 
-
-
-	
-
-
 	void printAllFavPages();
 	void printAllMyFriends();
 	void printLatestStatusesOfFriends();
+	void writeToFile(ostream& os) const override;
 
-	
-	
-	bool isFanPage(const Page* newPage);
-	bool isFanPage(const string& pageName);
 
 };
 #endif //_MEMBER

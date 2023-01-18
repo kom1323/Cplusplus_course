@@ -13,6 +13,8 @@ public:
 	Date();
 	Date(const string& birthDayDate);
 	const string& getmDate() const;
+	friend ostream& operator<<(ostream& os, const Date& date);
+	friend ostream& operator>>(ostream& os, Date& d);
 };
 
 #endif //_Date

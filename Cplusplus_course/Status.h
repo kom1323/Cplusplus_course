@@ -22,6 +22,8 @@ public:
 
 	const string& getCurrStatus() const;
 	Date getDate() const;
+	virtual void writeToFile(ostream& os) const;
+	friend ostream& operator<<(ostream& os, const Status& status);
 
 };
 #endif // !_STATUS

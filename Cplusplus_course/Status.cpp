@@ -31,3 +31,19 @@ Date Status::getDate() const
 {
 	return this->date;
 }
+
+void Status::writeToFile(ostream& os) const
+{
+}
+
+ostream& operator<<(ostream& os, const Status& status)
+{
+	if (typeid(status) == typeid(Status))
+		os << "Media Status" << endl;
+	else
+		os << "Status" << endl;
+	os << status.currStatus<<endl;
+	os << status.date;
+	status.writeToFile(os);
+	return os;
+}

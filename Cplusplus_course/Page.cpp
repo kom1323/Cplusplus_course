@@ -63,19 +63,4 @@ bool Page::operator<(const Page& other)
 
 
 
-//void Page::printAllFans()
-//{
-//	cout << "Fans of page: " << this->name << endl;
-//	cout << "-------------------------" << endl;
-//	if (this->membersList.size() == 0)
-//	{
-//		cout << "This page has no fans" << endl;
-//		return;
-//	}
-//	for (auto& fan : this->membersList)
-//	{
-//		cout << fan->getName() << endl;
-//	}
-//	cout << "-------------------------" << endl;
-//}
 

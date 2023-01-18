@@ -74,6 +74,10 @@ void Entity::printAllStatus() const
 	cout << "-------------------------" << endl;
 }
 
+void Entity::writeToFile(ostream& os) const
+{
+}
+
 
 bool Entity::addFollow(Entity* newEntity)
 {
@@ -87,7 +91,7 @@ bool Entity::addFollow(Entity* newEntity)
 	this->followersList.push_back(newEntity);
 	if (typeid(*this) == typeid(Member))
 	{
-		Member* temp = (Member*)newEntity;
+		Member* temp = (Member*)this;
 		if (typeid(*newEntity) == typeid(Member))
 			temp->increaseFriendsSize(1);
 		else
@@ -206,4 +210,25 @@ void Entity::checkNotFollowship(const string& name) throw(NotFriendsException)
 {
 	if (!this->isMember(name))
 		throw NotFriendsException();
+}
+
+ostream& operator<<(ostream& os, const Entity& entity)
+{
+	if (typeid(entity) == typeid(Member))
+		os << "Member" << endl;
+	else
+		os << "Page" << endl;
+	os << entity.name << endl;
+	os << entity.followersList.size() << endl;
+	for (auto& follower: entity.followersList)
+	{
+		os << follower->name << endl;
+	}
+	os << entity.statusList.size() << endl;
+	for (auto& status : entity.statusList)
+	{
+		os << *status;
+	}
+	entity.writeToFile(os);
+	return os;
 }

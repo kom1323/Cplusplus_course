@@ -304,6 +304,8 @@ string readInputString()
 }
 
 
+
+
 void initFacebookEntities(Facebook& facebook)
 {
 	Member* m1, * m2, * m3;
@@ -385,4 +387,11 @@ bool getMedia(string& mediaFile)
 		
 	}	
 
+}
+
+void saveData(Facebook& facebook)
+{
+	ofstream outFile("Boazcohen.txt",ios::out);
+	outFile << facebook;
+	outFile.close();
 }

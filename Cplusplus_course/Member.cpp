@@ -6,10 +6,12 @@ using namespace std;
 
 
 
-Member::Member(const string& newName, Date date) : Entity(newName), birthday(date), friendsSize(0),favPagesSize(0)
+Member::Member(const string& newName, Date date) : Entity(newName), birthday(date), friendsSize(0), favPagesSize(0)
 {
 
 }
+
+
 
 
 const Member& Member::operator=(const Member& other)
@@ -85,65 +87,6 @@ void Member::increaseFavPagesSize(int num)
 }
 
 
-//bool Member::addFriend(Member* newAmigo)
-//{
-//	if (isMember(newAmigo)) //to stop loop between both friends
-//		return false;
-//	else
-//	{
-//		this->friendsList.push_back(newAmigo);
-//		newAmigo->addFriend(this); //add this friend to his friend's friends list
-//		return true;
-//	}
-//}
-
-//function that unconnects one friends from another
-//bool Member::removeFriend(const string& friendName)
-//{
-//	vector<Member*>::iterator mem = this->friendsList.begin();
-//
-//	for (mem; mem != friendsList.end(); mem++)
-//	{
-//		if ((*mem)->getName() == friendName)
-//		{
-//			Member* tmp = *mem;
-//			*mem = nullptr;
-//			this->friendsList.erase(mem);
-//			tmp->removeFriend(this->name);
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-
-//bool Member::addFavPage(Page* newPage)
-//{
-//	if (isFanPage(newPage))
-//		return false;
-//
-//	this->favPagesList.push_back(newPage);
-//	newPage->addFan(this);
-//	return true;
-//}
-
-//bool Member::removeFavPage(const string pageName)
-//{
-//	vector<Page*>::iterator page = this->favPagesList.begin();
-//
-//	for (page; page != favPagesList.end(); page++)
-//	{
-//		if ((*page)->getName() == pageName)
-//		{
-//			Page* temp = *page;
-//			*page = nullptr;
-//			this->favPagesList.erase(page);
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-
-
 void Member::printAllFavPages()
 {
 	bool hasPages = false;
@@ -211,6 +154,13 @@ void Member::printLatestStatusesOfFriends()
 		cout << "-------------------------" << endl;
 	}
 
+}
+
+void Member::writeToFile(ostream& os) const
+{
+	os << friendsSize << endl;
+	os << favPagesSize << endl;
+	os << birthday << endl;
 }
 
 

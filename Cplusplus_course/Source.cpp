@@ -13,7 +13,7 @@ Daniel Omesi 207689092
 void initFacebookEntities(Facebook &facebook);
 void startMenu(Facebook& facebook);
 void newTerminate();
-
+void saveData(Facebook& facebook);
 
 
 int main()
@@ -26,7 +26,5 @@ int main()
 	initFacebookEntities(facebook);
 
 	startMenu(facebook);
+	saveData(facebook);
 }
-
-
-//we stopped at case MENU_OPTIONS::ADD_FAN_TO_PAGE:
