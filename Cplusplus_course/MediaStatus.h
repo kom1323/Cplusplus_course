@@ -13,11 +13,10 @@ private:
 	
 public:
 	MediaStatus(const string& status, const string& nameOfFile);
-	
+	MediaStatus() = default;
 	void playMedia() const;
-	
 	void writeToFile(ostream& os) const override;
-
+	void readFromFile(istream& os) override;
 
 
 };

@@ -163,6 +163,14 @@ void Member::writeToFile(ostream& os) const
 	os << birthday << endl;
 }
 
+void Member::readFromFile(istream& os)
+{
+	
+	os >> this->friendsSize;
+	os >> this->favPagesSize;
+	os >> this->birthday;
+}
+
 
 
 

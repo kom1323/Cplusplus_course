@@ -23,7 +23,8 @@ public:
 	const string& getCurrStatus() const;
 	Date getDate() const;
 	virtual void writeToFile(ostream& os) const;
+	virtual void readFromFile(istream& os);
 	friend ostream& operator<<(ostream& os, const Status& status);
-
+	friend istream& operator>>(istream& os, Status& status);
 };
 #endif // !_STATUS

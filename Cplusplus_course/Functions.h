@@ -36,7 +36,7 @@ void newTerminate();
 void startMenu(Facebook& facebook);
 void isBlank(const string& input) throw(BlankException);
 bool getMedia(string& mediaFile);
-//void saveData(Facebook& facebook);
+
 
 #endif // !_FUNCTIONS_H
 

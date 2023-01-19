@@ -49,5 +49,6 @@ public:
     bool printAvailableFans(Page* pagePtr) const;
     friend ostream& operator<<(ostream& os, Facebook& facebook);
     friend istream& operator>>(istream& os, Facebook& facebook);
+    void updatePointers();
 };
 #endif

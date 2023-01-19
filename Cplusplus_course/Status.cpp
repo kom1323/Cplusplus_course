@@ -36,14 +36,26 @@ void Status::writeToFile(ostream& os) const
 {
 }
 
+void Status::readFromFile(istream& os)
+{
+}
+
 ostream& operator<<(ostream& os, const Status& status)
 {
 	if (typeid(status) == typeid(Status))
-		os << "Media Status" << endl;
-	else
 		os << "Status" << endl;
+	else
+		os << "Media Status" << endl;
 	os << status.currStatus<<endl;
 	os << status.date;
 	status.writeToFile(os);
+	return os;
+}
+
+istream& operator>>(istream& os, Status& status)
+{
+	getline(os, status.currStatus);
+	os >> status.date;
+	status.readFromFile(os);
 	return os;
 }

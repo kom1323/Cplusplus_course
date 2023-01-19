@@ -14,7 +14,7 @@ public:
 	Date(const string& birthDayDate);
 	const string& getmDate() const;
 	friend ostream& operator<<(ostream& os, const Date& date);
-	friend ostream& operator>>(ostream& os, Date& d);
+	friend istream& operator>>(istream& os, Date& d);
 };
 
 #endif //_Date

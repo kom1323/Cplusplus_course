@@ -395,3 +395,11 @@ void saveData(Facebook& facebook)
 	outFile << facebook;
 	outFile.close();
 }
+
+void getData(Facebook& facebook)
+{
+	ifstream inFile("Boazcohen.txt");
+	inFile >> facebook;
+	inFile.close();
+
+}

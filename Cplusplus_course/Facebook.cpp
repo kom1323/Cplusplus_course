@@ -357,10 +357,65 @@ ostream& operator<<(ostream& os, Facebook& facebook)
 
 istream& operator>>(istream& os, Facebook& facebook)
 {
-	int MembersSize, pagesSize;
+	int i,MembersSize, pagesSize;
+	string garbageBuffer;
 	os >> MembersSize;
 	Member* tempMem;
 	Page* tempPage;
-	int i;
 
+	for (i = 0; i < MembersSize; i++)
+	{
+		tempMem = new Member();
+		os >> *tempMem;
+		facebook.addMember(tempMem);
+		os >> garbageBuffer;
+	}
+	os >> pagesSize;
+	for (i = 0; i < pagesSize; i++)
+	{
+		tempPage = new Page();
+		os >> *tempPage;
+		facebook.addPage(tempPage);
+		os >> garbageBuffer;
+	}
+
+	facebook.updatePointers();
+
+	return os;
+}
+
+void Facebook::updatePointers()
+{
+	Member* memCpy;
+
+	for (Member* memPtr: this->allMembers)
+	{
+		for (Entity*& followerPtr: memPtr->setFollowersList())
+		{
+			string* realName;
+			realName = (string*)followerPtr;
+
+			
+			memCpy = this->getMemberByName(*realName);
+			if (memCpy != nullptr)
+				followerPtr = memCpy;
+			else
+				followerPtr = this->getPageByName(*realName);
+			delete realName;
+		}
+	}
+
+	for (Page* pagePtr : this->allPages)
+	{
+		for (Entity*& followerPtr : pagePtr->setFollowersList())
+		{
+			string* realName;
+			realName = (string*)followerPtr;
+
+
+			followerPtr = this->getMemberByName(*realName);
+
+			delete realName;
+		}
+	}
 }

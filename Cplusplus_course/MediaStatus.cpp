@@ -17,3 +17,9 @@ void MediaStatus::writeToFile(ostream& os) const
 {
 	os << this->fileName;
 }
+
+void MediaStatus::readFromFile(istream& os)
+{
+	getline(os, this->fileName);
+
+}

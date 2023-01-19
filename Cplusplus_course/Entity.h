@@ -14,11 +14,13 @@ protected:
 
 public:
 	Entity(const string& newName);
+	Entity() = default;
 	virtual ~Entity();
 	
 	const string& getName() const;
 	const vector<Status*>& getStatusList() const;
 	const vector<Entity*>& getFollowersList() const;
+	vector<Entity*>& setFollowersList();
 
 	void checkFollowship(const string& name);
 	void checkNotFollowship(const string& name);
@@ -40,7 +42,8 @@ public:
 
 	virtual void writeToFile(ostream& os) const;
 	friend ostream& operator<<(ostream& os, const Entity& entity);
-
+	virtual void readFromFile(istream& os) ;
+	friend istream& operator>>(istream& os, Entity& entity);
 };
 
 

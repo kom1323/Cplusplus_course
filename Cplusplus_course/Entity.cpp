@@ -32,6 +32,11 @@ const vector<Entity*>& Entity::getFollowersList() const
 	return this->followersList;
 }
 
+vector<Entity*>& Entity::setFollowersList()
+{
+	return this->followersList;
+}
+
 bool Entity::addStatus(const string& status)
 {
 	this->statusList.push_back(new Status(status));
@@ -60,7 +65,7 @@ void Entity::printAllStatus() const
 
 	for (auto& status : this->statusList)
 	{
-		cout << count + 1 << ". " << status->getCurrStatus() << endl << "Date: " << status->getDate().getmDate() << endl;
+		cout << count + 1 << ". " << status->getCurrStatus() << endl << "Date: " << status->getDate().getmDate() << endl<<endl;
 		count++;
 
 		if (typeid(*status) == typeid(MediaStatus))
@@ -75,6 +80,10 @@ void Entity::printAllStatus() const
 }
 
 void Entity::writeToFile(ostream& os) const
+{
+}
+
+void Entity::readFromFile(istream& os)
 {
 }
 
@@ -230,5 +239,32 @@ ostream& operator<<(ostream& os, const Entity& entity)
 		os << *status;
 	}
 	entity.writeToFile(os);
+	return os;
+}
+
+istream& operator>>(istream& os, Entity& entity)
+{
+	int i,followersSize, statusSize;
+	string* temp, statusChecker;
+	Status* statusTmp;
+	getline(os, entity.name);
+	os >> followersSize;
+	for (i = 0; i < followersSize; i++)
+	{
+		temp = new string;
+		getline(os, *temp);
+		entity.followersList.push_back((Entity*)temp);
+	}
+	os >> statusSize;
+	for (i = 0; i < statusSize; i++)
+	{
+		getline(os, statusChecker);
+		if (statusChecker == "Media Status")
+			statusTmp = new MediaStatus();
+		else
+			statusTmp = new Status();
+		os >> *statusTmp;
+	}
+	entity.readFromFile(os);
 	return os;
 }

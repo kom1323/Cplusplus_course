@@ -41,7 +41,7 @@ public:
 	void printAllMyFriends();
 	void printLatestStatusesOfFriends();
 	void writeToFile(ostream& os) const override;
-
+	void readFromFile(istream& os) override;
 
 };
 #endif //_MEMBER
