@@ -305,51 +305,6 @@ string readInputString()
 
 
 
-
-void initFacebookEntities(Facebook& facebook)
-{
-	Member* m1, * m2, * m3;
-	Page* p1, * p2, * p3;
-
-
-	Date d1("06/11/2020");
-	Date d2("30/02/2020");
-	Date d3("12/01/2020");
-
-
-	m1 = new Member("Daniel", d1);
-	m2 = new Member("Omer", d2);
-	m3 = new Member("Roey", d3);
-	p1 = new Page("Twitter");
-	p2 = new Page("Instagram");
-	p3 = new Page("Linkedin");
-
-	facebook.addMember(m1);
-	facebook.addMember(m2);
-	facebook.addMember(m3);
-	facebook.addPage(p1);
-	facebook.addPage(p2);
-	facebook.addPage(p3);
-
-	m1->addStatus("This is Daniel's status");
-	m2->addStatus("This is Omer's status");
-	m2->addStatus("This is Omer's second status");
-	m3->addStatus("This is Roey's status");
-
-	p1->addStatus("This is Twitter's status");
-	p2->addStatus("This is instagram's status");
-	p3->addStatus("This is linkedin's status");
-
-
-	m1->addFollow(m2);
-	m1->addFollow(p1);
-
-	m3->addFollow(m2);
-	m3->addFollow(p3);
-
-	m2->addFollow(p2);
-}
-
 void isBlank(const string& input) throw(BlankException)
 {
 	if (input.size() == 0)
@@ -363,9 +318,9 @@ bool getMedia(string& mediaFile)
 
 	while (!isValid)
 	{
-		cout << "Do you want to add a media file (image/video)? Y\N" << endl;
+		cout << "Do you want to add a media file (image/video)? y/n" << endl;
 		userAnswer = readInputString();
-		if (userAnswer == "Y")
+		if (userAnswer == "y")
 		{
 			cout << "Please type the file name with extension: " << endl;
 			mediaFile = readInputString();
@@ -380,25 +335,25 @@ bool getMedia(string& mediaFile)
 			isValid = true;
 			return true;
 		}
-		else if (userAnswer == "N")
+		else if (userAnswer == "n")
 			return false;
 		else 
 			cout << "Wrong input!";
 		
 	}	
-
+	return isValid;
 }
 
 void saveData(Facebook& facebook)
 {
-	ofstream outFile("Boazcohen.txt",ios::out);
+	ofstream outFile("database.txt",ios::out);
 	outFile << facebook;
 	outFile.close();
 }
 
 void getData(Facebook& facebook)
 {
-	ifstream inFile("Boazcohen.txt");
+	ifstream inFile("database.txt");
 	inFile >> facebook;
 	inFile.close();
 

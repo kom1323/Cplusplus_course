@@ -9,7 +9,7 @@ class MediaStatus : public Status
 {
 private:
 
-	string fileName; // start 
+	string fileName; 
 	
 public:
 	MediaStatus(const string& status, const string& nameOfFile);

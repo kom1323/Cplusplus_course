@@ -5,6 +5,7 @@
 #include "Date.h"
 #include "Page.h"
 #include "Status.h"
+#include "MediaStatus.h"
 #include "Entity.h"
 #include "FacebookExceptions.h"
 

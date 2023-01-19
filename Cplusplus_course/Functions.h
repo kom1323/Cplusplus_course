@@ -31,7 +31,6 @@ void readMemberName(Facebook& facebook, string& nameInput);
 void readPageName(Facebook& facebook, string& nameInput);
 void readValidChoice(string& userInput, MENU_OPTIONS& choice, Facebook& facebook);
 string readInputString();
-void initFacebookEntities(Facebook& facebook);
 void newTerminate();
 void startMenu(Facebook& facebook);
 void isBlank(const string& input) throw(BlankException);

@@ -104,6 +104,7 @@ void Facebook::isBirthdayValid(const string& birthday) const throw(DateFormatExc
 		
 }
 
+
 bool Facebook::addMember(Member* mem)
 {
 	//add the new member
@@ -358,25 +359,29 @@ ostream& operator<<(ostream& os, Facebook& facebook)
 istream& operator>>(istream& os, Facebook& facebook)
 {
 	int i,MembersSize, pagesSize;
-	string garbageBuffer;
-	os >> MembersSize;
+	string garbageBuffer,size;
+	getline(os, size);
+	MembersSize = std::stoi(size);
 	Member* tempMem;
 	Page* tempPage;
 
 	for (i = 0; i < MembersSize; i++)
 	{
+		getline(os, garbageBuffer);
 		tempMem = new Member();
 		os >> *tempMem;
 		facebook.addMember(tempMem);
-		os >> garbageBuffer;
+		getline(os, garbageBuffer);
 	}
-	os >> pagesSize;
+	getline(os, size);
+	pagesSize = std::stoi(size);
 	for (i = 0; i < pagesSize; i++)
 	{
+		getline(os, garbageBuffer);
 		tempPage = new Page();
 		os >> *tempPage;
 		facebook.addPage(tempPage);
-		os >> garbageBuffer;
+		getline(os, garbageBuffer);
 	}
 
 	facebook.updatePointers();

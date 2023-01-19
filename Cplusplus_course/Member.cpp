@@ -1,5 +1,5 @@
 #include "Member.h"
-using namespace std;
+
 
 
 
@@ -10,8 +10,6 @@ Member::Member(const string& newName, Date date) : Entity(newName), birthday(dat
 {
 
 }
-
-
 
 
 const Member& Member::operator=(const Member& other)
@@ -129,6 +127,7 @@ void Member::printAllMyFriends()
 void Member::printLatestStatusesOfFriends()
 {
 	int statusSize, count;
+	MediaStatus* medStatus;
 	cout << "The statuses of " << this->name << "'s friends: " << endl;;
 	cout << "-------------------------" << endl;
 	for (auto& amigo : this->followersList)
@@ -146,6 +145,11 @@ void Member::printLatestStatusesOfFriends()
 				for (auto& status : memPtr->statusList)
 				{
 					cout << count << ". " << status->getCurrStatus() << endl << status->getDate().getmDate() << endl << endl;
+					if (typeid(*status) == typeid(MediaStatus))
+					{
+						medStatus = (MediaStatus*)status;
+						medStatus->playMedia();
+					}
 					count++;
 				}
 			}
@@ -165,36 +169,12 @@ void Member::writeToFile(ostream& os) const
 
 void Member::readFromFile(istream& os)
 {
-	
-	os >> this->friendsSize;
-	os >> this->favPagesSize;
+	string size;
+	getline(os, size);
+	this->friendsSize = std::stoi(size);
+	getline(os, size);
+	this->favPagesSize = std::stoi(size);
 	os >> this->birthday;
 }
 
 
-
-
-
-
-
-//function that returns true if the page is on this user's fav pages
-//bool Member::isFanPage(const Page* newPage)
-//{
-//	for (auto& page : this->favPagesList)
-//	{
-//		if (page == newPage)
-//			return true;
-//	}
-//	return false;
-//}
-
-//function that returns true if the page is on this user's fav pages
-//bool Member::isFanPage(const string& pageName)
-//{
-//	for (auto& page : this->favPagesList)
-//	{
-//		if (pageName == page->getName())
-//			return true;
-//	
-//	return false;
-//}

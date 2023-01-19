@@ -1,5 +1,6 @@
 #include "MediaStatus.h"
 
+
 MediaStatus::MediaStatus(const string& status, const string& nameOfFile): Status(status), fileName(nameOfFile)
 {
 	
@@ -15,7 +16,7 @@ void MediaStatus::playMedia() const
 
 void MediaStatus::writeToFile(ostream& os) const
 {
-	os << this->fileName;
+	os << this->fileName<<endl;
 }
 
 void MediaStatus::readFromFile(istream& os)

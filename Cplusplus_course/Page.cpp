@@ -19,7 +19,7 @@ const Page& Page::operator=(const Page& other)
 	return *this;
 }
 
-const Page& Page::operator+=(Member& fan)
+Page& Page::operator+=(Member& fan)
 {
 	this->addFollow(&fan);
 	return *this;
@@ -53,6 +53,11 @@ bool Page::operator<(const Page& other)
 	if (this->getFollowersList().size() < other.getFollowersList().size())
 		return true;
 	return false;
+}
+
+void Page::writeToFile(ostream& os) const
+{
+	os << endl;
 }
 
 

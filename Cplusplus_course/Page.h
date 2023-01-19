@@ -12,25 +12,18 @@ class Page : public Entity
 {
 private:
 
-
 public:
 	Page(const string& name);
 	Page() = default;
 
-	
-
-
 	const Page& operator=(const Page& other);
-	const Page& operator+=(Member& fan);
+	Page& operator+=(Member& fan);
 
 	bool operator>(const Member& other);
 	bool operator>(const Page& other);
 	bool operator<(const Member& other);
 	bool operator<(const Page& other);
 
-	
-
-
-	void printAllFans();
+	void writeToFile(ostream& os) const override;
 };
 #endif // ! _PAGE

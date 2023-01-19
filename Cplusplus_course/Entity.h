@@ -2,6 +2,8 @@
 #define _ENTITY_H
 
 #include "Types.h"
+#include "FacebookExceptions.h"
+
 
 class Entity 
 {
@@ -22,8 +24,8 @@ public:
 	const vector<Entity*>& getFollowersList() const;
 	vector<Entity*>& setFollowersList();
 
-	void checkFollowship(const string& name);
-	void checkNotFollowship(const string& name);
+	void checkFollowship(const string& name) throw(AlreadyFriendsException);
+	void checkNotFollowship(const string& name) throw(NotFriendsException);
 	bool addFollow(Entity* newEntity);
 	bool removeMutualFollow(const string& friendName);
 	bool isMutualFollowing(Entity* entity) const;
@@ -32,7 +34,7 @@ public:
 
 	bool isMember(const Entity* newAmigo) const;
 	bool isMember(const string& amigoName) const;
-	void isMe(const string& name);
+	void isMe(const string& name) throw(SelfException);
 
 
 	bool addStatus(const string& status);

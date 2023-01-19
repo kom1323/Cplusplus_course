@@ -1,8 +1,9 @@
 #include "Entity.h"
 #include "Status.h"
 #include "MediaStatus.h"
-#include "FacebookExceptions.h"
 #include "Member.h"
+
+
 
 Entity::Entity(const string& newName) :name(newName)
 {
@@ -245,17 +246,19 @@ ostream& operator<<(ostream& os, const Entity& entity)
 istream& operator>>(istream& os, Entity& entity)
 {
 	int i,followersSize, statusSize;
-	string* temp, statusChecker;
+	string* temp, statusChecker,size;
 	Status* statusTmp;
 	getline(os, entity.name);
-	os >> followersSize;
+	getline(os, size);
+	followersSize = std::stoi(size);
 	for (i = 0; i < followersSize; i++)
 	{
 		temp = new string;
 		getline(os, *temp);
 		entity.followersList.push_back((Entity*)temp);
 	}
-	os >> statusSize;
+	getline(os, size);
+	statusSize = std::stoi(size);
 	for (i = 0; i < statusSize; i++)
 	{
 		getline(os, statusChecker);
@@ -264,6 +267,7 @@ istream& operator>>(istream& os, Entity& entity)
 		else
 			statusTmp = new Status();
 		os >> *statusTmp;
+		entity.statusList.push_back(statusTmp);
 	}
 	entity.readFromFile(os);
 	return os;

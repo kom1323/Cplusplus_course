@@ -1,5 +1,5 @@
 #include "Date.h"
-using namespace std;
+
 
 Date::Date()
 {
@@ -23,7 +23,7 @@ const string& Date::getmDate() const
 
 ostream& operator<<(ostream& os, const Date& d)
 {  
-    os << d.mDate<<endl;
+    os << d.mDate << endl;
     return os;
 }
 
